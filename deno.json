@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable"
+    ]
+  },
+  "imports": {
+    "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
+    "$fresh/": "https://deno.land/x/fresh@1.1.2/",
+    "preact": "https://esm.sh/preact@10.11.0",
+    "preact/": "https://esm.sh/preact@10.11.0/",
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.4"
+  },
+  "tasks": {
+    "test": "deno test -A .",
+    "test:watch": "deno test -A --watch .",
+    "fmt": "deno fmt",
+    "lint": "deno fmt --check && deno lint"
+  },
+  "test": {
+    "files": {
+      "exclude": [
+        "Routing/Checker",
+        "Routing/Matched"
+      ]
+    }
+  }
+}
