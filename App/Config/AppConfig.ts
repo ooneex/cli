@@ -1,8 +1,7 @@
-import { File } from "../deps.ts";
 import { AppDirectoryType } from "../Directory/types.ts";
-import { AppConfigErrorType, AppConfigType, IAppConfig } from "./types.ts";
+import { AppConfigErrorType, AppConfigType } from "./types.ts";
 
-export class AppConfig implements IAppConfig {
+export class AppConfig {
   private config: AppConfigType | null = null;
 
   public async parse(): Promise<void> {

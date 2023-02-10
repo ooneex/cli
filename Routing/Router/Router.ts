@@ -1,31 +1,23 @@
 import { Collection } from "../deps.ts";
-import { Route } from "../Route/Route.ts";
-import { IRoute, IRouter } from "../types.ts";
+import { IRoute } from "../Route/types.ts";
+import { IRouter } from "./types.ts";
 
 export class Router implements IRouter {
-  private routeCollection = new Collection<string, Route>();
+  public readonly collection = new Collection<string, IRoute>();
 
-  public add(route: Route): this {
-    this.routeCollection.add(route.getName(), route);
-
-    return this;
+  public findByName(name: string): IRoute | null {
+    return this.collection.get(name) ?? null;
   }
 
-  public set(routes: Record<string, Route>): this {
-    this.routeCollection.set(routes);
+  public findByPathname(url: URL): IRoute | null {
+    const routes = this.collection.values();
 
-    return this;
-  }
+    const route = routes.find((r) => {
+      const pattern = new URLPattern({ pathname: r.getPath() });
 
-  public count(): number {
-    return this.routeCollection.count();
-  }
+      return pattern.test(url);
+    });
 
-  public findByName(name: string): IRoute | undefined {
-    return this.routeCollection.get(name);
-  }
-
-  public getCollection(): Collection<string, Route> {
-    return this.routeCollection;
+    return route ?? null;
   }
 }

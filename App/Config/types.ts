@@ -1,20 +1,24 @@
-import { ComponentType, ErrorPageProps, UnknownPageProps } from "../deps.ts";
+import {
+  ComponentType,
+  ErrorHandler,
+  ErrorPageProps,
+  UnknownHandler,
+  UnknownPageProps,
+} from "../deps.ts";
 import { AppDirectoryType } from "../Directory/types.ts";
 
 export type AppConfigErrorType = {
-  notFound: ComponentType<UnknownPageProps>;
-  server: ComponentType<ErrorPageProps>;
+  notFound: {
+    view?: ComponentType<UnknownPageProps>;
+    handler: UnknownHandler;
+  };
+  server: {
+    view?: ComponentType<ErrorPageProps>;
+    handler: ErrorHandler;
+  };
 };
 
 export type AppConfigType = {
   directories: AppDirectoryType;
   errors: AppConfigErrorType;
 };
-
-export interface IAppConfig {
-  parse(): void;
-
-  getDirectories(): AppDirectoryType | null;
-
-  getErrors(): AppConfigErrorType | null;
-}

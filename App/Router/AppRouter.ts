@@ -1,5 +1,17 @@
 import { appConfig } from "../Config/AppConfig.ts";
-import { Directory, File, Path, Route, Router, RouteType } from "../deps.ts";
+import { ConfigException } from "../Config/ConfigException.ts";
+import {
+  Directory,
+  File,
+  Path,
+  Route,
+  RouteDefinitionType,
+  Router,
+} from "../deps.ts";
+import { DirectoryNotFoundException } from "../Directory/DirectoryNotFoundException.ts";
+import { ProxyHandler } from "../Proxy/ProxyHandler.ts";
+import { ProxyMiddleware } from "../Proxy/ProxyMiddleware.ts";
+import { ProxyView } from "../Proxy/ProxyView.tsx";
 import { ManifestType } from "./types.ts";
 
 const manifest: ManifestType = {
@@ -15,18 +27,16 @@ export class AppRouter {
   private async parseIslands(): Promise<Record<string, unknown>> {
     const islandsDir = appConfig.getDirectories()?.islands;
     if (!islandsDir) {
-      // TODO: Set error message and catch it in the front
-      console.log(
-        "Islands not found in configuration file. Check config/app.config.ts file",
+      throw new DirectoryNotFoundException(
+        "Islands not found in the configuration file. Check config/app.config.ts file",
       );
-      Deno.exit(1);
     }
 
     const directory = new Directory(islandsDir);
     if (!directory.exists()) {
-      // TODO: Set error message and catch it in the front
-      console.log(`Directory ${islandsDir} not found.`);
-      Deno.exit(1);
+      throw new DirectoryNotFoundException(
+        `Directory ${islandsDir} not found.`,
+      );
     }
 
     let islandFiles = directory.files(/\.tsx$/i);
@@ -42,7 +52,7 @@ export class AppRouter {
     islandFiles.map((islandFile, index) => {
       importContent +=
         `import \$${index} from "@app/${islandFile.getPath()}";\n`;
-      arrayContent += `  "./${islandFile.getPath()}": \$${index},\n`;
+      arrayContent += `  "./${islandFile.getPath()}": {default: \$${index}},\n`;
     });
 
     const content =
@@ -53,27 +63,20 @@ export class AppRouter {
     file.ensure();
     file.write(content);
 
-    const islands: Record<string, unknown> =
-      (await import(`@app/var/cache/islands.ts`)).default;
-
-    return islands;
+    return (await import(`@app/var/cache/islands.ts`)).default;
   }
 
   public async parse(): Promise<ManifestType> {
     const routesDir = appConfig.getDirectories()?.routes;
     if (!routesDir) {
-      // TODO: Set error message and catch it in the front
-      console.log(
-        "Routes not found in configuration file. Check config/app.config.ts file",
+      throw new DirectoryNotFoundException(
+        "Routes not found in the configuration file. Check config/app.config.ts file",
       );
-      Deno.exit(1);
     }
 
     const directory = new Directory(routesDir);
     if (!directory.exists()) {
-      // TODO: Set error message and catch it in the front
-      console.log(`Directory ${routesDir} not found.`);
-      Deno.exit(1);
+      throw new DirectoryNotFoundException(`Directory ${routesDir} not found`);
     }
 
     let routesDef = directory.files(/\.ts$/i);
@@ -99,7 +102,7 @@ export class AppRouter {
     file.ensure();
     file.write(content);
 
-    const routes: RouteType[] =
+    const routes: RouteDefinitionType[] =
       (await import(`@app/var/cache/routes.ts`)).default;
 
     routes.map((route) => {
@@ -109,53 +112,77 @@ export class AppRouter {
 
     // Cache islands
     const islands = await this.parseIslands();
-    // Get deno.json config file
-    const denoConfigFile = new File("deno.json");
+
     // Create Manifest
     routesDef.map((routeDef, index) => {
       const route = routes[index];
-      manifest.routes[`./${routeDef.getPath()}`] = {
+      /*manifest.routes[`./${routeDef.getPath()}`] = {
         default: route.view,
-        handler: route.handler,
+        handler: ProxyHandler,
         config: {
           name: route.name,
           routeOverride: route.path,
-          methods: route.methods,
           csp: route.csp,
         },
-      };
+      };*/
 
       if (route.middleware) {
         const middlewarePath = `./${
           Path.dirname(routeDef.getPath())
         }/_middleware.ts`;
         manifest.routes[middlewarePath] = {
-          default: route.middleware,
+          handler: route.middleware,
         };
       }
     });
 
-    // Set NotFound and Server errors
-    const notFound = appConfig.getErrors()?.notFound;
-    if (notFound) {
-      manifest.routes[`./${routesDir}/_404.tsx`] = {
-        default: notFound,
+    // Set proxy handler
+    manifest.routes[`./${routesDir}/index.ts`] = {
+      default: ProxyView,
+      handler: ProxyHandler,
+      config: {
+        name: "proxy",
+        routeOverride: "/*",
+        csp: true,
+      },
+    };
+
+    // Set proxy middleware
+    if (manifest.routes[`./${routesDir}/_middleware.ts`]) {
+      manifest.routes[`./${routesDir}/_middleware.ts`] = {
+        handler: [
+          ProxyMiddleware,
+          manifest.routes[`./${routesDir}/_middleware.ts`],
+        ],
+      };
+    } else {
+      manifest.routes[`./${routesDir}/_middleware.ts`] = {
+        handler: ProxyMiddleware,
       };
     }
 
+    // Set NotFound errors
+    manifest.routes[`./${routesDir}/_404.tsx`] = {
+      default: appConfig.getErrors()?.notFound.view,
+      handler: appConfig.getErrors()?.notFound.handler,
+    };
+
+    // Set server errors
     const server = appConfig.getErrors()?.server;
     if (server) {
       manifest.routes[`./${routesDir}/_500.tsx`] = {
-        default: server,
+        default: appConfig.getErrors()?.server.view,
+        handler: appConfig.getErrors()?.server.handler,
       };
     }
 
     manifest.islands = islands;
     try {
+      // Get deno.json config file
+      const denoConfigFile = new File("deno.json");
       manifest.config = JSON.parse(denoConfigFile.read());
-    } catch {
-      // TODO: Set error message and catch it in the front
-      console.log("Error found in deno.json file");
+    } catch (e) {
+      throw new ConfigException(e.message);
     }
 
     return manifest;
@@ -163,7 +190,7 @@ export class AppRouter {
 
   public getRouter(): Router {
     const router = new Router();
-    router.set(this.routes);
+    router.collection.set(this.routes);
 
     return router;
   }

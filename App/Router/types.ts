@@ -1,9 +1,6 @@
-import { HttpMethodType } from "../deps.ts";
-
 export type RouteConfigType = {
   name: string;
   routeOverride: string;
-  methods?: HttpMethodType[];
   csp?: boolean;
 };
 

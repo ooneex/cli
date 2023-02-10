@@ -1,12 +1,13 @@
 import { DotEnv, File } from "../deps.ts";
-import { AppEnvType, AppEnvVarsType, IEnv } from "./types.ts";
 import { AppLocaleType, AppVersionType } from "../types.ts";
+import { AppEnvType, AppEnvVarsType, IEnv } from "./types.ts";
 
 export class Env implements IEnv {
   private dotEnv: DotEnv = new DotEnv();
 
   public generateEnvFile(): void {
     let fileContent = `APP_ENV=dev
+API=false
 LOCALE=en-us
 COUNTRY="United States"
 VERSION=1.0.0
@@ -41,8 +42,8 @@ PORT=8080
     await this.dotEnv.parse(".env.prod.local");
   }
 
-  public getAppEnv(): AppEnvType | null {
-    return this.get<AppEnvType>("APP_ENV") ?? null;
+  public getAppEnv(): AppEnvType {
+    return this.get<AppEnvType>("APP_ENV") ?? "dev";
   }
 
   public isDev(): boolean {
@@ -61,8 +62,8 @@ PORT=8080
     return this.get<string>("COUNTRY") ?? null;
   }
 
-  public getLocale(): AppLocaleType | null {
-    return this.get<AppLocaleType>("LOCALE") ?? null;
+  public getLocale(): AppLocaleType {
+    return this.get<AppLocaleType>("LOCALE") ?? "en";
   }
 
   public getPort(): number | null {
@@ -79,6 +80,10 @@ PORT=8080
 
   public isDebug(): boolean {
     return this.get<boolean>("DEBUG") === true;
+  }
+
+  public isApi(): boolean {
+    return this.get<boolean>("API") === true;
   }
 
   public get<T>(key: Uppercase<string>): T | undefined {

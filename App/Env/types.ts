@@ -1,8 +1,9 @@
 import { DotEnvValueType } from "../deps.ts";
-import { AppLocaleType } from "../types.ts";
+import { AppLocaleType, AppVersionType } from "../types.ts";
 
 export type AppEnvVarsType = Record<
   | "APP_ENV"
+  | "API"
   | "LOCALE"
   | "COUNTRY"
   | "VERSION"
@@ -19,16 +20,10 @@ export type AppEnvType =
   | "test"
   | string;
 
-export const AppDefaultEnv: AppEnvType[] = [
-  "dev",
-  "prod",
-  "test",
-];
-
 export interface IEnv {
-  parse(): void;
+  getAppEnv(): AppEnvType;
 
-  getAppEnv(): AppEnvType | null;
+  isApi(): boolean;
 
   isDev(): boolean;
 
@@ -36,11 +31,11 @@ export interface IEnv {
 
   isTest(): boolean;
 
-  getLocale(): AppLocaleType | null;
+  getLocale(): AppLocaleType;
 
   getCountry(): string | null;
 
-  getVersion(): string | null;
+  getVersion(): AppVersionType | null;
 
   getSecret(): string | null;
 

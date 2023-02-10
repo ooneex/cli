@@ -1,226 +1,89 @@
 import {
-  AppDefaultEnv,
   AppEnvType,
   AppLocaleType,
-  AppRoleType,
   AppVersionType,
   ComponentType,
   Handler,
-  HttpDefaultProtocols,
   HttpMethodType,
   HttpProtocolType,
   MiddlewareHandler,
   PageProps,
 } from "../deps.ts";
-import {
-  IRoute,
-  RouteConstraintsType,
-  RouteType,
-} from "../types.ts";
+import { IRoute, RouteConstraintsType, RouteDefinitionType } from "./types.ts";
 
 export class Route implements IRoute {
-  public static DEFAULT_LOCALE: AppLocaleType[] = [];
-
-  constructor(private route: RouteType) {
-  }
-
-  public setData<T>(data: Record<string, T> = {}): this {
-    this.route.data = data;
-
-    return this;
+  constructor(public readonly definition: RouteDefinitionType) {
   }
 
   public getData<T>(): Record<string, T> | null {
-    return (this.route.data as T) ?? null;
-  }
-
-  public setDefault(values: Record<string, string> = {}): this {
-    this.route.default = values;
-
-    return this;
+    return (this.definition.data as T) ?? null;
   }
 
   public getDefault(): Record<string, string | number> | null {
-    return this.route.default ?? null;
-  }
-
-  public setFixture(fixture: string | undefined): this {
-    this.route.fixture = fixture;
-
-    return this;
+    return this.definition.default ?? null;
   }
 
   public getFixture(): string | null {
-    return this.route.fixture ?? null;
-  }
-
-  public setDescription(text: string | undefined): this {
-    this.route.description = text;
-
-    return this;
+    return this.definition.fixture ?? null;
   }
 
   public getDescription(): string | null {
-    return this.route.description ?? null;
-  }
-
-  public setEnvs(envs: AppEnvType[] = AppDefaultEnv): this {
-    this.route.envs = envs;
-
-    return this;
+    return this.definition.description ?? null;
   }
 
   public getEnvs(): AppEnvType[] | null {
-    return this.route.envs ?? null;
-  }
-
-  public setHosts(hosts: string[] = []): this {
-    this.route.hosts = hosts;
-
-    return this;
+    return this.definition.envs ?? null;
   }
 
   public getHosts(): string[] | null {
-    return this.route.hosts ?? null;
-  }
-
-  public setIps(ips: string[] = []): this {
-    this.route.ips = ips;
-
-    return this;
+    return this.definition.hosts ?? null;
   }
 
   public getIps(): string[] | null {
-    return this.route.ips ?? null;
-  }
-
-  public setLocales(locales: AppLocaleType[] = Route.DEFAULT_LOCALE): this {
-    this.route.locales = locales;
-
-    return this;
+    return this.definition.ips ?? null;
   }
 
   public getLocales(): AppLocaleType[] | null {
-    return this.route.locales ?? null;
-  }
-
-  public setView(view?: ComponentType<PageProps>): this {
-    this.route.view = view;
-
-    return this;
+    return this.definition.locales ?? null;
   }
 
   public getView(): ComponentType<PageProps> | null {
-    return this.route.view ?? null;
-  }
-
-  public setHandler(handler?: Handler): this {
-    this.route.handler = handler;
-
-    return this;
+    return this.definition.view ?? null;
   }
 
   public getHandler(): Handler | null {
-    return this.route.handler ?? null;
-  }
-
-  public setMiddleware(middleware?: MiddlewareHandler): this {
-    this.route.middleware = middleware;
-
-    return this;
+    return this.definition.handler ?? null;
   }
 
   public getMiddleware(): MiddlewareHandler | null {
-    return this.route.middleware ?? null;
-  }
-
-  public setConstraints(constraints?: RouteConstraintsType): this {
-    this.route.constraints = constraints;
-
-    return this;
+    return this.definition.middleware ?? null;
   }
 
   public getConstraints(): RouteConstraintsType | null {
-    return this.route.constraints ?? null;
-  }
-
-  public setMethods(methods?: HttpMethodType[]): this {
-    this.route.methods = methods;
-
-    return this;
+    return this.definition.constraints ?? null;
   }
 
   public getMethods(): HttpMethodType[] | null {
-    return this.route.methods ?? null;
-  }
-
-  public setName(name: string): this | string {
-    this.route.name = name;
-
-    return this;
+    return this.definition.methods ?? null;
   }
 
   public getName(): string {
-    return this.route.name;
-  }
-
-  public setPath(path: string): this {
-    this.route.path = path;
-
-    return this;
+    return this.definition.name;
   }
 
   public getPath(): string {
-    return this.route.path;
-  }
-
-  public setPorts(ports: string[] = []): this {
-    this.route.ports = ports ?? [];
-
-    return this;
+    return this.definition.path;
   }
 
   public getPorts(): string[] | null {
-    return this.route.ports ?? null;
-  }
-
-  public setProtocols(
-    protocols: HttpProtocolType[] = HttpDefaultProtocols,
-  ): this {
-    this.route.protocols = protocols;
-
-    return this;
+    return this.definition.ports ?? null;
   }
 
   public getProtocols(): HttpProtocolType[] | null {
-    return this.route.protocols ?? null;
-  }
-
-  public setRoles(roles: AppRoleType[] = []): this {
-    this.route.roles = roles;
-
-    return this;
-  }
-
-  public getRoles(): AppRoleType[] | null {
-    return this.route.roles ?? null;
-  }
-
-  public setVersions(versions: AppVersionType[] = []): this {
-    this.route.versions = versions;
-
-    return this;
+    return this.definition.protocols ?? null;
   }
 
   public getVersions(): AppVersionType[] | null {
-    return this.route.versions ?? null;
+    return this.definition.versions ?? null;
   }
-
-  // public isEquals(matchedRoute: IMatchedRoute): boolean {
-    // const routeChecker = new RouteChecker(this, matchedRoute);
-
-    // return routeChecker.isValid();
-
-    // return true;
-  // }
 }

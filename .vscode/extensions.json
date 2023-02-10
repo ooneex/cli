@@ -1,5 +1,7 @@
 {
- "recommendations": [
-  "denoland.vscode-deno"
- ]
+  "recommendations": [
+    "denoland.vscode-deno",
+    "mikestead.dotenv",
+    "dskwrk.vscode-generate-getter-setter"
+  ]
 }

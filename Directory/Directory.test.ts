@@ -1,4 +1,8 @@
-import { assertInstanceOf, assertThrows, assertEquals } from "@ooneex/testing/asserts.ts";
+import {
+  assertEquals,
+  assertInstanceOf,
+  assertThrows,
+} from "@ooneex/testing/asserts.ts";
 import { afterAll, describe, it } from "@ooneex/testing/bdd.ts";
 import { File, Path } from "./deps.ts";
 import { Directory, DirectoryException } from "./mod.ts";

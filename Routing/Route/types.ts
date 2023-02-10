@@ -1,35 +1,24 @@
 import {
   AppEnvType,
   AppLocaleType,
-  AppRoleType,
   AppVersionType,
-  Collection,
   ComponentType,
   Handler,
   HttpMethodType,
   HttpProtocolType,
   MiddlewareHandler,
   PageProps,
-} from "./deps.ts";
-
-import { Route } from "./Route/Route.ts";
-
-export type RouteConstraintValidationType = {
-  key: string;
-  constraint: RegExp;
-  context: string;
-};
+} from "../deps.ts";
 
 export type RouteConstraintsType = {
   where?: Record<string, string | number>;
   regex?: Record<string, string>;
   number?: string[];
   alphaNumeric?: string[];
-  uuid?: string[];
   in?: Record<string, (string | number)[]>;
 };
 
-export type RouteType = {
+export type RouteDefinitionType = {
   /**
    * Name of route
    */
@@ -102,10 +91,6 @@ export type RouteType = {
    */
   locales?: AppLocaleType[];
   /**
-   * Allowed roles for this route
-   */
-  roles?: AppRoleType[];
-  /**
    * Allowed environment for this route
    * @example ["dev"] ["prod", "dev"] ["test", "demo"]
    */
@@ -125,6 +110,8 @@ export type RouteType = {
 };
 
 export interface IRoute {
+  readonly definition: RouteDefinitionType;
+
   getName(): string;
 
   getPath(): string;
@@ -141,9 +128,9 @@ export interface IRoute {
 
   getConstraints(): RouteConstraintsType | null;
 
-  getHandler(): Handler | null;
-
   getView(): ComponentType<PageProps> | null;
+
+  getHandler(): Handler | null;
 
   // deno-lint-ignore no-explicit-any
   getMiddleware(): MiddlewareHandler<any> | null;
@@ -154,8 +141,6 @@ export interface IRoute {
 
   getLocales(): AppLocaleType[] | null;
 
-  getRoles(): AppRoleType[] | null;
-
   getEnvs(): AppEnvType[] | null;
 
   getVersions(): AppVersionType[] | null;
@@ -163,99 +148,4 @@ export interface IRoute {
   getFixture(): string | null;
 
   getDescription(): string | null;
-
-  // isEquals(matchedRoute: IMatchedRoute): boolean;
-}
-
-export type MatchedRouteParamsType = Record<
-  string | number,
-  string | number | undefined
->;
-
-export type MatchedRouteType = {
-  captures?: string[];
-  methods?: HttpMethodType[];
-  name?: string;
-  path?: string;
-  params?: MatchedRouteParamsType;
-  method?: HttpMethodType;
-  protocol?: HttpProtocolType;
-  ip?: string;
-  host?: string;
-  port?: string;
-  locale?: AppLocaleType;
-  role?: AppRoleType;
-  env?: AppEnvType;
-  version?: AppVersionType;
-};
-
-export interface IMatchedRoute {
-  getCaptures(): string[] | null;
-
-  getMethods(): HttpMethodType[] | null;
-
-  getName(): string | null;
-
-  getPath(): string | null;
-
-  getParams(): MatchedRouteParamsType;
-
-  getMethod(): HttpMethodType | null;
-
-  getProtocol(): HttpProtocolType | null;
-
-  getIp(): string | null;
-
-  getHost(): string | null;
-
-  getPort(): string | null;
-
-  getLocale(): AppLocaleType | null;
-
-  getRole(): AppRoleType | null;
-
-  getEnv(): AppEnvType | null;
-
-  getVersion(): AppVersionType | null;
-}
-
-export type RouteCheckerErrorType = {
-  key: string;
-  message: string;
-  context?: string;
-  errors?: RouteCheckerErrorType;
-}[];
-
-export interface IRouteChecker {
-  check(route: IRoute, MatchedRoute: IMatchedRoute): this;
-
-  isValid(): boolean;
-
-  getErrors(): RouteCheckerErrorType;
-
-  checkMethod(): boolean | string;
-
-  checkProtocol(): boolean | string;
-
-  checkHost(): boolean | string;
-
-  checkPort(): boolean | string;
-
-  checkLocale(): boolean | string;
-
-  checkRole(): boolean | string;
-
-  checkEnv(): boolean | string;
-
-  checkVersion(): boolean | string;
-
-  // checkConstraints(): boolean | RouteCheckerErrorType;
-}
-
-export interface IRouter {
-  count(): number;
-
-  findByName(name: string): IRoute | undefined;
-
-  getCollection(): Collection<string, Route>;
 }

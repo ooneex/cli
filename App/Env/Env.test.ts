@@ -1,8 +1,8 @@
 import { assertEquals, assertObjectMatch } from "@ooneex/testing/asserts.ts";
 import { afterAll, describe, it } from "@ooneex/testing/bdd.ts";
 
-import { env } from "./Env.ts";
 import { Helper } from "../../Helper/Helper.ts";
+import { env } from "./Env.ts";
 import { AppEnvVarsType } from "./types.ts";
 
 env.generateEnvFile();
@@ -52,6 +52,10 @@ describe("App Env", () => {
     assertEquals(env.isDebug(), true);
   });
 
+  it("api is enabled", () => {
+    assertEquals(env.isApi(), false);
+  });
+
   it("same data", () => {
     assertObjectMatch(env.getData(), {
       APP_ENV: "dev",
@@ -67,6 +71,7 @@ describe("App Env", () => {
   it("can set new data", () => {
     const data: AppEnvVarsType = {
       APP_ENV: "prod",
+      API: false,
       LOCALE: "en-us",
       COUNTRY: "United States",
       VERSION: "1.0.0",

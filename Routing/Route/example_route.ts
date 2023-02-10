@@ -1,6 +1,6 @@
-import { RouteType } from "../types.ts";
+import { RouteDefinitionType } from "./types.ts";
 
-const routeDefinition: RouteType = {
+const routeDefinition: RouteDefinitionType = {
   name: "homepage",
   path: "/products/:id/:name",
   protocols: ["https", "http"],
@@ -12,7 +12,6 @@ const routeDefinition: RouteType = {
     regex: { price: "^[0-9]+$", name: "^[a-z0-9]+$" },
     number: ["part"],
     alphaNumeric: ["code"],
-    uuid: ["id"],
     in: { name: ["Doe", "Obama"] },
   },
   default: {
@@ -25,7 +24,6 @@ const routeDefinition: RouteType = {
     size: 42,
   },
   locales: ["fr", "en"],
-  roles: ["ROLE_USER", "ROLE_ADMIN"],
   envs: ["dev", "test", "prod"],
   versions: ["1.2.3", "2.0.0"],
   view: undefined,
