@@ -1,13 +1,13 @@
-import {List, ListOptions} from "../deps.ts";
-import {BasePrompt} from "./BasePrompt.ts";
-import {ListPromptType} from "./types.ts";
+import { List, ListOptions } from "../deps.ts";
+import { BasePrompt } from "./BasePrompt.ts";
+import { ListPromptType } from "./types.ts";
 
 export class ListPrompt extends BasePrompt {
   protected options: ListPromptType;
 
   constructor(message: string) {
     super(message);
-    this.options = {message};
+    this.options = { message };
   }
 
   public min(length?: number): this {

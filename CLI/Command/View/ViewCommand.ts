@@ -5,19 +5,19 @@ import {
   CommandVersionType,
   ICommand,
   LongFlagType,
-  ShortFlagType
+  ShortFlagType,
 } from "../../types.ts";
 
 export class ViewCommand implements ICommand {
   public getActions(): ActionType[] {
     return [
-      {name: "new", description: "Create new view"}
+      { name: "new", description: "Create new view" },
     ];
   }
 
   public getArgs(): ArgType[] {
     return [
-      {name: "name", description: "Name of view"}
+      { name: "name", description: "Name of view" },
     ];
   }
 
@@ -40,7 +40,7 @@ export class ViewCommand implements ICommand {
   public getUsage(): string[] {
     return [
       "ooneex view:new",
-      "ooneex view:new BookListView"
+      "ooneex view:new BookListView",
     ];
   }
 

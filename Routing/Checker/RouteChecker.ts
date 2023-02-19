@@ -329,7 +329,7 @@ export class RouteChecker implements IRouteChecker {
         errors.push({
           key: "in constraints",
           message: `${key} param must equal to " ${
-            inConstraints[key].join("\" or \"")
+            inConstraints[key].join('" or "')
           }"`,
         });
       }

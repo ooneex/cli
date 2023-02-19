@@ -1,13 +1,13 @@
-import {Number, NumberOptions} from "../deps.ts";
-import {BasePrompt} from "./BasePrompt.ts";
-import {NumberPromptType} from "./types.ts";
+import { Number, NumberOptions } from "../deps.ts";
+import { BasePrompt } from "./BasePrompt.ts";
+import { NumberPromptType } from "./types.ts";
 
 export class NumberPrompt extends BasePrompt {
   protected options: NumberPromptType;
 
   constructor(message: string) {
     super(message);
-    this.options = {message};
+    this.options = { message };
   }
 
   public min(min?: number): this {

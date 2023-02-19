@@ -1,4 +1,4 @@
-import {SelectValueOptions, SuggestionHandler} from "../deps.ts";
+import { SelectValueOptions, SuggestionHandler } from "../deps.ts";
 
 export type InputPromptType = BasePromptType & {
   minLength?: number;
@@ -26,7 +26,6 @@ export type SelectPromptType = BasePromptType & {
   maxOptions?: number;
   check?: string;
   uncheck?: string;
-
 };
 
 export type NumberPromptType = BasePromptType & {
@@ -55,11 +54,11 @@ export type BasePromptType = {
   /**
    * The pointer option lets you change the pointer icon.
    */
-  pointer?: string,
+  pointer?: string;
   /**
    * With the indent option you can change the prompt indentation. Default is " ".
    */
-  indent?: string,
+  indent?: string;
   /**
    * The suggestions options specifies a list of default suggestions.
    */
@@ -76,4 +75,8 @@ export type BasePromptType = {
   prefix?: string;
 };
 
-export type SelectOptionType = { name: string, value: string, disabled?: boolean };
+export type SelectOptionType = {
+  name: string;
+  value: string;
+  disabled?: boolean;
+};

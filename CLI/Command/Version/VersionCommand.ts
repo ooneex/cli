@@ -5,9 +5,9 @@ import {
   CommandVersionType,
   ICommand,
   LongFlagType,
-  ShortFlagType
+  ShortFlagType,
 } from "../../types.ts";
-import {VersionCommandException} from "./VersionCommandException.ts";
+import { VersionCommandException } from "./VersionCommandException.ts";
 
 export class VersionCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -16,7 +16,7 @@ export class VersionCommand implements ICommand {
 
   public getArgs(): ArgType[] {
     return [
-      {name: "command", description: "Print other command line version"},
+      { name: "command", description: "Print other command line version" },
     ];
   }
 

@@ -1,16 +1,18 @@
-import {CommandActionException} from "./CommandActionException.ts";
-import {CommandArgumentException} from "./CommandArgumentException.ts";
-import {CommandFlagException} from "./CommandFlagException.ts";
-import {Exception, Helper} from "./deps.ts";
-import {CommandNotFoundException} from "./CommandNotFoundException.ts";
-import {container} from "./Container.ts";
-import {CommandRequestType, ICommand} from "./types.ts";
+import { CommandActionException } from "./CommandActionException.ts";
+import { CommandArgumentException } from "./CommandArgumentException.ts";
+import { CommandFlagException } from "./CommandFlagException.ts";
+import { Exception, Helper } from "./deps.ts";
+import { CommandNotFoundException } from "./CommandNotFoundException.ts";
+import { container } from "./Container.ts";
+import { CommandRequestType, ICommand } from "./types.ts";
 
 export const commandChecker = (request: CommandRequestType): ICommand => {
   const command: ICommand | null = container.get(request.name) ?? null;
 
   if (!command) {
-    const error = new CommandNotFoundException(`Command "${request.name}" not found`);
+    const error = new CommandNotFoundException(
+      `Command "${request.name}" not found`,
+    );
     Exception.print(error, false);
     Deno.exit(1);
   }
@@ -23,13 +25,16 @@ export const commandChecker = (request: CommandRequestType): ICommand => {
   return command;
 };
 
-export const checkAction = (request: CommandRequestType, command: ICommand): void => {
+export const checkAction = (
+  request: CommandRequestType,
+  command: ICommand,
+): void => {
   const actions = command.getActions();
   const suggestions: string[] = [];
   actions.map((action) => {
     suggestions.push(`${command.getName()}:${action.name}`);
   });
-  const suggestion = `"${suggestions.join("\" or \"")}"`;
+  const suggestion = `"${suggestions.join('" or "')}"`;
 
   if (actions.length > 0) {
     if (!request.action) {
@@ -39,16 +44,23 @@ export const checkAction = (request: CommandRequestType, command: ICommand): voi
     const action = actions.find((a) => a.name === request.action);
 
     if (!action) {
-      throw new CommandActionException(`Action "${request.action}" not allowed. Try ${suggestion}`);
+      throw new CommandActionException(
+        `Action "${request.action}" not allowed. Try ${suggestion}`,
+      );
     }
   }
 
   if (actions.length === 0 && request.action) {
-    throw new CommandActionException(`Action not allowed. Try "${command.getName()}"`);
+    throw new CommandActionException(
+      `Action not allowed. Try "${command.getName()}"`,
+    );
   }
-}
+};
 
-export const checkArgs = (request: CommandRequestType, command: ICommand): void => {
+export const checkArgs = (
+  request: CommandRequestType,
+  command: ICommand,
+): void => {
   const args = command.getArgs();
 
   if (args.length > 0) {
@@ -76,7 +88,9 @@ export const checkArgs = (request: CommandRequestType, command: ICommand): void 
       const constraint = args[index].constraint;
 
       if (constraint && !constraint.test(value)) {
-        throw new CommandArgumentException(`Argument "${value}" must match with "${constraint}"`);
+        throw new CommandArgumentException(
+          `Argument "${value}" must match with "${constraint}"`,
+        );
       }
     });
   }
@@ -84,9 +98,12 @@ export const checkArgs = (request: CommandRequestType, command: ICommand): void 
   if (args.length === 0 && request.args.length > 0) {
     throw new CommandArgumentException(`Argument not allowed`);
   }
-}
+};
 
-export const checkShortFlags = (request: CommandRequestType, command: ICommand): void => {
+export const checkShortFlags = (
+  request: CommandRequestType,
+  command: ICommand,
+): void => {
   const shortFlags = command.getShortFlags();
 
   if (shortFlags.length > 0) {
@@ -104,11 +121,12 @@ export const checkShortFlags = (request: CommandRequestType, command: ICommand):
 
         request.shortFlags[flag.name].map((value) => {
           if (!constraint.test(value)) {
-            throw new CommandFlagException(`Flag "-${flag.name}" must match with "${constraint}"`);
+            throw new CommandFlagException(
+              `Flag "-${flag.name}" must match with "${constraint}"`,
+            );
           }
         });
       }
-
     });
   }
 
@@ -119,9 +137,12 @@ export const checkShortFlags = (request: CommandRequestType, command: ICommand):
       throw new CommandFlagException(`Flag "-${name}" not allowed`);
     }
   });
-}
+};
 
-export const checkLongFlags = (request: CommandRequestType, command: ICommand): void => {
+export const checkLongFlags = (
+  request: CommandRequestType,
+  command: ICommand,
+): void => {
   const longFlags = command.getLongFlags();
 
   if (longFlags.length > 0) {
@@ -139,11 +160,12 @@ export const checkLongFlags = (request: CommandRequestType, command: ICommand): 
 
         request.longFlags[flag.name].map((value) => {
           if (!constraint.test(value)) {
-            throw new CommandFlagException(`Flag "--${flag.name}" must match with "${constraint}"`);
+            throw new CommandFlagException(
+              `Flag "--${flag.name}" must match with "${constraint}"`,
+            );
           }
         });
       }
-
     });
   }
 
@@ -154,4 +176,4 @@ export const checkLongFlags = (request: CommandRequestType, command: ICommand): 
       throw new CommandFlagException(`Flag "--${name}" not allowed`);
     }
   });
-}
+};

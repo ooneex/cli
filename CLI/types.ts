@@ -1,6 +1,6 @@
-import {Container} from "./Container.ts";
+import { Container } from "./Container.ts";
 import { IEnv } from "./deps.ts";
-import {Figure} from "./Figure/Figure.ts";
+import { Figure } from "./Figure/Figure.ts";
 import { Output } from "./Output/Output.ts";
 import { Style } from "./Style/Style.ts";
 
@@ -49,7 +49,7 @@ export type ArgType = {
 };
 
 export type CommandVersionType = `${number}.${number}.${number}`;
-export type ShortFlagType = Omit<ArgType, "name"> & {name: ShortFlagKeyType};
+export type ShortFlagType = Omit<ArgType, "name"> & { name: ShortFlagKeyType };
 export type LongFlagType = ArgType;
 export type ShortFlagKeyType =
   | "a"

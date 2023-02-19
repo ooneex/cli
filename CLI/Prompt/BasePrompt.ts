@@ -1,11 +1,11 @@
-import {SuggestionHandler} from "../deps.ts";
-import {BasePromptType} from "./types.ts";
+import { SuggestionHandler } from "../deps.ts";
+import { BasePromptType } from "./types.ts";
 
 export class BasePrompt {
   protected options: BasePromptType;
 
   constructor(message: string) {
-    this.options = {message};
+    this.options = { message };
   }
 
   public message(message: string): this {
@@ -50,7 +50,9 @@ export class BasePrompt {
     return this;
   }
 
-  public suggestions(suggestions?: (string | number)[] | SuggestionHandler): this {
+  public suggestions(
+    suggestions?: (string | number)[] | SuggestionHandler,
+  ): this {
     this.options.suggestions = suggestions;
 
     return this;

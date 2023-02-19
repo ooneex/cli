@@ -1,6 +1,6 @@
-import {Checkbox, CheckboxOptions, Select} from "../deps.ts";
-import {BasePrompt} from "./BasePrompt.ts";
-import {SelectOptionType, SelectPromptType} from "./types.ts";
+import { Checkbox, CheckboxOptions, Select } from "../deps.ts";
+import { BasePrompt } from "./BasePrompt.ts";
+import { SelectOptionType, SelectPromptType } from "./types.ts";
 
 export class SelectPrompt extends BasePrompt {
   protected options: SelectPromptType;
@@ -8,7 +8,7 @@ export class SelectPrompt extends BasePrompt {
 
   constructor(message: string) {
     super(message);
-    this.options = {message, options: []};
+    this.options = { message, options: [] };
   }
 
   public addOption(option: SelectOptionType): this {
@@ -67,6 +67,8 @@ export class SelectPrompt extends BasePrompt {
   }
 
   public async prompt(): Promise<string | string[]> {
-    return this.multiple ? await Checkbox.prompt(this.options as CheckboxOptions) : await Select.prompt(this.options);
+    return this.multiple
+      ? await Checkbox.prompt(this.options as CheckboxOptions)
+      : await Select.prompt(this.options);
   }
 }

@@ -1,15 +1,18 @@
-import {commandChecker} from "./checker.ts";
+import { commandChecker } from "./checker.ts";
 import { CommandLineException } from "./CommandLineException.ts";
-import {container} from "./Container.ts";
-import { Env, Exception, Helper, parseFlags, InvalidOptionError } from "./deps.ts";
-import {Figure} from "./Figure/Figure.ts";
-import {InvalidOptionException} from "./InvalidOptionException.ts";
-import {Output} from "./Output/Output.ts";
-import {Style} from "./Style/Style.ts";
+import { container } from "./Container.ts";
 import {
-  CommandRequestType,
-  ShortFlagKeyType,
-} from "./types.ts";
+  Env,
+  Exception,
+  Helper,
+  InvalidOptionError,
+  parseFlags,
+} from "./deps.ts";
+import { Figure } from "./Figure/Figure.ts";
+import { InvalidOptionException } from "./InvalidOptionException.ts";
+import { Output } from "./Output/Output.ts";
+import { Style } from "./Style/Style.ts";
+import { CommandRequestType, ShortFlagKeyType } from "./types.ts";
 
 const ooneex = async (): Promise<void> => {
   const env = new Env();
@@ -56,7 +59,13 @@ const ooneex = async (): Promise<void> => {
     }
   });
 
-  const request: CommandRequestType = {name, action, args, shortFlags, longFlags};
+  const request: CommandRequestType = {
+    name,
+    action,
+    args,
+    shortFlags,
+    longFlags,
+  };
 
   const command = commandChecker(request);
 
@@ -68,7 +77,6 @@ const ooneex = async (): Promise<void> => {
     figure: new Figure(),
     container,
   });
-
 };
 
 if (import.meta.main) {

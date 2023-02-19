@@ -1,13 +1,13 @@
-import {Toggle, ToggleOptions} from "../deps.ts";
-import {BasePrompt} from "./BasePrompt.ts";
-import {InputPromptType} from "./types.ts";
+import { Toggle, ToggleOptions } from "../deps.ts";
+import { BasePrompt } from "./BasePrompt.ts";
+import { InputPromptType } from "./types.ts";
 
 export class TogglePrompt extends BasePrompt {
   protected options: InputPromptType;
 
   constructor(message: string) {
     super(message);
-    this.options = {message};
+    this.options = { message };
   }
 
   public async prompt(): Promise<boolean> {

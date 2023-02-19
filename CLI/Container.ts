@@ -1,6 +1,6 @@
-import {HelpCommand} from "./Command/Help/HelpCommand.ts";
-import {VersionCommand} from "./Command/Version/VersionCommand.ts";
-import {ViewCommand} from "./Command/View/ViewCommand.ts";
+import { HelpCommand } from "./Command/Help/HelpCommand.ts";
+import { VersionCommand } from "./Command/Version/VersionCommand.ts";
+import { ViewCommand } from "./Command/View/ViewCommand.ts";
 import { Collection } from "./deps.ts";
 import { ICommand } from "./types.ts";
 

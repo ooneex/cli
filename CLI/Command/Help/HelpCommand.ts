@@ -1,4 +1,4 @@
-import { Row, Table} from "../../deps.ts";
+import { Row, Table } from "../../deps.ts";
 import {
   ActionType,
   ArgType,
@@ -6,9 +6,9 @@ import {
   CommandVersionType,
   ICommand,
   LongFlagType,
-  ShortFlagType
+  ShortFlagType,
 } from "../../types.ts";
-import {HelpCommandException} from "./HelpCommandException.ts";
+import { HelpCommandException } from "./HelpCommandException.ts";
 
 export class HelpCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -17,7 +17,7 @@ export class HelpCommand implements ICommand {
 
   public getArgs(): ArgType[] {
     return [
-      {name: "command", description: "Print help for other command"}
+      { name: "command", description: "Print help for other command" },
     ];
   }
 
@@ -125,7 +125,10 @@ export class HelpCommand implements ICommand {
           dash = "-";
         }
         style.reset().color("blue");
-        output.writeln(option.required ? `${dash}${option.name}` : `[${dash}${option.name}]`, style);
+        output.writeln(
+          option.required ? `${dash}${option.name}` : `[${dash}${option.name}]`,
+          style,
+        );
         style.reset().color("gray");
         output.writeln(`${option.description}`, style);
         output.write(figure.squareFilled(), style);
@@ -168,16 +171,18 @@ export class HelpCommand implements ICommand {
     const table = new Table();
     app.style.color("blue");
 
-    table.header(Row.from([
-      style.render("Name"),
-      style.render("Description"),
-      style.render("Usage")
-    ]).align("center"));
+    table.header(
+      Row.from([
+        style.render("Name"),
+        style.render("Description"),
+        style.render("Usage"),
+      ]).align("center"),
+    );
 
     style.color("gray");
     app.container.map((command) => {
       const usages = command.getUsage().map((usage) => {
-        return `${figure.arrowRight()} ${style.render(usage)}`
+        return `${figure.arrowRight()} ${style.render(usage)}`;
       });
 
       table.push([

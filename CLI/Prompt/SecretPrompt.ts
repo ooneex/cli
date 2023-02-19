@@ -1,13 +1,13 @@
-import {Secret} from "../deps.ts";
-import {BasePrompt} from "./BasePrompt.ts";
-import {InputPromptType} from "./types.ts";
+import { Secret } from "../deps.ts";
+import { BasePrompt } from "./BasePrompt.ts";
+import { InputPromptType } from "./types.ts";
 
 export class SecretPrompt extends BasePrompt {
   protected options: InputPromptType;
 
   constructor(message: string) {
     super(message);
-    this.options = {message};
+    this.options = { message };
   }
 
   public min(length?: number): this {
