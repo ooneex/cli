@@ -2,8 +2,13 @@ import { Collection } from "../deps.ts";
 import { IRoute } from "../Route/types.ts";
 import { IRouter } from "./types.ts";
 
+// TODO: generatePath() and generateUrl() methods
 export class Router implements IRouter {
-  public readonly collection = new Collection<string, IRoute>();
+  public readonly collection: Collection<string, IRoute>;
+
+  constructor() {
+    this.collection = new Collection<string, IRoute>();
+  }
 
   public findByName(name: string): IRoute | null {
     return this.collection.get(name) ?? null;

@@ -2,12 +2,11 @@ import {
   AppEnvType,
   AppLocaleType,
   AppVersionType,
-  ComponentType,
-  Handler,
+  HandlerType,
   HttpMethodType,
   HttpProtocolType,
-  MiddlewareHandler,
-  PageProps,
+  MiddlewareType,
+  ViewType,
 } from "../deps.ts";
 
 export type RouteConstraintsType = {
@@ -29,18 +28,17 @@ export type RouteDefinitionType = {
    */
   path: string;
   /**
-   * Component to render if this route matched
+   * View to render if this route matched
    */
-  view?: ComponentType<PageProps>;
+  view?: ViewType;
   /**
    * Handler to trigger if this route matched
    */
-  handler?: Handler;
+  handler: HandlerType;
   /**
    * Middlewares to trigger if this route matched
    */
-  // deno-lint-ignore no-explicit-any
-  middleware?: MiddlewareHandler<any>;
+  middlewares?: MiddlewareType[];
   /**
    * If Content-Security-Policy should be enabled for this page. If 'true', a
    * locked down policy will be used that allows only the scripts and styles
@@ -110,42 +108,22 @@ export type RouteDefinitionType = {
 };
 
 export interface IRoute {
-  readonly definition: RouteDefinitionType;
-
-  getName(): string;
-
-  getPath(): string;
-
-  getProtocols(): HttpProtocolType[] | null;
-
-  getHosts(): string[] | null;
-
-  getIps(): string[] | null;
-
-  getPorts(): string[] | null;
-
-  getDefault(): Record<string, string | number> | null;
-
-  getConstraints(): RouteConstraintsType | null;
-
-  getView(): ComponentType<PageProps> | null;
-
-  getHandler(): Handler | null;
-
-  // deno-lint-ignore no-explicit-any
-  getMiddleware(): MiddlewareHandler<any> | null;
-
-  getMethods(): HttpMethodType[] | null;
-
-  getData<T>(): Record<string, T> | null;
-
-  getLocales(): AppLocaleType[] | null;
-
-  getEnvs(): AppEnvType[] | null;
-
-  getVersions(): AppVersionType[] | null;
-
-  getFixture(): string | null;
-
-  getDescription(): string | null;
+  getName: () => string;
+  getPath: () => string;
+  getProtocols: () => HttpProtocolType[] | null;
+  getHosts: () => string[] | null;
+  getIps: () => string[] | null;
+  getPorts: () => string[] | null;
+  getDefault: () => Record<string, string | number> | null;
+  getConstraints: () => RouteConstraintsType | null;
+  getView: () => ViewType | null;
+  getHandler: () => HandlerType;
+  getMiddlewares: () => MiddlewareType[] | null;
+  getMethods: () => HttpMethodType[] | null;
+  getData: <T>() => Record<string, T> | null;
+  getLocales: () => AppLocaleType[] | null;
+  getEnvs: () => AppEnvType[] | null;
+  getVersions: () => AppVersionType[] | null;
+  getFixture: () => string | null;
+  getDescription: () => string | null;
 }

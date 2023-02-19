@@ -5,7 +5,11 @@ import routeDefinition from "./example_route.ts";
 
 describe("Route", () => {
   it("Should handle default values", () => {
-    const route = new Route({ name: "route_name", path: "/products" });
+    const route = new Route({
+      name: "route_name",
+      path: "/products",
+      handler: (_req, _resp, _app) => _resp,
+    });
     assertEquals(route.getProtocols(), null);
     assertEquals(route.getHosts(), null);
     assertEquals(route.getIps(), null);
@@ -16,9 +20,8 @@ describe("Route", () => {
     assertEquals(route.getLocales(), null);
     assertEquals(route.getEnvs(), null);
     assertEquals(route.getVersions(), null);
-    assertEquals(route.getHandler(), null);
     assertEquals(route.getView(), null);
-    assertEquals(route.getMiddleware(), null);
+    assertEquals(route.getMiddlewares(), null);
     assertEquals(route.getFixture(), null);
     assertEquals(route.getDescription(), null);
   });
@@ -43,9 +46,8 @@ describe("Route", () => {
     assertEquals(route.getLocales(), ["fr", "en"]);
     assertEquals(route.getEnvs(), ["dev", "test", "prod"]);
     assertEquals(route.getVersions(), ["1.2.3", "2.0.0"]);
-    assertEquals(route.getHandler(), null);
     assertEquals(route.getView(), null);
-    assertEquals(route.getMiddleware(), null);
+    assertEquals(route.getMiddlewares(), null);
     assertEquals(route.getFixture(), "users.ts");
     assertEquals(route.getDescription(), "Route description");
 

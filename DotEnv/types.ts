@@ -1,4 +1,5 @@
 import { DotEnv } from "./DotEnv.ts";
+
 export type DotEnvValueType = string | number | boolean;
 
 export interface IDotEnv {

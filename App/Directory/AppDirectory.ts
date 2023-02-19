@@ -1,42 +1,31 @@
+import { Directory } from "../deps.ts";
 import { AppDirectoryType } from "./types.ts";
 
 export class AppDirectory {
-  constructor(private data: AppDirectoryType) {
+  constructor(public readonly data: AppDirectoryType = AppDefaultDirectories) {
   }
 
-  public getComponents(): string {
-    return this.data.components;
-  }
+  public ensure(): this {
+    Object.values(this.data).map((d: string) => {
+      const directory = new Directory(`${Deno.cwd()}/${d}`);
+      directory.ensure();
+    });
 
-  public getConfig(): string {
-    return this.data.config;
-  }
-
-  public getHandlers(): string {
-    return this.data.handlers;
-  }
-
-  public getIslands(): string {
-    return this.data.islands;
-  }
-
-  public getMiddlewares(): string {
-    return this.data.middlewares;
-  }
-
-  public getRoutes(): string {
-    return this.data.routes;
-  }
-
-  public getStatic(): string {
-    return this.data.static;
-  }
-
-  public getVar(): string {
-    return this.data.var;
-  }
-
-  public getViews(): string {
-    return this.data.views;
+    return this;
   }
 }
+
+export const AppDefaultDirectories: AppDirectoryType = {
+  bin: "bin",
+  components: "components",
+  config: "config",
+  fixtures: "fixtures",
+  handlers: "handlers",
+  islands: "islands",
+  middlewares: "middlewares",
+  migrations: "migrations",
+  routes: "routes",
+  static: "static",
+  var: "var",
+  views: "views",
+};

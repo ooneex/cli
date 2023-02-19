@@ -1,24 +1,19 @@
-import {
-  ComponentType,
-  ErrorHandler,
-  ErrorPageProps,
-  UnknownHandler,
-  UnknownPageProps,
-} from "../deps.ts";
+import { ViewType } from "../deps.ts";
 import { AppDirectoryType } from "../Directory/types.ts";
+import { NotFoundHandlerType } from "../Error/types.ts";
 
 export type AppConfigErrorType = {
-  notFound: {
-    view?: ComponentType<UnknownPageProps>;
-    handler: UnknownHandler;
+  readonly notFound: {
+    readonly view?: ViewType;
+    readonly handler: NotFoundHandlerType;
   };
-  server: {
-    view?: ComponentType<ErrorPageProps>;
-    handler: ErrorHandler;
+  readonly server: {
+    readonly view?: ViewType;
+    readonly handler: NotFoundHandlerType;
   };
 };
 
 export type AppConfigType = {
-  directories: AppDirectoryType;
-  errors: AppConfigErrorType;
+  readonly directories: AppDirectoryType;
+  readonly errors: AppConfigErrorType;
 };

@@ -1,2 +1,4 @@
-export class YamlParseFailedException extends Error {
+import { Exception } from "../deps.ts";
+
+export class YamlParseFailedException extends Exception {
 }

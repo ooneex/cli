@@ -2,17 +2,17 @@ import {
   AppEnvType,
   AppLocaleType,
   AppVersionType,
-  ComponentType,
-  Handler,
+  HandlerType,
   HttpMethodType,
   HttpProtocolType,
-  MiddlewareHandler,
-  PageProps,
+  MiddlewareType,
+  ViewType,
 } from "../deps.ts";
+
 import { IRoute, RouteConstraintsType, RouteDefinitionType } from "./types.ts";
 
 export class Route implements IRoute {
-  constructor(public readonly definition: RouteDefinitionType) {
+  constructor(private readonly definition: RouteDefinitionType) {
   }
 
   public getData<T>(): Record<string, T> | null {
@@ -47,16 +47,16 @@ export class Route implements IRoute {
     return this.definition.locales ?? null;
   }
 
-  public getView(): ComponentType<PageProps> | null {
+  public getView(): ViewType | null {
     return this.definition.view ?? null;
   }
 
-  public getHandler(): Handler | null {
-    return this.definition.handler ?? null;
+  public getHandler(): HandlerType {
+    return this.definition.handler;
   }
 
-  public getMiddleware(): MiddlewareHandler | null {
-    return this.definition.middleware ?? null;
+  public getMiddlewares(): MiddlewareType[] | null {
+    return this.definition.middlewares ?? null;
   }
 
   public getConstraints(): RouteConstraintsType | null {

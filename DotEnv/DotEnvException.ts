@@ -1,1 +1,3 @@
-export class DotEnvException extends Error {}
+import { Exception } from "./deps.ts";
+
+export class DotEnvException extends Exception {}

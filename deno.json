@@ -11,23 +11,21 @@
     ]
   },
   "imports": {
+    "@app/config/": "./App/Config/",
     "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
-    "$fresh/": "https://deno.land/x/fresh@1.1.2/",
-    "preact": "https://esm.sh/preact@10.11.0",
-    "preact/": "https://esm.sh/preact@10.11.0/",
-    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.4"
+    "preact": "https://esm.sh/preact@10.12.1",
+    "preact/": "https://esm.sh/preact@10.12.1/"
   },
   "tasks": {
     "test": "deno test -A .",
     "test:watch": "deno test -A --watch .",
     "fmt": "deno fmt",
-    "lint": "deno fmt --check && deno lint"
+    "lint": "deno fmt --check && deno lint",
+    "ooneex": "deno run -A ./CLI/ooneex.ts"
   },
   "test": {
     "files": {
-      "exclude": [
-        "Routing/Matched"
-      ]
+      "exclude": []
     }
   }
 }

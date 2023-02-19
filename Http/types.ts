@@ -8,28 +8,24 @@
  * console.log(HttpCodeType[HttpStatusType.NotFound]); // "Not Found"
  * ```
  */
-import { Status as HttpStatus, STATUS_TEXT as HttpCode } from "./deps.ts";
+import {
+  ConnInfo,
+  Status as HttpStatusType,
+  STATUS_TEXT as HttpCodeType,
+} from "./deps.ts";
 
 export type HttpMethodType =
+  | "CONNECT"
   | "DELETE"
   | "GET"
   | "HEAD"
   | "OPTIONS"
   | "PATCH"
   | "POST"
-  | "PUT";
+  | "PUT"
+  | "TRACE";
 
-export const HttpDefaultMethods: HttpMethodType[] = [
-  "DELETE",
-  "GET",
-  "HEAD",
-  "OPTIONS",
-  "PATCH",
-  "POST",
-  "PUT",
-];
-
-export { HttpCode, HttpStatus };
+export { HttpCodeType, HttpStatusType };
 
 export type HttpProtocolType =
   | "https"
@@ -37,9 +33,22 @@ export type HttpProtocolType =
   | "socket"
   | "tcp";
 
-export const HttpDefaultProtocols: HttpProtocolType[] = [
-  "https",
-  "http",
-  "socket",
-  "tcp",
-];
+export type ServerOptionsType = {
+  port?: number;
+  hostname?: string;
+  handler: (
+    request: Request,
+    connInfo: ConnInfo,
+  ) => Response | Promise<Response>;
+  onError?: (error: unknown) => Response | Promise<Response>;
+  onListen?: (params: { hostname: string; port: number }) => void;
+  signal?: AbortSignal;
+  /** Server private key in PEM format */
+  key?: string;
+  /** Cert chain in PEM format */
+  cert?: string;
+  /** The path to the file containing the TLS private key. */
+  keyFile?: string;
+  /** The path to the file containing the TLS certificate */
+  certFile?: string;
+};

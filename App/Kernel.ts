@@ -1,36 +1,56 @@
-import { app } from "./App.ts";
-import { appConfig } from "./Config/AppConfig.ts";
+import { App } from "./App.ts";
+import { config } from "./Config/Config.ts";
 import { AppConfigErrorType } from "./Config/types.ts";
-import {Manifest, OoneexFreshPlugin, start} from "./deps.ts";
+import {
+  ConnInfo,
+  HttpServer,
+  OnServerError,
+  OnServerListen,
+  ServerHandler,
+} from "./deps.ts";
+import { AppDirectory } from "./Directory/AppDirectory.ts";
 import { AppDirectoryType } from "./Directory/types.ts";
 import { env } from "./Env/Env.ts";
 import { appRouter } from "./Router/AppRouter.ts";
-import { AppStateType } from "./types.ts";
 
 export class Kernel {
   public static async boot(): Promise<void> {
-    // TODO: Use try and catch
-    env.generateEnvFile();
+    // Directory
+    const appDirectory = new AppDirectory();
+    appDirectory.ensure();
+    // Config
+    config.ensure();
+    await config.parse();
+    // Env
+    env.ensure();
     await env.parse();
-    await appConfig.parse();
-    const manifest = await appRouter.parse();
-    // End of try and catch
+    // App Router
+    const router = await appRouter.parse();
 
-    const state: AppStateType = {
-      env: env,
-      config: {
-        directories: appConfig.getDirectories() as AppDirectoryType,
-        errors: appConfig.getErrors() as AppConfigErrorType,
-      },
-      router: appRouter.getRouter(),
-    };
-
-    app.setState(state);
-
-    await start(manifest as Manifest, {
-      port: env.getPort() || undefined,
-      experimentalDenoServe: true,
-      plugins: [],
+    const app = new App({
+      env,
+      directories: config.getDirectories() as AppDirectoryType,
+      errors: config.getErrors() as AppConfigErrorType,
+      router,
     });
+
+    const server = new HttpServer({
+      port: env.getPort() ?? undefined,
+      hostname: env.getHost() ?? undefined,
+      handler: (request: Request, connInfo: ConnInfo) =>
+        ServerHandler(request, app, connInfo),
+      onError: (error: unknown) => OnServerError(error, app),
+      onListen: (params: { hostname: string; port: number }) =>
+        OnServerListen(params.hostname, params.port, app),
+
+      // TODO:
+      signal: undefined,
+      key: undefined,
+      cert: undefined,
+      keyFile: undefined,
+      certFile: undefined,
+    });
+
+    await server.start();
   }
 }

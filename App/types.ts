@@ -1,11 +1,12 @@
-import { AppConfigType } from "./Config/types.ts";
+import { AppConfigErrorType } from "./Config/types.ts";
 import {
-  IException,
+  Collection,
+  IMatchedRoute,
+  IRoute,
   IRouter,
   LocaleType,
-  MatchedRouteType,
-  RouteDefinitionType,
 } from "./deps.ts";
+import { AppDirectoryType } from "./Directory/types.ts";
 import { IEnv } from "./Env/types.ts";
 
 export type AppLocaleType = LocaleType;
@@ -16,18 +17,24 @@ export type AppRoleType =
   | "ROLE_ADMIN"
   | "ROLE_SUPER_ADMIN"
   | `ROLE_${Uppercase<string>}`;
+
 export type AppVersionType = `${number}.${number}.${number}`;
 
 export type AppStateType = {
-  env: IEnv;
-  config: AppConfigType;
-  router: IRouter;
-  routeDefinition?: RouteDefinitionType;
-  matchedRoute?: MatchedRouteType;
-  error?: IException;
+  readonly env: IEnv;
+  readonly errors: AppConfigErrorType;
+  readonly directories: AppDirectoryType;
+  readonly router: IRouter;
+  readonly route?: IRoute;
+  readonly matchedRoute?: IMatchedRoute;
 };
 
-export type ViewPropsType<T = Record<string, unknown>> = {
-  app: AppStateType;
-  data: T;
-};
+export interface IApp {
+  readonly env: IEnv;
+  readonly errors: AppConfigErrorType;
+  readonly directories: AppDirectoryType;
+  readonly router: IRouter;
+  readonly route?: IRoute;
+  readonly matchedRoute?: IMatchedRoute;
+  readonly data: Collection;
+}
