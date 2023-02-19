@@ -1,4 +1,7 @@
+import { IException } from "../deps.ts";
 import { IStyle } from "../Style/mod.ts";
+
+// TODO: make it fluent
 
 /**
  * Output interface
@@ -58,6 +61,12 @@ export interface IOutput {
    * @param message - Error message.
    */
   formattedError(title: string, message: string): IOutput;
+
+  /**
+   * Print threw exception
+   * @param error
+   */
+  printException(error: IException): IOutput;
 
   /**
    * Write info message.

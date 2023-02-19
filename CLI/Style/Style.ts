@@ -10,11 +10,11 @@ import { ColorType, IStyle, ModifierType } from "./mod.ts";
  * ```ts
  *  const style = new Style();
  *
- *  style.bold().underline().color('blue');
- *  console.log(style.render('hello'));
+ *  style.bold().underline().color("blue");
+ *  console.log(style.render("hello"));
  *  style.reset();
- *  style.color('white', true).bgc('blue');
- *  console.log(style.render('hello'));
+ *  style.color("white", true).bgc("blue");
+ *  console.log(style.render("hello"));
  * ```
  */
 export class Style implements IStyle {
@@ -62,6 +62,7 @@ export class Style implements IStyle {
     this.fontColorLight = false;
     this.bgColor = null;
     this.bgColorLight = false;
+    this.color(null);
 
     return this;
   }

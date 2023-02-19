@@ -1,3 +1,4 @@
+import { IException } from "../deps.ts";
 import { EOL, Figure, IStyle, Style } from "./deps.ts";
 import { IOutput } from "./mod.ts";
 
@@ -12,17 +13,17 @@ import { IOutput } from "./mod.ts";
  *  const style = new Style();
  *
  *  // Simple text
- *  output.write('Hello');
+ *  output.write("Hello");
  *
  *  // Text with style
- *  style.bold().color('yellow');
- *  output.write('Hello', style);
+ *  style.bold().color("yellow");
+ *  output.write("Hello", style);
  *
  *  // Success message with tick
- *  output.success('Hello');
+ *  output.success("Hello");
  *
  *  // Success message without tick
- *  output.success('Hello', false);
+ *  output.success("Hello", false);
  * ```
  */
 export class Output implements IOutput {
@@ -100,6 +101,43 @@ export class Output implements IOutput {
     this.write(`${this.consoleFigure.cross()}`);
     this.error(" ERROR: ", false);
     this.writeln(`${message}`);
+    return this;
+  }
+
+  /**
+   * @inheritDoc IOutput.formattedError
+   */
+  public printException(error: IException, printStack = true): this {
+    this.newLine();
+    this.style.reset().color("red").bold();
+    this.writeln(`${error.getName()}`, this.style);
+    this.write(`${this.consoleFigure.cross()} `);
+    this.style.reset();
+    this.writeln(`${error.getMessage()}`, this.style);
+
+    if (!printStack) {
+      return this;
+    }
+
+    this.newLine();
+
+    this.style.reset().bold();
+    this.writeln(`Threw in`, this.style);
+    this.write(`${this.consoleFigure.arrowRight()} `);
+    this.writeln(`${error.getFile()} ${error.getLine()}:${error.getColumn()}`);
+    this.newLine();
+
+    this.style.reset().bold();
+    this.writeln(`Stack trace`, this.style);
+    this.style.reset().color("gray");
+    let space = 0;
+    error.getStack().map((stack) => {
+      this.space(space);
+      const file = stack.file.replace(/ (\(?.+\)?)/, this.style.render(" $1"));
+      this.writeln(`${file} ${stack.line}:${stack.column}`);
+      space += 2;
+    });
+
     return this;
   }
 
