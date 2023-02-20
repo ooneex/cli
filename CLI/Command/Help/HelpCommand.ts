@@ -158,10 +158,11 @@ export class HelpCommand implements ICommand {
     return true;
   }
 
-  public run<T = boolean>(app: CommandType): T {
+  public run(app: CommandType): Record<string, unknown> {
     const arg = app.args[0];
     if (arg) {
-      return this.printCommandHelp(arg, app) as T;
+      this.printCommandHelp(arg, app);
+      return {};
     }
 
     const output = app.output;
@@ -193,11 +194,9 @@ export class HelpCommand implements ICommand {
     });
 
     style.reset();
-
     output.newLine();
-
     table.align("left").border(true).render();
 
-    return true as T;
+    return {};
   }
 }

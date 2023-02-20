@@ -49,7 +49,7 @@ export class VersionCommand implements ICommand {
     return "1.0.0";
   }
 
-  public run<T = CommandVersionType>(app: CommandType): T {
+  public run(app: CommandType): Record<string, unknown> {
     let version = this.getVersion();
     const arg = app.args[0];
 
@@ -63,11 +63,11 @@ export class VersionCommand implements ICommand {
       version = command.getVersion();
       app.output.writeln(`${command.getName()} ${version}`);
 
-      return version as T;
+      return { version };
     }
 
     app.output.writeln(`ooneex ${this.getVersion()}`);
 
-    return version as T;
+    return { version };
   }
 }

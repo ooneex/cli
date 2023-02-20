@@ -14,7 +14,7 @@ export class BasePrompt {
     return this;
   }
 
-  public defaultValue(value?: string): this {
+  public defaultValue(value?: string | boolean): this {
     this.options.default = value;
 
     return this;
@@ -26,7 +26,7 @@ export class BasePrompt {
     return this;
   }
 
-  public validate(callback?: (input: string) => string): this {
+  public validate(callback?: (input: string) => boolean | string): this {
     this.options.validate = callback;
 
     return this;

@@ -37,7 +37,7 @@ export type NumberPromptType = BasePromptType & {
 
 export type BasePromptType = {
   message: string;
-  default?: string;
+  default?: string | boolean;
   transform?: (input: string) => string;
   /**
    * With the validate callback option you can validate the user input. It receives as first argument the sanitized user input.
@@ -46,7 +46,7 @@ export type BasePromptType = {
    * If false is returned, an error message is shown.
    * If a string is returned, the value will be used as error message.
    */
-  validate?: (input: string) => string;
+  validate?: (input: string) => boolean | string;
   /**
    * With the hint option you can display an info message that is displayed below the prompt.
    */

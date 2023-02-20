@@ -42,7 +42,7 @@ export class SelectPrompt extends BasePrompt {
     return this;
   }
 
-  public isSearch(search?: boolean): this {
+  public isSearch(search = true): this {
     this.options.search = search;
 
     return this;

@@ -13,7 +13,9 @@ export interface ICommand {
   getDescription: () => string;
   getVersion: () => CommandVersionType;
   getUsage: () => string[];
-  run: <T = void>(app: CommandType) => T;
+  run: (
+    app: CommandType,
+  ) => Record<string, unknown> | Promise<Record<string, unknown>>;
 }
 
 export type CommandType = {

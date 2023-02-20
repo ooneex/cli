@@ -7,6 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
+import { createView } from "./create.ts";
 
 export class ViewCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -16,9 +17,7 @@ export class ViewCommand implements ICommand {
   }
 
   public getArgs(): ArgType[] {
-    return [
-      { name: "name", description: "Name of view" },
-    ];
+    return [];
   }
 
   public getDescription(): string {
@@ -40,7 +39,6 @@ export class ViewCommand implements ICommand {
   public getUsage(): string[] {
     return [
       "ooneex view:new",
-      "ooneex view:new BookListView",
     ];
   }
 
@@ -48,12 +46,12 @@ export class ViewCommand implements ICommand {
     return "1.0.0";
   }
 
-  public run<T = boolean>(app: CommandType): T {
-    const arg = app.args[0];
-    // if (arg) {
-    //
-    // }
+  public async run(app: CommandType): Promise<Record<string, unknown>> {
+    switch (app.action) {
+      case "new":
+        return await createView(app);
+    }
 
-    return true as T;
+    return {};
   }
 }
