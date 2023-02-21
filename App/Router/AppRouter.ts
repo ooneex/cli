@@ -16,7 +16,7 @@ export class AppRouter {
     const routesDir = config.getDirectories()?.routes;
     if (!routesDir) {
       throw new DirectoryNotFoundException(
-        "Routes not found in the configuration file. Check config/app.config.ts file",
+        "Routes not found in the configuration file. Check \"config/app.config.ts\" file",
       );
     }
 

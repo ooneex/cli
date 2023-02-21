@@ -1,0 +1,12 @@
+import { IApp } from "@ooneex/app";
+import { IRequest, IHandlerResponse } from "@ooneex/http";
+
+export const Handler = (
+  request: IRequest,
+  response: IHandlerResponse,
+  app: IApp
+): IHandlerResponse => {
+  // Do something
+
+  return response;
+};

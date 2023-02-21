@@ -1,9 +1,6 @@
 import { IApp } from "../App/types.ts";
 import { IHandlerResponse, IRequest } from "./deps.ts";
 
-export interface IHandler {
-}
-
 export type HandlerType = (
   request: IRequest,
   response: IHandlerResponse,

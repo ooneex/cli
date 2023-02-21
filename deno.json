@@ -12,7 +12,10 @@
   },
   "imports": {
     "@app/config/": "./App/Config/",
+    
     "@ooneex/app": "./App/mod.ts",
+    "@ooneex/handler": "./Handler/mod.ts",
+
     "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
     "preact": "https://esm.sh/preact@10.12.1",
     "preact/": "https://esm.sh/preact@10.12.1/"

@@ -1,3 +1,4 @@
+import {HandlerCommand} from "./Command/Handler/HandlerCommand.ts";
 import { HelpCommand } from "./Command/Help/HelpCommand.ts";
 import { VersionCommand } from "./Command/Version/VersionCommand.ts";
 import { ViewCommand } from "./Command/View/ViewCommand.ts";
@@ -17,3 +18,6 @@ container.add(help.getName(), help);
 
 const view = new ViewCommand();
 container.add(view.getName(), view);
+
+const handler = new HandlerCommand();
+container.add(handler.getName(), handler);

@@ -7,13 +7,13 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createView } from "./create.ts";
+import {createHandler} from "./create.ts";
 
-export class ViewCommand implements ICommand {
+export class HandlerCommand implements ICommand {
   public getActions(): ActionType[] {
     return [
-      { name: "new", description: "Create new view" },
-      { name: "create", description: "Create new view" },
+      { name: "new", description: "Create new handler" },
+      { name: "create", description: "Create new handler" },
     ];
   }
 
@@ -22,7 +22,7 @@ export class ViewCommand implements ICommand {
   }
 
   public getDescription(): string {
-    return "Handle view for Ooneex application";
+    return "Manage handler for Ooneex application";
   }
 
   public getLongFlags(): LongFlagType[] {
@@ -30,7 +30,7 @@ export class ViewCommand implements ICommand {
   }
 
   public getName(): string {
-    return "view";
+    return "handler";
   }
 
   public getShortFlags(): ShortFlagType[] {
@@ -39,8 +39,8 @@ export class ViewCommand implements ICommand {
 
   public getUsage(): string[] {
     return [
-      "ooneex view:new",
-      "ooneex view:create",
+      "ooneex handler:new",
+      "ooneex handler:create",
     ];
   }
 
@@ -52,7 +52,7 @@ export class ViewCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createView(app);
+        return await createHandler(app);
     }
 
     return {};
