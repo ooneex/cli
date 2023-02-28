@@ -184,8 +184,6 @@ export class Helper {
 
   /**
    * Converts text to slug.
-   *
-   * @param text - The string to convert.
    */
   public static kebabize(text: string): string {
     return text
@@ -197,13 +195,20 @@ export class Helper {
 
   /**
    * Converts text to camelCase.
-   *
-   * @param text - The string to convert.
    */
   public static camelize(text: string): string {
     return Helper.kebabize(text)
       .replace(/\s(.)/g, ($1) => $1.toUpperCase())
       .replace(/-(.)/g, ($1) => $1.toUpperCase())
       .replace(/\s/g, "").replace(/-/g, "");
+  }
+
+  /**
+   * Converts text to PascalCase.
+   */
+  public static pascalize(text: string): string {
+    return text.split("/").map((part) => {
+      return Helper.ucFirst(Helper.camelize(part));
+    }).join("/");
   }
 }

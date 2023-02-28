@@ -1,4 +1,4 @@
-import { Directory, File } from "../../deps.ts";
+import {Directory, File, Helper} from "../../deps.ts";
 import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import {HandlerHelper} from "./Helper.ts";
@@ -27,10 +27,17 @@ export const createHandler = async (
   const fileDir = await prompt.prompt();
 
   const inputPrompt = new InputPrompt("File name (e.g. WelcomeHandler)");
+
+  inputPrompt.transform((input): string => {
+    return Helper.pascalize(input);
+  });
+
   inputPrompt.validate((input): boolean | string => {
-    if (!/^[A-Z][a-zA-Z0-9]*Handler$/.test(input)) {
-      return `Value must matched with "/^[A-Z][a-zA-Z0-9]*Handler$/"`;
+    if (!/Handler$/.test(input)) {
+      return `Value must end with "Handler"`;
     }
+
+    input = Helper.pascalize(input);
 
     const filePath = `${fileDir}/${input}.ts`;
     if ((new File(`${Deno.cwd()}/${filePath}`)).exists()) {

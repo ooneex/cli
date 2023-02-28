@@ -1,7 +1,6 @@
-import { Directory, File } from "../../deps.ts";
+import {Directory, File, Helper} from "../../deps.ts";
 import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
-import {HandlerHelper} from "../Handler/Helper.ts";
 import {ViewHelper} from "./Helper.ts";
 
 export const createView = async (
@@ -28,10 +27,17 @@ export const createView = async (
   const fileDir = await prompt.prompt();
 
   const inputPrompt = new InputPrompt("File name (e.g. WelcomeView)");
+
+  inputPrompt.transform((input): string => {
+    return Helper.pascalize(input);
+  });
+
   inputPrompt.validate((input): boolean | string => {
-    if (!/^[A-Z][a-zA-Z0-9]*View$/.test(input)) {
-      return `Value must matched with "/^[A-Z][a-zA-Z0-9]*View$/"`;
+    if (!/View$/.test(input)) {
+      return `Value must end with "View"`;
     }
+
+    input = Helper.pascalize(input);
 
     const filePath = `${fileDir}/${input}.tsx`;
     if ((new File(`${Deno.cwd()}/${filePath}`)).exists()) {
@@ -55,10 +61,10 @@ export const createView = async (
   const __dirname = new URL(".", import.meta.url).pathname;
   const content = (new File(`${__dirname}view.template.txt`)).read().replaceAll(
     "{{ name }}",
-    filename,
+    filename.split("/").join(""),
   );
 
-  HandlerHelper.createHandler(`${fileDir}/${filename}`, content);
+  ViewHelper.createView(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
