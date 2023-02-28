@@ -1,26 +1,22 @@
-import {Directory, File, Helper} from "../../deps.ts";
-import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
-import { CommandType } from "../../types.ts";
+import {File, Helper} from "../../deps.ts";
+import {ConfirmPrompt, InputPrompt, SelectPrompt} from "../../Prompt/mod.ts";
+import {CommandType} from "../../types.ts";
 import {ViewHelper} from "./Helper.ts";
 
 export const createView = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const viewsDir = await ViewHelper.getViewsDirectory();
-
-  const directory = new Directory(`${viewsDir}`);
-  const directories = directory.directories(null, true);
+  const views = await ViewHelper.getAllDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
-  prompt.addOption({ name: viewsDir, value: viewsDir });
 
-  directories.map((dir) => {
-    prompt.addOption({ name: dir.getPath(), value: dir.getPath() });
+  views.map((dir) => {
+    prompt.addOption({ name: dir, value: dir });
   });
 
   prompt
-    .defaultValue(viewsDir)
+    .defaultValue(views[0])
     .searchLabel("Search")
     .isSearch(true);
 
@@ -59,9 +55,10 @@ export const createView = async (
   }
 
   const __dirname = new URL(".", import.meta.url).pathname;
+  const filenameFormatted = filename.split("/");
   const content = (new File(`${__dirname}view.template.txt`)).read().replaceAll(
     "{{ name }}",
-    filename.split("/").join(""),
+    filenameFormatted[filenameFormatted.length - 1],
   );
 
   ViewHelper.createView(`${fileDir}/${filename}`, content);

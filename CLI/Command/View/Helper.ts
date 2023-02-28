@@ -1,6 +1,18 @@
 import {Directory, File, ViewException} from "../../deps.ts";
 
 export class ViewHelper {
+  public static async getAllDirectories(): Promise<string[]> {
+    const viewsDir = await ViewHelper.getViewsDirectory();
+    const views: string[] = [viewsDir];
+
+    const directory = new Directory(`${viewsDir}`);
+    directory.directories(null, true).map((dir) => {
+      views.push(dir.getPath());
+    });
+
+    return views;
+  }
+
   public static async getViews(): Promise<string[]> {
     const viewsDir = await ViewHelper.getViewsDirectory();
     const views: string[] = [];
@@ -28,7 +40,8 @@ export class ViewHelper {
 
   public static async getViewsDirectory(): Promise<string> {
     try {
-      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default.directories.views;
+      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
+        .directories.views;
     } catch (e) {
       throw new ViewException(e.message);
     }
