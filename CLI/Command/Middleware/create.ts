@@ -1,21 +1,12 @@
 import { Directory, File } from "../../deps.ts";
 import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
-import {MiddlewareCreationException} from "./MiddlewareCreationException.ts";
+import {MiddlewareHelper} from "./Helper.ts";
 
 export const createMiddleware = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  let config = {};
-  let middlewaresDir = "";
-
-  try {
-    config = (await import(`${Deno.cwd()}/config/app.config.ts`)).default;
-    // @ts-ignore: trust me
-    middlewaresDir = config.directories.middlewares;
-  } catch (e) {
-    throw new MiddlewareCreationException(e.message);
-  }
+  const middlewaresDir = await MiddlewareHelper.getMiddlewaresDirectory();
 
   const directory = new Directory(`${middlewaresDir}`);
   const directories = directory.directories(null, true);
@@ -64,9 +55,8 @@ export const createMiddleware = async (
     "{{ name }}",
     filename,
   );
-  const file = new File(`${Deno.cwd()}/${fileDir}/${filename}.ts`);
-  file.ensure();
-  file.write(content);
+
+  MiddlewareHelper.createMiddleware(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
