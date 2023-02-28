@@ -1,21 +1,12 @@
 import { Directory, File } from "../../deps.ts";
 import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
-import {HandlerCreationException} from "./HandlerCreationException.ts";
+import {HandlerHelper} from "./Helper.ts";
 
 export const createHandler = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  let config = {};
-  let handlersDir = "";
-
-  try {
-    config = (await import(`${Deno.cwd()}/config/app.config.ts`)).default;
-    // @ts-ignore: trust me
-    handlersDir = config.directories.handlers;
-  } catch (e) {
-    throw new HandlerCreationException(e.message);
-  }
+  const handlersDir = await HandlerHelper.getHandlersDirectory();
 
   const directory = new Directory(`${handlersDir}`);
   const directories = directory.directories(null, true);
@@ -64,9 +55,8 @@ export const createHandler = async (
     "{{ name }}",
     filename,
   );
-  const file = new File(`${Deno.cwd()}/${fileDir}/${filename}.ts`);
-  file.ensure();
-  file.write(content);
+
+  HandlerHelper.createHandler(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
