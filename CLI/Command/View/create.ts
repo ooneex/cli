@@ -1,21 +1,13 @@
 import { Directory, File } from "../../deps.ts";
 import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
-import { ViewCreationException } from "./ViewCreationException.ts";
+import {HandlerHelper} from "../Handler/Helper.ts";
+import {ViewHelper} from "./Helper.ts";
 
 export const createView = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  let config = {};
-  let viewsDir = "";
-
-  try {
-    config = (await import(`${Deno.cwd()}/config/app.config.ts`)).default;
-    // @ts-ignore: trust me
-    viewsDir = config.directories.views;
-  } catch (e) {
-    throw new ViewCreationException(e.message);
-  }
+  const viewsDir = await ViewHelper.getViewsDirectory();
 
   const directory = new Directory(`${viewsDir}`);
   const directories = directory.directories(null, true);
@@ -65,9 +57,8 @@ export const createView = async (
     "{{ name }}",
     filename,
   );
-  const file = new File(`${Deno.cwd()}/${fileDir}/${filename}.tsx`);
-  file.ensure();
-  file.write(content);
+
+  HandlerHelper.createHandler(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
