@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import {createProject} from "./create.ts";
+import { createProject } from "./create.ts";
 
 export class ProjectCommand implements ICommand {
   public getActions(): ActionType[] {

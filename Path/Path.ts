@@ -46,7 +46,7 @@ export class Path {
    * Normalize the path, resolving '..' and '.' segments.
    */
   public static normalize(path: string): string {
-    path = path.replace(/[\\/]/g, Path.SEPARATOR);
+    path = path.replace(/[\\/]+/g, Path.SEPARATOR);
 
     return normalize(path);
   }

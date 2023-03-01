@@ -1,8 +1,8 @@
 import { HandlerCommand } from "./Command/Handler/HandlerCommand.ts";
 import { HelpCommand } from "./Command/Help/HelpCommand.ts";
 import { MiddlewareCommand } from "./Command/Middleware/MiddlewareCommand.ts";
-import {NewCommand} from "./Command/Project/NewCommand.ts";
-import {ProjectCommand} from "./Command/Project/ProjectCommand.ts";
+import { NewCommand } from "./Command/Project/NewCommand.ts";
+import { ProjectCommand } from "./Command/Project/ProjectCommand.ts";
 import { RouteCommand } from "./Command/Route/RouteCommand.ts";
 import { VersionCommand } from "./Command/Version/VersionCommand.ts";
 import { ViewCommand } from "./Command/View/ViewCommand.ts";

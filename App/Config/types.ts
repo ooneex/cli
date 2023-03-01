@@ -1,6 +1,9 @@
 import { ViewType } from "../deps.ts";
-import {AppApiDirectoryType, AppDirectoryType} from "../Directory/types.ts";
-import { NotFoundHandlerType } from "../Exception/types.ts";
+import { AppApiDirectoryType, AppDirectoryType } from "../Directory/types.ts";
+import {
+  NotFoundHandlerType,
+  ServerErrorHandlerType,
+} from "../Exception/types.ts";
 
 export type AppConfigErrorType = {
   readonly notFound: {
@@ -9,7 +12,7 @@ export type AppConfigErrorType = {
   };
   readonly server: {
     readonly view?: ViewType;
-    readonly handler: NotFoundHandlerType;
+    readonly handler: ServerErrorHandlerType;
   };
 };
 

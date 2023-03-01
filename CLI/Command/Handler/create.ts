@@ -1,7 +1,7 @@
-import {File, Helper} from "../../deps.ts";
-import {ConfirmPrompt, InputPrompt, SelectPrompt} from "../../Prompt/mod.ts";
-import {CommandType} from "../../types.ts";
-import {HandlerHelper} from "./Helper.ts";
+import { File, Helper } from "../../deps.ts";
+import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
+import { CommandType } from "../../types.ts";
+import { HandlerHelper } from "./Helper.ts";
 
 export const createHandler = async (
   app: CommandType,

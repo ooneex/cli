@@ -24,8 +24,7 @@ export const ServerHandler = async (
       `Route ${request.url.pathname} not found`,
     );
 
-    return (await HttpResponse.renderNotFound(error, request, response, app))
-      .send();
+    return await HttpResponse.renderNotFound(error, request, response, app);
   }
 
   const params = request.getParams(route.getPath() as UrlPatternType);
@@ -48,8 +47,7 @@ export const ServerHandler = async (
     );
     error.setData(routeChecker.getErrors());
 
-    return (await HttpResponse.renderNotFound(error, request, response, app))
-      .send();
+    return await HttpResponse.renderNotFound(error, request, response, app);
   }
 
   const handler = route.getHandler();
@@ -57,12 +55,17 @@ export const ServerHandler = async (
   const view = route.getView();
 
   if (view) {
-    response.setView(view);
+    response.setView(`${app.directories.views}/${view}`);
   }
 
-  // if (response.isNotFound()) {
-  // HttpResponse.renderNotFound(error)
-  // }
+  if (response.isNotFound()) {
+    return await HttpResponse.renderNotFound(
+      response.getError(),
+      request,
+      response,
+      app,
+    );
+  }
 
   return await response.send();
 };

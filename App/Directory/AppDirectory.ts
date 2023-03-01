@@ -1,4 +1,4 @@
-import {AppApiDirectoryType, AppDirectoryType} from "./types.ts";
+import { AppApiDirectoryType, AppDirectoryType } from "./types.ts";
 
 export const AppApiDirectories: AppApiDirectoryType = {
   bin: "bin",

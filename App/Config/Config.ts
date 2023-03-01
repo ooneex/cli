@@ -1,6 +1,6 @@
-import {AppApiDirectoryType, AppDirectoryType} from "../Directory/types.ts";
-import {ConfigException} from "./ConfigException.ts";
-import {AppConfigErrorType, AppConfigType} from "./types.ts";
+import { AppApiDirectoryType, AppDirectoryType } from "../Directory/types.ts";
+import { ConfigException } from "./ConfigException.ts";
+import { AppConfigErrorType, AppConfigType } from "./types.ts";
 
 export class Config {
   private config: AppConfigType | null = null;

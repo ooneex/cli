@@ -6,7 +6,8 @@ export const NotFoundHandler = (
   response: INotFoundResponse,
   _app: IApp,
 ): INotFoundResponse => {
+  console.log(response);
   response.body.set({ message: "Message from NotFoundHandler" });
 
-  return response.render();
+  return response;
 };

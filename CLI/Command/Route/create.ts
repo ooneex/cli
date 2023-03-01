@@ -1,9 +1,9 @@
-import {AppDirectories, File, Helper} from "../../deps.ts";
-import {InputPrompt, SelectPrompt} from "../../Prompt/mod.ts";
-import {CommandType} from "../../types.ts";
-import {HandlerHelper} from "../Handler/Helper.ts";
-import {ViewHelper} from "../View/Helper.ts";
-import {RouteHelper} from "./Helper.ts";
+import { AppDirectories, File, Helper } from "../../deps.ts";
+import { InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
+import { CommandType } from "../../types.ts";
+import { HandlerHelper } from "../Handler/Helper.ts";
+import { ViewHelper } from "../View/Helper.ts";
+import { RouteHelper } from "./Helper.ts";
 
 export const createRoute = async (
   app: CommandType,
@@ -92,7 +92,7 @@ export const createRoute = async (
   content += `  path: "${routePath}",\n`;
   content += `  handler: RouteHandler,\n`;
   if (routeView) {
-    routeView = routeView.replace(`${AppDirectories.views}/`, '');
+    routeView = routeView.replace(`${AppDirectories.views}/`, "");
     content += `  view: "${routeView}",\n`;
   }
   content += `  description: "${routeDescription}",\n`;

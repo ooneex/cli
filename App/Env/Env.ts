@@ -1,6 +1,6 @@
-import {DotEnv} from "../deps.ts";
-import {AppLocaleType, AppVersionType} from "../types.ts";
-import {AppEnvType, AppEnvVarsType, IEnv} from "./types.ts";
+import { DotEnv } from "../deps.ts";
+import { AppLocaleType, AppVersionType } from "../types.ts";
+import { AppEnvType, AppEnvVarsType, IEnv } from "./types.ts";
 
 export class Env implements IEnv {
   private dotEnv: DotEnv = new DotEnv();

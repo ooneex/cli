@@ -66,6 +66,8 @@ export class Exception extends Error implements IException {
 
     this.errorStack = this.parseStack(error.stack as string);
 
+    this.message = error.message;
+
     return this;
   }
 

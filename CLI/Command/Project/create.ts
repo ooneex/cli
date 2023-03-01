@@ -1,6 +1,12 @@
-import {AppApiDirectories, AppDirectories, Directory, File, Helper} from "../../deps.ts";
-import {ConfirmPrompt, InputPrompt, NumberPrompt} from "../../Prompt/mod.ts";
-import {CommandType} from "../../types.ts";
+import {
+  AppApiDirectories,
+  AppDirectories,
+  Directory,
+  File,
+  Helper,
+} from "../../deps.ts";
+import { ConfirmPrompt, InputPrompt, NumberPrompt } from "../../Prompt/mod.ts";
+import { CommandType } from "../../types.ts";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 
@@ -9,7 +15,6 @@ const __dirname = new URL(".", import.meta.url).pathname;
 export const createProject = async (
   _app: CommandType,
 ): Promise<Record<string, unknown>> => {
-
   const namePrompt = new InputPrompt("Project name");
   namePrompt.validate((input): string | boolean => {
     const directory = new Directory(`${Deno.cwd()}/${Helper.trim(input, "/")}`);
@@ -45,7 +50,7 @@ export const createProject = async (
   if (isApi) {
     directories = Object.values(AppApiDirectories);
   } else {
-    directories = Object.values(AppDirectories)
+    directories = Object.values(AppDirectories);
   }
 
   directories.map((d: string) => {
@@ -55,8 +60,12 @@ export const createProject = async (
 
   // Config
   project.rm([`config/.gitkeep`]);
-  let content = (new File(`${__dirname}templates/app.config.template.txt`)).read()
-    .replaceAll("{{ directories }}", isApi ? "AppApiDirectories" : "AppDirectories");
+  let content = (new File(`${__dirname}templates/app.config.template.txt`))
+    .read()
+    .replaceAll(
+      "{{ directories }}",
+      isApi ? "AppApiDirectories" : "AppDirectories",
+    );
   project.touch(`config/app.config.ts`, content);
 
   // Handler
@@ -67,9 +76,13 @@ export const createProject = async (
 
   // Middleware
   project.rm([`${AppApiDirectories.middlewares}/.gitkeep`]);
-  content = (new File(`${__dirname}../Middleware/middleware.template.txt`)).read()
+  content = (new File(`${__dirname}../Middleware/middleware.template.txt`))
+    .read()
     .replaceAll("{{ name }}", "HomepageMiddleware");
-  project.touch(`${AppApiDirectories.middlewares}/HomepageMiddleware.ts`, content);
+  project.touch(
+    `${AppApiDirectories.middlewares}/HomepageMiddleware.ts`,
+    content,
+  );
 
   // Route
   project.rm([`${AppApiDirectories.routes}/.gitkeep`]);
@@ -89,11 +102,19 @@ export const createProject = async (
       .replaceAll("{{ name }}", "HomepageView");
     project.touch(`${AppDirectories.views}/HomepageView.tsx`, content);
 
-    content = (new File(`${__dirname}templates/view.not.found.template.txt`)).read();
-    project.touch(`${AppDirectories.views}/Exception/NotFoundView.tsx`, content);
+    content = (new File(`${__dirname}templates/view.not.found.template.txt`))
+      .read();
+    project.touch(
+      `${AppDirectories.views}/Exception/NotFoundView.tsx`,
+      content,
+    );
 
-    content = (new File(`${__dirname}templates/view.server.error.template.txt`)).read();
-    project.touch(`${AppDirectories.views}/Exception/ServerErrorView.tsx`, content);
+    content = (new File(`${__dirname}templates/view.server.error.template.txt`))
+      .read();
+    project.touch(
+      `${AppDirectories.views}/Exception/ServerErrorView.tsx`,
+      content,
+    );
   }
 
   // .env
@@ -111,10 +132,10 @@ export const createProject = async (
   // deno.json
   content = (new File(`${__dirname}templates/deno.template.txt`)).read();
   if (isApi) {
-    content = content.replace("    \"@app/components/\": \"./components/\",\n", "")
-      .replace("    \"@app/islands/\": \"./islands/\",\n", "")
-      .replace("    \"@app/static/\": \"./static/\",\n", "")
-      .replace("    \"@app/views/\": \"./views/\",\n", "");
+    content = content.replace('    "@app/components/": "./components/",\n', "")
+      .replace('    "@app/islands/": "./islands/",\n', "")
+      .replace('    "@app/static/": "./static/",\n', "")
+      .replace('    "@app/views/": "./views/",\n', "");
   }
   project.touch(`deno.json`, content);
 

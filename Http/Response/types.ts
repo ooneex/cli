@@ -12,6 +12,11 @@ export interface IHandlerResponse extends INotFoundResponse {
   setView: (view: ViewType | null) => this;
   setStatus: (status: HttpStatusType) => this;
   setCharset: (value: CharsetType) => this;
+  isNotFound: () => boolean;
+}
+
+export interface IServerErrorResponse extends IBaseResponse {
+  getError: () => IException | null;
 }
 
 export interface INotFoundResponse extends IBaseResponse {
@@ -28,9 +33,7 @@ export interface IBaseResponse {
   string: (content: string) => this;
   html: (content: string) => this;
   json: (data?: Record<string, unknown>) => this;
-  isNotFound: () => boolean;
   renderView: (name: ViewType, data: Record<string, unknown>) => Promise<this>;
-  render: (data?: Record<string, unknown>) => this;
 }
 
 export type CharsetType = "utf-8" | string;

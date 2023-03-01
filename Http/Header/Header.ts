@@ -9,6 +9,7 @@ import {
 
 export class Header implements IHeader {
   constructor(private readonly headers: Headers) {
+    // TODO: handle cache control
   }
 
   public get(name: HeaderKeyType): string | null {
