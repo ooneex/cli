@@ -1,30 +1,15 @@
-import { App } from "./App.ts";
-import { config } from "./Config/Config.ts";
-import { AppConfigErrorType } from "./Config/types.ts";
-import {
-  ConnInfo,
-  HttpServer,
-  OnServerError,
-  OnServerListen,
-  ServerHandler,
-} from "./deps.ts";
-import { AppDirectory } from "./Directory/AppDirectory.ts";
-import { AppDirectoryType } from "./Directory/types.ts";
-import { env } from "./Env/Env.ts";
-import { appRouter } from "./Router/AppRouter.ts";
+import {App} from "./App.ts";
+import {config} from "./Config/Config.ts";
+import {AppConfigErrorType} from "./Config/types.ts";
+import {ConnInfo, HttpServer, OnServerError, OnServerListen, ServerHandler,} from "./deps.ts";
+import {AppDirectoryType} from "./Directory/types.ts";
+import {env} from "./Env/Env.ts";
+import {appRouter} from "./Router/AppRouter.ts";
 
 export class Kernel {
   public static async boot(): Promise<void> {
-    // Directory
-    const appDirectory = new AppDirectory();
-    appDirectory.ensure();
-    // Config
-    config.ensure();
     await config.parse();
-    // Env
-    env.ensure();
     await env.parse();
-    // App Router
     const router = await appRouter.parse();
 
     const app = new App({

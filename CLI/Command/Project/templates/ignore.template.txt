@@ -1,0 +1,4 @@
+var/
+*.local
+deno.lock
+static/dist

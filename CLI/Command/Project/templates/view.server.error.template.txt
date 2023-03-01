@@ -1,0 +1,13 @@
+interface IServerErrorViewProps {
+  name: string;
+}
+
+const ServerErrorView = (props: IServerErrorViewProps) => {
+  return (
+    <div>
+      ServerErrorView.tsx
+    </div>
+  );
+};
+
+export default ServerErrorView;

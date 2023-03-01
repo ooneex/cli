@@ -1,0 +1,13 @@
+interface INotFoundViewProps {
+  name: string;
+}
+
+const NotFoundView = (props: INotFoundViewProps) => {
+  return (
+    <div>
+      NotFoundView.tsx
+    </div>
+  );
+};
+
+export default NotFoundView;

@@ -1,0 +1,11 @@
+import { RouteDefinitionType } from "@ooneex/routing";
+import HomepageHandler from "@app/handlers/HomepageHandler.ts";
+
+const routeDefinition: RouteDefinitionType = {
+  name: "HomepageRoute",
+  path: "/",
+  handler: HomepageHandler,
+  view: "HomepageView",
+  //TODO: add middlewares
+  description: "Homepage description",
+};

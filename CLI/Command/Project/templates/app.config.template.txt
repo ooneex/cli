@@ -1,0 +1,22 @@
+import {
+  AppConfigType,
+  {{ directories }},
+  NotFoundHandler,
+  ServerErrorHandler,
+} from "@ooneex/app";
+
+const config: AppConfigType = {
+  directories: {{ directories }},
+  errors: {
+    notFound: {
+      view: "Exception/NotFoundView",
+      handler: NotFoundHandler,
+    },
+    server: {
+      view: "Exception/ServerErrorView",
+      handler: ServerErrorHandler,
+    },
+  },
+};
+
+export default config;

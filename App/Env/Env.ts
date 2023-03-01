@@ -1,40 +1,9 @@
-import { DotEnv, File } from "../deps.ts";
-import { AppLocaleType, AppVersionType } from "../types.ts";
-import { AppEnvType, AppEnvVarsType, IEnv } from "./types.ts";
+import {DotEnv} from "../deps.ts";
+import {AppLocaleType, AppVersionType} from "../types.ts";
+import {AppEnvType, AppEnvVarsType, IEnv} from "./types.ts";
 
 export class Env implements IEnv {
   private dotEnv: DotEnv = new DotEnv();
-
-  public ensure(): this {
-    let fileContent = `APP_ENV=dev
-API=false
-LOCALE=en-us
-COUNTRY="United States"
-VERSION=1.0.0
-SECRET=${crypto.randomUUID()}
-DEBUG=true
-PORT=3000
-HOST=localhost
-#SSL=keyFile:certFile
-SSL=false
-`;
-    const file = new File(".env");
-    if (file.exists()) {
-      fileContent = file.read();
-    } else {
-      file.ensure();
-      file.write(fileContent);
-    }
-    // Generate .env.local if not exists
-    const localEnvFile = new File(".env.local");
-    if (localEnvFile.exists()) {
-      return this;
-    }
-    localEnvFile.ensure();
-    localEnvFile.write(fileContent);
-
-    return this;
-  }
 
   public async parse(): Promise<this> {
     await this.dotEnv.parse(".env");

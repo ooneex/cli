@@ -1,0 +1,43 @@
+{
+  "tasks": {
+    "start": "deno run -A index.ts",
+    "dev": "deno run -A --watch=static/,routes/ index.ts",
+    "test": "deno test -A --unstable .",
+    "fmt": "deno fmt",
+    "lint": "deno fmt --check && deno lint",
+    "ooneex": "deno run -A ../Packages/CLI/ooneex.ts",
+    "docker:build": "docker build -t ooneex:latest .",
+    "docker:sh": "docker run -it --rm -v $PWD:/home/ooneex/app ooneex:latest sh",
+    "styles:watch": "docker run -it --rm -v $PWD:/home/ooneex/app ooneex:latest sh -c './tw-watch.sh'",
+    "styles:build": "docker run -it --rm -v $PWD:/home/ooneex/app ooneex:latest sh -c './tw-build.sh'"
+  },
+  "imports": {
+    "@app/bin/": "./bin/",
+    "@app/components/": "./components/",
+    "@app/config/": "./config/",
+    "@app/fixtures/": "./fixtures/",
+    "@app/handlers/": "./handlers/",
+    "@app/islands/": "./islands/",
+    "@app/middlewares/": "./middlewares/",
+    "@app/migrations/": "./migrations/",
+    "@app/routes/": "./routes/",
+    "@app/static/": "./static/",
+    "@app/var/": "./var/",
+    "@app/views/": "./views/",
+
+    "@ooneex/app": "../Packages/App/mod.ts",
+    "@ooneex/handler": "../Packages/Handler/mod.ts",
+    "@ooneex/http": "../Packages/Http/mod.ts",
+    "@ooneex/routing": "../Packages/Routing/mod.ts",
+
+    "@testing/": "https://deno.land/std@0.171.0/testing/",
+    "preact": "https://esm.sh/preact@10.12.1",
+    "preact/": "https://esm.sh/preact@10.12.1/",
+    "solid-js": "https://esm.sh/v106/*solid-js@1.6.10",
+    "solid-js/": "https://esm.sh/v106/*solid-js@1.6.10/"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  }
+}

@@ -12,9 +12,9 @@ export * from "./Directory/types.ts";
 export * from "./Env/Env.ts";
 export * from "./Env/types.ts";
 // Error
-export * from "./Error/NotFoundHandler.ts";
-export * from "./Error/ServerErrorHandler.ts";
-export * from "./Error/types.ts";
+export * from "./Exception/NotFoundHandler.ts";
+export * from "./Exception/ServerErrorHandler.ts";
+export * from "./Exception/types.ts";
 // Router
 export * from "./Router/AppRouter.ts";
 // Kernel

@@ -1,5 +1,8 @@
 export * from "../App/Env/Env.ts";
 export * from "../App/Env/types.ts";
+export * from "../App/Directory/types.ts";
+export * from "../App/Directory/AppDirectory.ts";
+
 export * from "../Collection/mod.ts";
 export * from "../Directory/mod.ts";
 export * from "../Exception/mod.ts";

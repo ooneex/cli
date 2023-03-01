@@ -10,5 +10,4 @@ export * from "../Http/mod.ts";
 export * from "../Path/mod.ts";
 export * from "../Routing/mod.ts";
 export * from "../Translation/mod.ts";
-export * from "../View/deps.ts";
 export * from "../View/mod.ts";

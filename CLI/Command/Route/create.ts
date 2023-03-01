@@ -1,4 +1,4 @@
-import {File, Helper} from "../../deps.ts";
+import {AppDirectories, File, Helper} from "../../deps.ts";
 import {InputPrompt, SelectPrompt} from "../../Prompt/mod.ts";
 import {CommandType} from "../../types.ts";
 import {HandlerHelper} from "../Handler/Helper.ts";
@@ -92,6 +92,7 @@ export const createRoute = async (
   content += `  path: "${routePath}",\n`;
   content += `  handler: RouteHandler,\n`;
   if (routeView) {
+    routeView = routeView.replace(`${AppDirectories.views}/`, '');
     content += `  view: "${routeView}",\n`;
   }
   content += `  description: "${routeDescription}",\n`;
@@ -105,6 +106,8 @@ export const createRoute = async (
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
   app.output.newLine();
+
+  // TODO: add end message
 
   return {};
 };
