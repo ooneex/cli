@@ -1,25 +1,19 @@
-import {File, Helper} from "../../deps.ts";
-import {ConfirmPrompt, InputPrompt, SelectPrompt} from "../../Prompt/mod.ts";
-import {CommandType} from "../../types.ts";
-import {ViewHelper} from "./Helper.ts";
+import { File, Helper } from "../../deps.ts";
+import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
+import { CommandType } from "../../types.ts";
+import { ViewHelper } from "./Helper.ts";
 
 export const createView = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const views = await ViewHelper.getAllDirectories();
+  const views = await ViewHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
-
   views.map((dir) => {
     prompt.addOption({ name: dir, value: dir });
   });
-
-  prompt
-    .defaultValue(views[0])
-    .searchLabel("Search")
-    .isSearch(true);
-
+  prompt.searchLabel("Search");
   const fileDir = await prompt.prompt();
 
   const inputPrompt = new InputPrompt("File name (e.g. WelcomeView)");

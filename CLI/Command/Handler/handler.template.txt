@@ -1,7 +1,7 @@
 import { IApp } from "@ooneex/app";
 import { IRequest, IHandlerResponse } from "@ooneex/http";
 
-export const {{ name }} = (
+const {{ name }} = (
   request: IRequest,
   response: IHandlerResponse,
   app: IApp
@@ -10,3 +10,5 @@ export const {{ name }} = (
 
   return response;
 };
+
+export default {{ name }};

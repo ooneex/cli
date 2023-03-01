@@ -7,13 +7,13 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createMiddleware } from "./create.ts";
+import { createRoute } from "./create.ts";
 
-export class MiddlewareCommand implements ICommand {
+export class RouteCommand implements ICommand {
   public getActions(): ActionType[] {
     return [
-      { name: "new", description: "Create new middleware" },
-      { name: "create", description: "Create new middleware" },
+      { name: "new", description: "Create new route" },
+      { name: "create", description: "Create new route" },
     ];
   }
 
@@ -22,7 +22,7 @@ export class MiddlewareCommand implements ICommand {
   }
 
   public getDescription(): string {
-    return "Manage middleware for Ooneex application";
+    return "Manage route for Ooneex application";
   }
 
   public getLongFlags(): LongFlagType[] {
@@ -30,7 +30,7 @@ export class MiddlewareCommand implements ICommand {
   }
 
   public getName(): string {
-    return "middleware";
+    return "route";
   }
 
   public getShortFlags(): ShortFlagType[] {
@@ -39,8 +39,8 @@ export class MiddlewareCommand implements ICommand {
 
   public getUsage(): string[] {
     return [
-      "ooneex middleware:new",
-      "ooneex middleware:create",
+      "ooneex route:new",
+      "ooneex route:create",
     ];
   }
 
@@ -52,7 +52,7 @@ export class MiddlewareCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createMiddleware(app);
+        return await createRoute(app);
     }
 
     return {};

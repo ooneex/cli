@@ -1,6 +1,6 @@
-import {File, FS, IFile, Path} from "./deps.ts";
-import {DirectoryException} from "./DirectoryException.ts";
-import {CpConfigType, IDirectory} from "./types.ts";
+import { File, FS, IFile, Path } from "./deps.ts";
+import { DirectoryException } from "./DirectoryException.ts";
+import { CpConfigType, IDirectory } from "./types.ts";
 
 /**
  * This class allows you to manage directories.
@@ -324,9 +324,8 @@ export class Directory implements IDirectory {
    */
   public files(
     filters?: RegExp | null,
-    recursive?: boolean
+    recursive?: boolean,
   ): IFile[] {
-
     if (!filters) {
       filters = null;
     }

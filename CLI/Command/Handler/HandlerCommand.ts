@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import {createHandler} from "./create.ts";
+import { createHandler } from "./create.ts";
 
 export class HandlerCommand implements ICommand {
   public getActions(): ActionType[] {

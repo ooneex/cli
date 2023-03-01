@@ -18,7 +18,7 @@ export type ListPromptType = BasePromptType & {
   maxTags?: number;
 };
 
-export type SelectPromptType = BasePromptType & {
+export type SelectPromptType = Omit<BasePromptType, "default"> & {
   options: SelectValueOptions;
   search?: boolean;
   searchLabel?: string;

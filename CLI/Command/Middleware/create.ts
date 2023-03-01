@@ -1,29 +1,19 @@
-import {Directory, File, Helper} from "../../deps.ts";
+import { File, Helper } from "../../deps.ts";
 import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
-import {MiddlewareHelper} from "./Helper.ts";
+import { MiddlewareHelper } from "./Helper.ts";
 
 export const createMiddleware = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const middlewaresDir = await MiddlewareHelper.getMiddlewaresDirectory();
-
-  const directory = new Directory(`${middlewaresDir}`);
-  const directories = directory.directories(null, true);
+  const middlewares = await MiddlewareHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
-  prompt.addOption({ name: middlewaresDir, value: middlewaresDir });
-
-  directories.map((dir) => {
-    prompt.addOption({ name: dir.getPath(), value: dir.getPath() });
+  middlewares.map((dir) => {
+    prompt.addOption({ name: dir, value: dir });
   });
-
-  prompt
-    .defaultValue(middlewaresDir)
-    .searchLabel("Search")
-    .isSearch(true);
-
+  prompt.searchLabel("Search");
   const fileDir = await prompt.prompt();
 
   const inputPrompt = new InputPrompt("File name (e.g. WelcomeMiddleware)");
@@ -58,10 +48,12 @@ export const createMiddleware = async (
   }
 
   const __dirname = new URL(".", import.meta.url).pathname;
-  const content = (new File(`${__dirname}middleware.template.txt`)).read().replaceAll(
-    "{{ name }}",
-    filename,
-  );
+  const filenameFormatted = filename.split("/");
+  const content = (new File(`${__dirname}middleware.template.txt`)).read()
+    .replaceAll(
+      "{{ name }}",
+      filenameFormatted[filenameFormatted.length - 1],
+    );
 
   MiddlewareHelper.createMiddleware(`${fileDir}/${filename}`, content);
 

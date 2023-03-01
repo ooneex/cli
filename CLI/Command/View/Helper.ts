@@ -1,20 +1,20 @@
-import {Directory, File, ViewException} from "../../deps.ts";
+import { Directory, File, ViewException } from "../../deps.ts";
 
 export class ViewHelper {
-  public static async getAllDirectories(): Promise<string[]> {
-    const viewsDir = await ViewHelper.getViewsDirectory();
-    const views: string[] = [viewsDir];
+  public static async getDirectories(): Promise<string[]> {
+    const dir = await ViewHelper.getDirectory();
+    const directories: string[] = [dir];
 
-    const directory = new Directory(`${viewsDir}`);
+    const directory = new Directory(`${dir}`);
     directory.directories(null, true).map((dir) => {
-      views.push(dir.getPath());
+      directories.push(dir.getPath());
     });
 
-    return views;
+    return directories;
   }
 
   public static async getViews(): Promise<string[]> {
-    const viewsDir = await ViewHelper.getViewsDirectory();
+    const viewsDir = await ViewHelper.getDirectory();
     const views: string[] = [];
 
     const directory = new Directory(`${viewsDir}`);
@@ -38,7 +38,7 @@ export class ViewHelper {
     return true;
   }
 
-  public static async getViewsDirectory(): Promise<string> {
+  public static async getDirectory(): Promise<string> {
     try {
       return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
         .directories.views;

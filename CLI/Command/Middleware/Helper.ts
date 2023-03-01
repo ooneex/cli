@@ -1,8 +1,20 @@
-import {Directory, File, MiddlewareException} from "../../deps.ts";
+import { Directory, File, MiddlewareException } from "../../deps.ts";
 
 export class MiddlewareHelper {
+  public static async getDirectories(): Promise<string[]> {
+    const dir = await MiddlewareHelper.getDirectory();
+    const directories: string[] = [dir];
+
+    const directory = new Directory(`${dir}`);
+    directory.directories(null, true).map((dir) => {
+      directories.push(dir.getPath());
+    });
+
+    return directories;
+  }
+
   public static async getMiddlewares(): Promise<string[]> {
-    const middlewaresDir = await MiddlewareHelper.getMiddlewaresDirectory();
+    const middlewaresDir = await MiddlewareHelper.getDirectory();
     const middlewares: string[] = [];
 
     const directory = new Directory(`${middlewaresDir}`);
@@ -26,9 +38,10 @@ export class MiddlewareHelper {
     return true;
   }
 
-  public static async getMiddlewaresDirectory(): Promise<string> {
+  public static async getDirectory(): Promise<string> {
     try {
-      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default.directories.middlewares;
+      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
+        .directories.middlewares;
     } catch (e) {
       throw new MiddlewareException(e.message);
     }

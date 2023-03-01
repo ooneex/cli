@@ -1,29 +1,19 @@
-import {Directory, File, Helper} from "../../deps.ts";
-import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
-import { CommandType } from "../../types.ts";
+import {File, Helper} from "../../deps.ts";
+import {ConfirmPrompt, InputPrompt, SelectPrompt} from "../../Prompt/mod.ts";
+import {CommandType} from "../../types.ts";
 import {HandlerHelper} from "./Helper.ts";
 
 export const createHandler = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const handlersDir = await HandlerHelper.getHandlersDirectory();
-
-  const directory = new Directory(`${handlersDir}`);
-  const directories = directory.directories(null, true);
+  const handlers = await HandlerHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
-  prompt.addOption({ name: handlersDir, value: handlersDir });
-
-  directories.map((dir) => {
-    prompt.addOption({ name: dir.getPath(), value: dir.getPath() });
+  handlers.map((dir) => {
+    prompt.addOption({ name: dir, value: dir });
   });
-
-  prompt
-    .defaultValue(handlersDir)
-    .searchLabel("Search")
-    .isSearch(true);
-
+  prompt.searchLabel("Search");
   const fileDir = await prompt.prompt();
 
   const inputPrompt = new InputPrompt("File name (e.g. WelcomeHandler)");
@@ -58,10 +48,12 @@ export const createHandler = async (
   }
 
   const __dirname = new URL(".", import.meta.url).pathname;
-  const content = (new File(`${__dirname}handler.template.txt`)).read().replaceAll(
-    "{{ name }}",
-    filename,
-  );
+  const filenameFormatted = filename.split("/");
+  const content = (new File(`${__dirname}handler.template.txt`)).read()
+    .replaceAll(
+      "{{ name }}",
+      filenameFormatted[filenameFormatted.length - 1],
+    );
 
   HandlerHelper.createHandler(`${fileDir}/${filename}`, content);
 
