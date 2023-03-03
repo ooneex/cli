@@ -13,17 +13,19 @@
   },
   "imports": {
     "@app/bin/": "./bin/",
-    "@app/components/": "./components/",
     "@app/config/": "./config/",
     "@app/fixtures/": "./fixtures/",
     "@app/handlers/": "./handlers/",
-    "@app/islands/": "./islands/",
     "@app/middlewares/": "./middlewares/",
     "@app/migrations/": "./migrations/",
     "@app/routes/": "./routes/",
-    "@app/static/": "./static/",
     "@app/var/": "./var/",
+    ###--- WEB ---
+    "@app/static/": "./static/",
+    "@app/islands/": "./islands/",
+    "@app/components/": "./components/",
     "@app/views/": "./views/",
+    --- END WEB ---###
 
     "@ooneex/app": "../Packages/App/mod.ts",
     "@ooneex/handler": "../Packages/Handler/mod.ts",
@@ -31,10 +33,12 @@
     "@ooneex/routing": "../Packages/Routing/mod.ts",
 
     "@testing/": "https://deno.land/std@0.171.0/testing/",
+    ###--- WEB ---
     "preact": "https://esm.sh/preact@10.12.1",
     "preact/": "https://esm.sh/preact@10.12.1/",
-    "solid-js": "https://esm.sh/v106/*solid-js@1.6.10",
-    "solid-js/": "https://esm.sh/v106/*solid-js@1.6.10/"
+    "vite": "npm:vite@^4.0.0",
+    "vite-plugin-solid": "npm:vite-plugin-solid@^2.4.0"
+    --- END WEB ---###
   },
   "compilerOptions": {
     "jsx": "react-jsx",

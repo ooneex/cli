@@ -1,4 +1,10 @@
-import { Directory, File, RouteException } from "../../deps.ts";
+import {
+  AppDirectoryType,
+  config,
+  ConfigException,
+  Directory,
+  File,
+} from "../../deps.ts";
 
 export class RouteHelper {
   public static async getDirectories(): Promise<string[]> {
@@ -25,7 +31,7 @@ export class RouteHelper {
     return routes;
   }
 
-  public static createRoute(name: string, content: string): boolean {
+  public static create(name: string, content: string): boolean {
     const file = new File(`${Deno.cwd()}/${name}.ts`);
 
     if (file.exists()) {
@@ -38,12 +44,18 @@ export class RouteHelper {
     return false;
   }
 
-  public static async getDirectory(): Promise<string> {
-    try {
-      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
-        .directories.routes;
-    } catch (e) {
-      throw new RouteException(e.message);
+  public static getDirectory(): string {
+    const directories = config.getDirectories() as AppDirectoryType;
+
+    if (!directories) {
+      throw new ConfigException("Directories not found");
     }
+
+    const directory = directories.routes;
+    if (!directory) {
+      throw new ConfigException(`Directory "routes" not found`);
+    }
+
+    return directory;
   }
 }

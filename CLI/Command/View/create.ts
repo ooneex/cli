@@ -55,7 +55,7 @@ export const createView = async (
     filenameFormatted[filenameFormatted.length - 1],
   );
 
-  ViewHelper.createView(`${fileDir}/${filename}`, content);
+  ViewHelper.create(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);

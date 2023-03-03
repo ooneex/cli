@@ -130,6 +130,7 @@ export const createProject = async (
   project.touch(`.gitignore`, content);
 
   // deno.json
+  // TODO: replace by using ###--- WEB --- (see deno.template.txt)
   content = (new File(`${__dirname}templates/deno.template.txt`)).read();
   if (isApi) {
     content = content.replace('    "@app/components/": "./components/",\n', "")

@@ -1,4 +1,10 @@
-import { Directory, File, MiddlewareException } from "../../deps.ts";
+import {
+  AppDirectoryType,
+  config,
+  ConfigException,
+  Directory,
+  File,
+} from "../../deps.ts";
 
 export class MiddlewareHelper {
   public static async getDirectories(): Promise<string[]> {
@@ -25,7 +31,7 @@ export class MiddlewareHelper {
     return middlewares;
   }
 
-  public static createMiddleware(name: string, content: string): boolean {
+  public static create(name: string, content: string): boolean {
     const file = new File(`${Deno.cwd()}/${name}.ts`);
 
     if (file.exists()) {
@@ -38,12 +44,18 @@ export class MiddlewareHelper {
     return true;
   }
 
-  public static async getDirectory(): Promise<string> {
-    try {
-      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
-        .directories.middlewares;
-    } catch (e) {
-      throw new MiddlewareException(e.message);
+  public static getDirectory(): string {
+    const directories = config.getDirectories() as AppDirectoryType;
+
+    if (!directories) {
+      throw new ConfigException("Directories not found");
     }
+
+    const directory = directories.middlewares;
+    if (!directory) {
+      throw new ConfigException(`Directory "middlewares" not found`);
+    }
+
+    return directory;
   }
 }

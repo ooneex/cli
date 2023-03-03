@@ -1,4 +1,10 @@
-import { Directory, File, ViewException } from "../../deps.ts";
+import {
+  AppDirectoryType,
+  config,
+  ConfigException,
+  Directory,
+  File,
+} from "../../deps.ts";
 
 export class ViewHelper {
   public static async getDirectories(): Promise<string[]> {
@@ -25,7 +31,7 @@ export class ViewHelper {
     return views;
   }
 
-  public static createView(name: string, content: string): boolean {
+  public static create(name: string, content: string): boolean {
     const file = new File(`${Deno.cwd()}/${name}.tsx`);
 
     if (file.exists()) {
@@ -38,12 +44,18 @@ export class ViewHelper {
     return true;
   }
 
-  public static async getDirectory(): Promise<string> {
-    try {
-      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
-        .directories.views;
-    } catch (e) {
-      throw new ViewException(e.message);
+  public static getDirectory(): string {
+    const directories = config.getDirectories() as AppDirectoryType;
+
+    if (!directories) {
+      throw new ConfigException("Directories not found");
     }
+
+    const directory = directories.views;
+    if (!directory) {
+      throw new ConfigException(`Directory "views" not found`);
+    }
+
+    return directory;
   }
 }

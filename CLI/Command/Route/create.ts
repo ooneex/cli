@@ -99,7 +99,7 @@ export const createRoute = async (
   content += `};\n\n`;
   content += `export default routeDefinition;\n`;
 
-  RouteHelper.createRoute(`${fileDir}/${routeName}`, content);
+  RouteHelper.create(`${fileDir}/${routeName}`, content);
 
   const filePath = `${fileDir}/${routeName}.ts`;
 

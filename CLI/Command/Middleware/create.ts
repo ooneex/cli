@@ -55,7 +55,7 @@ export const createMiddleware = async (
       filenameFormatted[filenameFormatted.length - 1],
     );
 
-  MiddlewareHelper.createMiddleware(`${fileDir}/${filename}`, content);
+  MiddlewareHelper.create(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);

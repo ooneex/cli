@@ -55,7 +55,7 @@ export const createHandler = async (
       filenameFormatted[filenameFormatted.length - 1],
     );
 
-  HandlerHelper.createHandler(`${fileDir}/${filename}`, content);
+  HandlerHelper.create(`${fileDir}/${filename}`, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);

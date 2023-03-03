@@ -1,4 +1,10 @@
-import { Directory, File, HandlerException } from "../../deps.ts";
+import {
+  AppDirectoryType,
+  config,
+  ConfigException,
+  Directory,
+  File,
+} from "../../deps.ts";
 
 export class HandlerHelper {
   public static async getDirectories(): Promise<string[]> {
@@ -25,7 +31,7 @@ export class HandlerHelper {
     return handlers;
   }
 
-  public static createHandler(name: string, content: string): boolean {
+  public static create(name: string, content: string): boolean {
     const file = new File(`${Deno.cwd()}/${name}.ts`);
 
     if (file.exists()) {
@@ -38,12 +44,18 @@ export class HandlerHelper {
     return false;
   }
 
-  public static async getDirectory(): Promise<string> {
-    try {
-      return (await import(`${Deno.cwd()}/config/app.config.ts`)).default
-        .directories.handlers;
-    } catch (e) {
-      throw new HandlerException(e.message);
+  public static getDirectory(): string {
+    const directories = config.getDirectories() as AppDirectoryType;
+
+    if (!directories) {
+      throw new ConfigException("Directories not found");
     }
+
+    const directory = directories.handlers;
+    if (!directory) {
+      throw new ConfigException(`Directory "handlers" not found`);
+    }
+
+    return directory;
   }
 }
