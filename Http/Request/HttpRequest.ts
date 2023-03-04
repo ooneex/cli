@@ -12,6 +12,7 @@ export class HttpRequest implements IRequest {
 
   constructor(public readonly nativeRequest: Request) {
     this.url = new URL(nativeRequest.url);
+    this.url.pathname = decodeURIComponent(this.url.pathname);
     this.headers = new Header(nativeRequest.headers);
     this.search = this.url.searchParams;
   }
