@@ -1,4 +1,4 @@
-import { File, Helper, Path, render } from "./deps.ts";
+import { env, File, Helper, Path, render } from "./deps.ts";
 import { IView, ViewType } from "./types.ts";
 import { ViewNotFoundException } from "./ViewNotFoundException.ts";
 
@@ -18,7 +18,11 @@ export class View implements IView {
 
     const Component = (await import(viewPath)).default;
 
-    return render(<Component {...data} />);
+    let content = render(<Component {...data} />);
+
+    content = `<!DOCTYPE html><html lang=${env.getLocale()}>${content}</html>`;
+
+    return content;
   }
 }
 
