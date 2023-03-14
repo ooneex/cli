@@ -84,13 +84,6 @@ if (import.meta.main) {
       Deno.exit(1);
     }
 
-    // if (e instanceof InvalidOptionError) {
-    // const error = new InvalidOptionException(e.message);
-    // error.fromNativeError(e);
-    // Exception.print(error, false);
-    // Deno.exit(1);
-    // }
-
     const error = new CommandLineException(e.message);
     error.fromNativeError(e);
     Exception.print(error);
