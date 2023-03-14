@@ -2,16 +2,16 @@ import { DotEnvValueType } from "../deps.ts";
 import { AppLocaleType, AppVersionType } from "../types.ts";
 
 export type AppEnvVarsType = Record<
-  | "APP_ENV"
   | "API"
-  | "LOCALE"
+  | "APP_ENV"
   | "COUNTRY"
-  | "VERSION"
-  | "SECRET"
   | "DEBUG"
-  | "PORT"
   | "HOST"
+  | "LOCALE"
+  | "PORT"
+  | "SECRET"
   | "SSL"
+  | "VERSION"
   | `${Uppercase<string>}`,
   DotEnvValueType
 >;

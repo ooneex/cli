@@ -20,6 +20,13 @@ export class AppRouter {
       );
     }
 
+    const varDir = config.getDirectories()?.var;
+    if (!varDir) {
+      throw new DirectoryNotFoundException(
+        'Var not found in the configuration file. Check "config/app.config.ts" file',
+      );
+    }
+
     const directory = new Directory(routesDir);
     if (!directory.exists()) {
       throw new DirectoryNotFoundException(`Directory ${routesDir} not found`);
@@ -44,13 +51,13 @@ export class AppRouter {
     const content =
       `${importContent}\n${arrayContent}];\n\nexport default routes;\n`;
 
-    const file = new File("var/cache/routes.ts");
+    const file = new File(`${varDir}/cache/routes.ts`);
 
     file.ensure();
     file.write(content);
 
     const routes: RouteDefinitionType[] =
-      (await import(`@app/var/cache/routes.ts`)).default;
+      (await import(`${varDir}/cache/routes.ts`)).default;
 
     routes.map((route) => {
       const r = new Route(route);
