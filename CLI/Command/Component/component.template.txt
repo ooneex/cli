@@ -1,6 +1,7 @@
-import { createSignal } from 'solid-js';
+import { createSignal } from "solid-js";
+import { I{{ name }} } from "./types.ts";
 
-export const {{ name }} = () => {
+export const {{ name }} = (props: I{{ name }}) => {
   const [count, setCount] = createSignal(1);
 
   return (

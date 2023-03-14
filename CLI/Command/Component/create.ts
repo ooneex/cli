@@ -3,6 +3,8 @@ import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { ComponentHelper } from "./Helper.ts";
 
+const __dirname = new URL(".", import.meta.url).pathname;
+
 export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
@@ -33,7 +35,7 @@ export const create = async (
     return true;
   });
   const filename = await inputPrompt.prompt();
-  const filePath = `${fileDir}/${filename}.ts`;
+  const filePath = `${fileDir}/${filename}/${filename}.tsx`;
 
   const confirmPrompt = new ConfirmPrompt(`Create "${filePath}" file`);
   confirmPrompt.defaultValue(false);
@@ -43,14 +45,17 @@ export const create = async (
     return {};
   }
 
-  const __dirname = new URL(".", import.meta.url).pathname;
   const content = (new File(`${__dirname}component.template.txt`)).read()
     .replaceAll("{{ name }}", filename);
 
-  ComponentHelper.create(`${fileDir}/${filename}`, content);
+  ComponentHelper.create(fileDir as string, filename, content);
 
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
+  app.output.newLine();
+  app.output.success(`File "${fileDir}/${filename}/mod.ts" created`);
+  app.output.newLine();
+  app.output.success(`File "${fileDir}/${filename}/types.ts" created`);
   app.output.newLine();
 
   return {};

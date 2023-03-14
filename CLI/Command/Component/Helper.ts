@@ -2,9 +2,10 @@ import {
   AppFullDirectoryType,
   config,
   ConfigException,
-  Directory,
-  File,
+  Directory, File,
 } from "../../deps.ts";
+
+const __dirname = new URL(".", import.meta.url).pathname;
 
 export class ComponentHelper {
   public static getDirectories(): string[] {
@@ -31,15 +32,24 @@ export class ComponentHelper {
     return components;
   }
 
-  public static create(name: string, content: string): boolean {
-    const file = new File(`${Deno.cwd()}/${name}.tsx`);
+  public static create(dir: string, name: string, content: string): boolean {
+    const directory = new Directory(`${dir}/${name}`);
 
-    if (file.exists()) {
+    if (directory.exists()) {
       return false;
     }
 
-    file.ensure();
-    file.write(content);
+    directory.ensure();
+
+    directory.touch(`${name}.tsx`, content);
+
+    content = (new File(`${__dirname}types.template.txt`)).read()
+      .replaceAll("{{ name }}", name);
+    directory.touch(`types.ts`, content);
+
+    content = (new File(`${__dirname}mod.template.txt`)).read()
+      .replaceAll("{{ name }}", name);
+    directory.touch(`mod.ts`, content);
 
     return false;
   }
