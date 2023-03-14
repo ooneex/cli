@@ -3,10 +3,12 @@ import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { IslandHelper } from "./Helper.ts";
 
-export const createIsland = async (
+const __dirname = new URL(".", import.meta.url).pathname;
+
+export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const islands = await IslandHelper.getDirectories();
+  const islands = IslandHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
@@ -43,10 +45,10 @@ export const createIsland = async (
     return {};
   }
 
-  const __dirname = new URL(".", import.meta.url).pathname;
+  const id = crypto.randomUUID();
   const content = (new File(`${__dirname}island.template.txt`)).read()
     .replaceAll("{{ name }}", filename)
-    .replaceAll("{{ id }}", crypto.randomUUID());
+    .replaceAll("{{ id }}", id);
 
   IslandHelper.create(`${fileDir}/${filename}`, content);
 

@@ -7,8 +7,8 @@ import {
 } from "../../deps.ts";
 
 export class IslandHelper {
-  public static async getDirectories(): Promise<string[]> {
-    const dir = await IslandHelper.getDirectory();
+  public static getDirectories(): string[] {
+    const dir = IslandHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -19,8 +19,8 @@ export class IslandHelper {
     return directories;
   }
 
-  public static async getIslands(): Promise<string[]> {
-    const islandsDir = await IslandHelper.getDirectory();
+  public static getIslands(): string[] {
+    const islandsDir = IslandHelper.getDirectory();
     const islands: string[] = [];
 
     const directory = new Directory(`${islandsDir}`);
