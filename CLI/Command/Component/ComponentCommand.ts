@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createComponent } from "./create.ts";
+import { create } from "./create.ts";
 
 export class ComponentCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -52,7 +52,7 @@ export class ComponentCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createComponent(app);
+        return await create(app);
     }
 
     return {};

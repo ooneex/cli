@@ -1,5 +1,5 @@
 import {
-  AppDirectoryType,
+  AppFullDirectoryType,
   config,
   ConfigException,
   Directory,
@@ -7,8 +7,8 @@ import {
 } from "../../deps.ts";
 
 export class ComponentHelper {
-  public static async getDirectories(): Promise<string[]> {
-    const dir = await ComponentHelper.getDirectory();
+  public static getDirectories(): string[] {
+    const dir = ComponentHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -19,8 +19,8 @@ export class ComponentHelper {
     return directories;
   }
 
-  public static async getComponents(): Promise<string[]> {
-    const componentsDir = await ComponentHelper.getDirectory();
+  public static getComponents(): string[] {
+    const componentsDir = ComponentHelper.getDirectory();
     const components: string[] = [];
 
     const directory = new Directory(`${componentsDir}`);
@@ -45,7 +45,7 @@ export class ComponentHelper {
   }
 
   public static getDirectory(): string {
-    const directories = config.getDirectories() as AppDirectoryType;
+    const directories = config.getDirectories() as AppFullDirectoryType;
 
     if (!directories) {
       throw new ConfigException("Directories not found");

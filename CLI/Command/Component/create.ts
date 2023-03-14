@@ -3,10 +3,10 @@ import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { ComponentHelper } from "./Helper.ts";
 
-export const createComponent = async (
+export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const components = await ComponentHelper.getDirectories();
+  const components = ComponentHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
