@@ -1,9 +1,11 @@
 import {
   AppConfigType,
   {{ directories }},
-  NotFoundHandler,
-  ServerErrorHandler,
 } from "@ooneex/app";
+import {
+  NotFoundHandler,
+  ServerErrorHandler
+} from "@ooneex/handler";
 
 const config: AppConfigType = {
   directories: {{ directories }},

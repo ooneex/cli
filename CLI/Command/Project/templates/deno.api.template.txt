@@ -1,0 +1,27 @@
+{
+  "tasks": {
+    "start": "deno run -A --watch=.env,.env.local,config/,handlers/,middlewares/,routes/ index.ts",
+    "test": "deno test -A --unstable .",
+    "fmt": "deno fmt",
+    "lint": "deno fmt --check && deno lint",
+    "ooneex": "deno run -A ../Packages/CLI/ooneex.ts"
+  },
+  "imports": {
+    "@app/bin/": "./bin/",
+    "@app/config/": "./config/",
+    "@app/fixtures/": "./fixtures/",
+    "@app/handlers/": "./handlers/",
+    "@app/middlewares/": "./middlewares/",
+    "@app/migrations/": "./migrations/",
+    "@app/routes/": "./routes/",
+    "@app/var/": "./var/",
+    "@ooneex/app": "../Packages/App/mod.ts",
+    "@ooneex/handler": "../Packages/Handler/mod.ts",
+    "@ooneex/http": "../Packages/Http/mod.ts",
+    "@ooneex/island": "../Packages/Island/mod.ts",
+    "@ooneex/routing": "../Packages/Routing/mod.ts",
+    "@ooneex/view": "../Packages/View/mod.ts",
+    "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/"
+  },
+  "compilerOptions": {}
+}

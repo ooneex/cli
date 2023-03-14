@@ -6,7 +6,7 @@ import {
   IRouter,
   LocaleType,
 } from "./deps.ts";
-import { AppDirectoryType } from "./Directory/types.ts";
+import { AppFullDirectoryType } from "./Directory/types.ts";
 import { IEnv } from "./Env/types.ts";
 
 export type AppLocaleType = LocaleType;
@@ -23,7 +23,7 @@ export type AppVersionType = `${number}.${number}.${number}`;
 export type AppStateType = {
   readonly env: IEnv;
   readonly errors: AppConfigErrorType;
-  readonly directories: AppDirectoryType;
+  readonly directories: AppFullDirectoryType;
   readonly router: IRouter;
   readonly route?: IRoute;
   readonly matchedRoute?: IMatchedRoute;
@@ -32,9 +32,12 @@ export type AppStateType = {
 export interface IApp {
   readonly env: IEnv;
   readonly errors: AppConfigErrorType;
-  readonly directories: AppDirectoryType;
+  readonly directories: AppFullDirectoryType;
   readonly router: IRouter;
   readonly route?: IRoute;
   readonly matchedRoute?: IMatchedRoute;
   readonly data: Collection;
+
+  isFullApp: () => boolean;
+  isApi: () => boolean;
 }

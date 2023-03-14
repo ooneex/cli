@@ -1,12 +1,12 @@
 import { assertEquals } from "@ooneex/testing/asserts.ts";
 import { describe, it } from "@ooneex/testing/bdd.ts";
-import { AppDirectoryType } from "../Directory/types.ts";
+import { AppFullDirectoryType } from "../Directory/types.ts";
 import { config } from "./Config.ts";
 
 describe("App Config", async () => {
   await config.parse();
   describe("Should parse directories", () => {
-    const directories = config.getDirectories() as AppDirectoryType;
+    const directories = config.getDirectories() as AppFullDirectoryType;
     it("components", () => {
       assertEquals(directories.components, "components");
     });

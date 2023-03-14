@@ -1,17 +1,17 @@
-export type AppDirectoryType = AppApiDirectoryType & {
-  readonly components: string;
-  readonly islands: string;
-  readonly static: string;
-  readonly views: string;
+export type AppFullDirectoryType = AppApiDirectoryType & {
+  components: string;
+  islands: string;
+  static: string;
+  views: string;
 };
 
 export type AppApiDirectoryType = {
-  readonly bin: string;
-  readonly config: string;
-  readonly fixtures: string;
-  readonly handlers: string;
-  readonly middlewares: string;
-  readonly migrations: string;
-  readonly routes: string;
-  readonly var: string;
+  bin: string;
+  config: string;
+  fixtures: string;
+  handlers: string;
+  middlewares: string;
+  migrations: string;
+  routes: string;
+  var: string;
 };

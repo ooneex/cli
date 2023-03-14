@@ -15,8 +15,7 @@ export class Helper {
       key = keys[i];
 
       try {
-        // @ts-ignore:
-        object = object[key];
+        object = (object as Record<string, unknown>)[key];
         if (object === undefined) {
           return undefined;
         }
@@ -32,25 +31,25 @@ export class Helper {
     if (object === null) {
       return null;
     }
-    let t = typeof object;
+    let t: unknown = typeof object;
     if (t === "object") {
-      // @ts-ignore:
-      object = String(object.constructor);
-      if (/^(?:function|object) ([a-z0-9-]+)\(?/i.test(<string> object)) {
-        // FIXME: Fix deprecated notice
-        // @ts-ignore:
-        t = RegExp.$1;
-        if (/^html[a-z]*element$/i.test(t)) {
-          // @ts-ignore:
+      object = String((object as Record<string, unknown>).constructor);
+
+      const match = (object as string).match(
+        /^(?:function|object) ([a-z0-9-]+)\(?/i,
+      );
+
+      if (match) {
+        t = match[1];
+        if (/^html[a-z]*element$/i.test(t as string)) {
           t = "Element";
         }
       } else {
-        // @ts-ignore:
         t = undefined;
       }
     }
 
-    return t;
+    return t as (string | null);
   }
 
   public static isObject(object: unknown): boolean {

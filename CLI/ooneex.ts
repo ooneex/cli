@@ -1,15 +1,8 @@
 import { commandChecker } from "./checker.ts";
 import { CommandLineException } from "./CommandLineException.ts";
 import { container } from "./Container.ts";
-import {
-  Env,
-  Exception,
-  Helper,
-  InvalidOptionError,
-  parseFlags,
-} from "./deps.ts";
+import { config, Env, Exception, Helper, parseFlags } from "./deps.ts";
 import { Figure } from "./Figure/Figure.ts";
-import { InvalidOptionException } from "./InvalidOptionException.ts";
 import { Output } from "./Output/Output.ts";
 import { Style } from "./Style/Style.ts";
 import { CommandRequestType, ShortFlagKeyType } from "./types.ts";
@@ -17,6 +10,7 @@ import { CommandRequestType, ShortFlagKeyType } from "./types.ts";
 const ooneex = async (): Promise<void> => {
   const env = new Env();
   await env.parse();
+  await config.parse();
 
   const parseArgs = parseFlags(Deno.args);
   const flags = parseArgs.flags ?? {};
@@ -76,6 +70,8 @@ const ooneex = async (): Promise<void> => {
     style: new Style(),
     figure: new Figure(),
     container,
+    isApi: () => env.isApi(),
+    isFullApp: () => env.isFullApp(),
   });
 };
 
@@ -88,18 +84,16 @@ if (import.meta.main) {
       Deno.exit(1);
     }
 
-    if (e instanceof InvalidOptionError) {
-      const error = new InvalidOptionException(e.message);
-      error.fromNativeError(e);
-      Exception.print(error, false);
-      Deno.exit(1);
-    }
+    // if (e instanceof InvalidOptionError) {
+    // const error = new InvalidOptionException(e.message);
+    // error.fromNativeError(e);
+    // Exception.print(error, false);
+    // Deno.exit(1);
+    // }
 
-    if (e instanceof Error) {
-      const error = new CommandLineException(e.message);
-      error.fromNativeError(e);
-      Exception.print(error);
-    }
+    const error = new CommandLineException(e.message);
+    error.fromNativeError(e);
+    Exception.print(error);
 
     Deno.exit(1);
   }

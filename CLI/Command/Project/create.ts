@@ -1,6 +1,6 @@
 import {
   AppApiDirectories,
-  AppDirectories,
+  AppFullDirectories,
   Directory,
   File,
   Helper,
@@ -50,7 +50,7 @@ export const createProject = async (
   if (isApi) {
     directories = Object.values(AppApiDirectories);
   } else {
-    directories = Object.values(AppDirectories);
+    directories = Object.values(AppFullDirectories);
   }
 
   directories.map((d: string) => {
@@ -64,7 +64,7 @@ export const createProject = async (
     .read()
     .replaceAll(
       "{{ directories }}",
-      isApi ? "AppApiDirectories" : "AppDirectories",
+      isApi ? "AppApiDirectories" : "AppFullDirectories",
     );
   project.touch(`config/app.config.ts`, content);
 
@@ -96,23 +96,23 @@ export const createProject = async (
 
   // View
   if (!isApi) {
-    project.rm([`${AppDirectories.views}/.gitkeep`]);
-    project.mkdir(`${AppDirectories.views}/Exception`);
+    project.rm([`${AppFullDirectories.views}/.gitkeep`]);
+    project.mkdir(`${AppFullDirectories.views}/Exception`);
     content = (new File(`${__dirname}../View/view.template.txt`)).read()
       .replaceAll("{{ name }}", "HomepageView");
-    project.touch(`${AppDirectories.views}/HomepageView.tsx`, content);
+    project.touch(`${AppFullDirectories.views}/HomepageView.tsx`, content);
 
     content = (new File(`${__dirname}templates/view.not.found.template.txt`))
       .read();
     project.touch(
-      `${AppDirectories.views}/Exception/NotFoundView.tsx`,
+      `${AppFullDirectories.views}/Exception/NotFoundView.tsx`,
       content,
     );
 
     content = (new File(`${__dirname}templates/view.server.error.template.txt`))
       .read();
     project.touch(
-      `${AppDirectories.views}/Exception/ServerErrorView.tsx`,
+      `${AppFullDirectories.views}/Exception/ServerErrorView.tsx`,
       content,
     );
   }
@@ -130,14 +130,11 @@ export const createProject = async (
   project.touch(`.gitignore`, content);
 
   // deno.json
-  // TODO: replace by using ###--- WEB --- (see deno.template.txt)
-  content = (new File(`${__dirname}templates/deno.template.txt`)).read();
+  content = (new File(`${__dirname}templates/deno.full.template.txt`)).read();
   if (isApi) {
-    content = content.replace('    "@app/components/": "./components/",\n', "")
-      .replace('    "@app/islands/": "./islands/",\n', "")
-      .replace('    "@app/static/": "./static/",\n', "")
-      .replace('    "@app/views/": "./views/",\n', "");
+    content = (new File(`${__dirname}templates/deno.api.template.txt`)).read();
   }
+
   project.touch(`deno.json`, content);
 
   // index.ts

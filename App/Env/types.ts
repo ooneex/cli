@@ -27,6 +27,8 @@ export interface IEnv {
 
   isApi(): boolean;
 
+  isFullApp(): boolean;
+
   isDev(): boolean;
 
   isProd(): boolean;

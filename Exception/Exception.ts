@@ -8,6 +8,10 @@ export class Exception extends Error implements IException {
   private formatter: ((data: unknown) => unknown) | null = null;
 
   public getName(): string {
+    if (this.nativeError) {
+      return this.nativeError.constructor.name;
+    }
+
     return this.constructor.name;
   }
 
@@ -65,8 +69,6 @@ export class Exception extends Error implements IException {
     this.nativeError = error;
 
     this.errorStack = this.parseStack(error.stack as string);
-
-    this.message = error.message;
 
     return this;
   }

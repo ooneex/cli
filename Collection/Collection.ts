@@ -44,6 +44,10 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     return Helper.hasProperty(this.data, key);
   }
 
+  public hasData(): boolean {
+    return this.count() > 0;
+  }
+
   public entries(): K[] {
     return Object.keys(this.data) as K[];
   }

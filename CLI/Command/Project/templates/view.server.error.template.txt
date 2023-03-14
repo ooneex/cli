@@ -2,6 +2,8 @@ interface IServerErrorViewProps {
   name: string;
 }
 
+// TODO: refactor
+
 const ServerErrorView = (props: IServerErrorViewProps) => {
   return (
     <div>

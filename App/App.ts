@@ -1,14 +1,13 @@
 import { AppConfigErrorType } from "./Config/types.ts";
 import { Collection, IMatchedRoute, IRoute, IRouter } from "./deps.ts";
-import { AppDirectoryType } from "./Directory/types.ts";
+import { AppFullDirectoryType } from "./Directory/types.ts";
 import { IEnv } from "./Env/types.ts";
 import { AppStateType, IApp } from "./types.ts";
 
-// TODO: Refactor readonly. Use Readonly<Type>
 export class App implements IApp {
   public readonly env: IEnv;
   public readonly errors: AppConfigErrorType;
-  public readonly directories: AppDirectoryType;
+  public readonly directories: AppFullDirectoryType;
   public readonly router: IRouter;
   public readonly route?: IRoute;
   public readonly matchedRoute?: IMatchedRoute;
@@ -22,5 +21,13 @@ export class App implements IApp {
     this.route = state.route;
     this.matchedRoute = state.matchedRoute;
     this.data = new Collection();
+  }
+
+  public isFullApp(): boolean {
+    return this.env.isFullApp();
+  }
+
+  public isApi(): boolean {
+    return this.env.isApi();
   }
 }

@@ -9,7 +9,7 @@ describe("Output", () => {
   const decoder = new TextDecoder();
   const style = new Style();
 
-  Deno.stdout.writeSync = (p: Uint8Array): number => {
+  Deno.stdout.writeSync = (_p: Uint8Array): number => {
     return 5;
   };
 

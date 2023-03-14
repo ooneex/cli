@@ -21,8 +21,19 @@ export const ServerHandler = async (
 
   let pathname = request.url.pathname;
 
-  if (/\/public\/.+/i.test(pathname)) {
-    pathname = pathname.replace("public", app.directories.static ?? "static");
+  if (app.isFullApp() && /^\/public|dist\/.+/i.test(pathname)) {
+    if (/^\/dist\/.+/i.test(pathname)) {
+      pathname = pathname.replace(
+        /dist/i,
+        `${app.directories.static ?? "static"}/dist`,
+      );
+    } else {
+      pathname = pathname.replace(
+        /public/i,
+        app.directories.static ?? "static",
+      );
+    }
+
     const path = `${Deno.cwd()}${pathname}`;
 
     return await serveFile(req, path);

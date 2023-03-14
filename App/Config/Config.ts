@@ -1,4 +1,7 @@
-import { AppApiDirectoryType, AppDirectoryType } from "../Directory/types.ts";
+import {
+  AppApiDirectoryType,
+  AppFullDirectoryType,
+} from "../Directory/types.ts";
 import { ConfigException } from "./ConfigException.ts";
 import { AppConfigErrorType, AppConfigType } from "./types.ts";
 
@@ -17,7 +20,7 @@ export class Config {
     return this;
   }
 
-  public getDirectories(): AppDirectoryType | AppApiDirectoryType | null {
+  public getDirectories(): AppFullDirectoryType | AppApiDirectoryType | null {
     return this.config?.directories ?? null;
   }
 

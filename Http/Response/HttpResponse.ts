@@ -90,8 +90,12 @@ export class HttpResponse implements IResponse {
    * Render json response
    */
   public json(data?: Record<string, unknown>): this {
+    if (!data) {
+      data = this.body.hasData() ? this.body.getData() : this.data.getData();
+    }
+
     this.response = this.buildResponse(
-      JSON.stringify(data ?? this.body.getData()),
+      JSON.stringify(data),
       "application/json",
     );
 
@@ -141,7 +145,10 @@ export class HttpResponse implements IResponse {
     name: ViewType,
     data?: Record<string, unknown>,
   ): Promise<this> {
-    const content = await view.render(name, data ?? this.data.getData());
+    if (!data) {
+      data = this.data.hasData() ? this.data.getData() : this.body.getData();
+    }
+    const content = await view.render(name, data);
     this.response = this.buildResponse(content, "text/html");
 
     return this;

@@ -1,4 +1,4 @@
-import { AppApiDirectoryType, AppDirectoryType } from "./types.ts";
+import { AppApiDirectoryType, AppFullDirectoryType } from "./types.ts";
 
 export const AppApiDirectories: AppApiDirectoryType = {
   bin: "bin",
@@ -11,7 +11,7 @@ export const AppApiDirectories: AppApiDirectoryType = {
   var: "var",
 };
 
-export const AppDirectories: AppDirectoryType = {
+export const AppFullDirectories: AppFullDirectoryType = {
   ...AppApiDirectories,
   components: "components",
   islands: "islands",

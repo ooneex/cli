@@ -8,7 +8,7 @@ import {
   OnServerListen,
   ServerHandler,
 } from "./deps.ts";
-import { AppDirectoryType } from "./Directory/types.ts";
+import { AppFullDirectoryType } from "./Directory/types.ts";
 import { env } from "./Env/Env.ts";
 import { appRouter } from "./Router/AppRouter.ts";
 
@@ -20,7 +20,7 @@ export class Kernel {
 
     const app = new App({
       env,
-      directories: config.getDirectories() as AppDirectoryType,
+      directories: config.getDirectories() as AppFullDirectoryType,
       errors: config.getErrors() as AppConfigErrorType,
       router,
     });

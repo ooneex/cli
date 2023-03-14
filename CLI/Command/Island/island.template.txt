@@ -1,0 +1,11 @@
+import { render } from "solid-js/web";
+
+const {{ name }} = () => {
+  return (
+    <>
+      {/* Only components go here */}
+    </>
+  )
+}
+
+render(() => <{{ name }} />, document.getElementById("{{ id }}") as HTMLElement);

@@ -64,6 +64,10 @@ export class Env implements IEnv {
     return this.get<boolean>("API") === true;
   }
 
+  public isFullApp(): boolean {
+    return !this.isApi();
+  }
+
   public getSsl(): string | false {
     return this.get<string | false>("SSL") ?? false;
   }

@@ -1,4 +1,4 @@
-import { AppDirectories, File, Helper } from "../../deps.ts";
+import { AppFullDirectories, File, Helper } from "../../deps.ts";
 import { InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { HandlerHelper } from "../Handler/Helper.ts";
@@ -63,7 +63,7 @@ export const createRoute = async (
 
   // Select route view
   let routeView: string | null = null;
-  if (!app.env.isApi()) {
+  if (app.isFullApp()) {
     const views = await ViewHelper.getViews();
     const viewPrompt = new SelectPrompt("Select route view");
     views.map((dir) => {
@@ -90,9 +90,17 @@ export const createRoute = async (
   content += `const routeDefinition: RouteDefinitionType = {\n`;
   content += `  name: "${routeName}",\n`;
   content += `  path: "${routePath}",\n`;
+  content += `  // methods: ["GET", "POST"],\n`;
+  content += `  // ips: ["127.0.0.1"],\n`;
+  content += `  // locales: ["fr", "en"],\n`;
+  content += `  // envs: ["dev", "test", "prod"],\n`;
+  content += `  // versions: ["1.2.3", "2.0.0"],\n`;
+  content += `  // hosts: ["api.ooneex.io", "ooneex.io"],\n`;
+  content += `  // protocols: ["https", "http"],\n`;
+  content += `  // ports: ["80", "8000"],\n`;
   content += `  handler: RouteHandler,\n`;
   if (routeView) {
-    routeView = routeView.replace(`${AppDirectories.views}/`, "");
+    routeView = routeView.replace(`${AppFullDirectories.views}/`, "");
     content += `  view: "${routeView}",\n`;
   }
   content += `  description: "${routeDescription}",\n`;

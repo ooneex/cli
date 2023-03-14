@@ -11,6 +11,7 @@ export const OnServerError = async (
   const error = new ServerErrorException();
   error.fromNativeError(e as Error);
   response.setStatus(HttpStatusType.InternalServerError);
+  response.setError(error);
   const serverErrorHandler = app.errors.server.handler;
   response = await serverErrorHandler(response, app) as HttpResponse;
   const serverErrorView = app.errors.server.view;
@@ -19,8 +20,6 @@ export const OnServerError = async (
     const viewPath = `${app.directories.views}/${serverErrorView}`;
     response.setView(viewPath as ViewType);
   }
-
-  console.log(response);
 
   return response.send();
 };

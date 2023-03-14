@@ -1,5 +1,5 @@
 import {
-  AppDirectoryType,
+  AppFullDirectoryType,
   config,
   ConfigException,
   Directory,
@@ -45,7 +45,7 @@ export class RouteHelper {
   }
 
   public static getDirectory(): string {
-    const directories = config.getDirectories() as AppDirectoryType;
+    const directories = config.getDirectories() as AppFullDirectoryType;
 
     if (!directories) {
       throw new ConfigException("Directories not found");

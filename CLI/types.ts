@@ -14,7 +14,7 @@ export interface ICommand {
   getVersion: () => CommandVersionType;
   getUsage: () => string[];
   run: (
-    app: CommandType,
+    app: Readonly<CommandType>,
   ) => Record<string, unknown> | Promise<Record<string, unknown>>;
 }
 
@@ -28,6 +28,8 @@ export type CommandType = {
   style: Style;
   figure: Figure;
   container: Container;
+  isFullApp: () => boolean;
+  isApi: () => boolean;
 };
 
 export type CommandRequestType = {

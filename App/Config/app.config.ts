@@ -1,10 +1,9 @@
-import { AppDirectories } from "../Directory/AppDirectory.ts";
-import { NotFoundHandler } from "../Exception/NotFoundHandler.ts";
-import { ServerErrorHandler } from "../Exception/ServerErrorHandler.ts";
+import { NotFoundHandler, ServerErrorHandler } from "../deps.ts";
+import { AppFullDirectories } from "../Directory/AppDirectory.ts";
 import { AppConfigType } from "./types.ts";
 
 const config: AppConfigType = {
-  directories: AppDirectories,
+  directories: AppFullDirectories,
   errors: {
     notFound: {
       view: "NotFoundView",

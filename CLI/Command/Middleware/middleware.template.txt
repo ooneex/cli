@@ -1,6 +1,8 @@
 import { IApp } from "@ooneex/app";
 import { IRequest, IHandlerResponse } from "@ooneex/http";
 
+// TODO: refactor
+
 export const {{ name }} = (
   request: IRequest,
   response: IHandlerResponse,

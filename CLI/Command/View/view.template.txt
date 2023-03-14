@@ -1,12 +1,19 @@
+import { Island } from "@ooneex/island";
+import { Body, Head } from "@ooneex/app";
+
 interface I{{ name }}Props {
-    name: string;
+  name: string;
 }
 
 const {{ name }} = (props: I{{ name }}Props) => {
   return (
-    <div>
+    <>
+      <Head title={"{{ name }}"} styles={["{{ name }}.css"]} />
+      <Body scripts={["{{ name }}.js"]}>
         {{ name }}.tsx
-    </div>
+      </Body>
+      <Island name={"..."} />
+    </>
   );
 };
 

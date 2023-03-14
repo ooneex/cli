@@ -2,6 +2,8 @@ interface INotFoundViewProps {
   name: string;
 }
 
+// TODO: refactor
+
 const NotFoundView = (props: INotFoundViewProps) => {
   return (
     <div>

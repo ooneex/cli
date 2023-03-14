@@ -1,8 +1,24 @@
-import { IApp } from "../App/types.ts";
-import { IHandlerResponse, IRequest } from "./deps.ts";
+import {
+  IApp,
+  IHandlerResponse,
+  INotFoundResponse,
+  IRequest,
+  IServerErrorResponse,
+} from "./deps.ts";
 
 export type HandlerType = (
   request: IRequest,
   response: IHandlerResponse,
   app: IApp,
 ) => IHandlerResponse;
+
+export type NotFoundHandlerType = (
+  request: IRequest,
+  response: INotFoundResponse,
+  app: IApp,
+) => INotFoundResponse;
+
+export type ServerErrorHandlerType = (
+  response: IServerErrorResponse,
+  app: IApp,
+) => IServerErrorResponse;

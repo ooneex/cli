@@ -6,6 +6,5 @@ const routeDefinition: RouteDefinitionType = {
   path: "/",
   handler: HomepageHandler,
   view: "HomepageView",
-  //TODO: add middlewares
   description: "Homepage description",
 };

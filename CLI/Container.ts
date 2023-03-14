@@ -1,5 +1,7 @@
+import { ComponentCommand } from "./Command/Component/ComponentCommand.ts";
 import { HandlerCommand } from "./Command/Handler/HandlerCommand.ts";
 import { HelpCommand } from "./Command/Help/HelpCommand.ts";
+import { IslandCommand } from "./Command/Island/IslandCommand.ts";
 import { MiddlewareCommand } from "./Command/Middleware/MiddlewareCommand.ts";
 import { NewCommand } from "./Command/Project/NewCommand.ts";
 import { ProjectCommand } from "./Command/Project/ProjectCommand.ts";
@@ -37,3 +39,9 @@ container.add(project.getName(), project);
 
 const newProject = new NewCommand();
 container.add(newProject.getName(), newProject);
+
+const component = new ComponentCommand();
+container.add(component.getName(), component);
+
+const island = new IslandCommand();
+container.add(island.getName(), island);

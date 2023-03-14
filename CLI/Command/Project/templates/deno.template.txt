@@ -32,7 +32,7 @@
     "@ooneex/http": "../Packages/Http/mod.ts",
     "@ooneex/routing": "../Packages/Routing/mod.ts",
 
-    "@testing/": "https://deno.land/std@0.171.0/testing/",
+    "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
     ###--- WEB ---
     "preact": "https://esm.sh/preact@10.12.1",
     "preact/": "https://esm.sh/preact@10.12.1/",
@@ -41,7 +41,16 @@
     --- END WEB ---###
   },
   "compilerOptions": {
+    ###--- WEB ---
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable"
+    ]
+    --- END WEB ---###
   }
 }
