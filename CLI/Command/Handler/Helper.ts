@@ -7,8 +7,8 @@ import {
 } from "../../deps.ts";
 
 export class HandlerHelper {
-  public static async getDirectories(): Promise<string[]> {
-    const dir = await HandlerHelper.getDirectory();
+  public static getDirectories(): string[] {
+    const dir = HandlerHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -19,8 +19,8 @@ export class HandlerHelper {
     return directories;
   }
 
-  public static async getHandlers(): Promise<string[]> {
-    const handlersDir = await HandlerHelper.getDirectory();
+  public static getHandlers(): string[] {
+    const handlersDir = HandlerHelper.getDirectory();
     const handlers: string[] = [];
 
     const directory = new Directory(`${handlersDir}`);

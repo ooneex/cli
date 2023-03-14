@@ -2,9 +2,9 @@ import { IApp } from "@ooneex/app";
 import { IRequest, IHandlerResponse } from "@ooneex/http";
 
 const {{ name }} = (
-  request: IRequest,
-  response: IHandlerResponse,
-  app: IApp
+  _request: IRequest,
+  _response: IHandlerResponse,
+  _app: IApp
 ): IHandlerResponse => {
   // Do something
 

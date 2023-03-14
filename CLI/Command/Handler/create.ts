@@ -3,10 +3,10 @@ import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { HandlerHelper } from "./Helper.ts";
 
-export const createHandler = async (
+export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const handlers = await HandlerHelper.getDirectories();
+  const handlers = HandlerHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");

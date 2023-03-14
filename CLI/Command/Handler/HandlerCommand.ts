@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createHandler } from "./create.ts";
+import { create } from "./create.ts";
 
 export class HandlerCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -52,7 +52,7 @@ export class HandlerCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createHandler(app);
+        return await create(app);
     }
 
     return {};
