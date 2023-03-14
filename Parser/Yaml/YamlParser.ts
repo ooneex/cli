@@ -9,12 +9,14 @@ export class YamlParser implements IYamlParser {
     this.parse(fileContent);
   }
 
-  public parse(fileContent: string): void {
+  public parse(fileContent: string): this {
     try {
       this.data = parse(fileContent);
     } catch (e) {
       throw new YamlParseFailedException(e.message);
     }
+
+    return this;
   }
 
   public get<T>(key: string): T | undefined {

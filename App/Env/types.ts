@@ -10,6 +10,8 @@ export type AppEnvVarsType = Record<
   | "SECRET"
   | "DEBUG"
   | "PORT"
+  | "HOST"
+  | "SSL"
   | `${Uppercase<string>}`,
   DotEnvValueType
 >;
@@ -24,6 +26,8 @@ export interface IEnv {
   getAppEnv(): AppEnvType;
 
   isApi(): boolean;
+
+  isFullApp(): boolean;
 
   isDev(): boolean;
 
@@ -41,7 +45,13 @@ export interface IEnv {
 
   isDebug(): boolean;
 
+  getSsl(): string | false;
+
+  isSsl(): boolean;
+
   getPort(): number | null;
+
+  getHost(): string | null;
 
   get<T>(key: Uppercase<string>): T | undefined;
 

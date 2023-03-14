@@ -1,0 +1,8 @@
+import { Kernel } from "@ooneex/app";
+import { watchIslands } from "@ooneex/island";
+
+if (Deno.args.includes("--islands-watch")) {
+  await watchIslands();
+} else {
+  await Kernel.boot();
+}

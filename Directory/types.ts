@@ -83,7 +83,7 @@ export interface IDirectory {
   /**
    * Lists files.
    */
-  files(filters?: RegExp): IFile[];
+  files(filters?: RegExp | null, recursive?: boolean): IFile[];
   /**
    * Checks if two directories are equal.
    */

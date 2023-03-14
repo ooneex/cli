@@ -1,0 +1,49 @@
+{
+  "tasks": {
+    "start": "deno run -A --watch=.env,.env.local,config/,handlers/,middlewares/,routes/ index.ts",
+    "islands:watch": "deno run -A --node-modules-dir index.ts --islands-watch",
+    "islands:build": "deno run -A --node-modules-dir index.ts --islands-build",
+    "test": "deno test -A --unstable .",
+    "fmt": "deno fmt",
+    "lint": "deno fmt --check && deno lint",
+    "ooneex": "deno run -A ../Packages/CLI/ooneex.ts"
+  },
+  "imports": {
+    "@app/bin/": "./bin/",
+    "@app/components/": "./components/",
+    "@app/config/": "./config/",
+    "@app/fixtures/": "./fixtures/",
+    "@app/handlers/": "./handlers/",
+    "@app/islands/": "./islands/",
+    "@app/middlewares/": "./middlewares/",
+    "@app/migrations/": "./migrations/",
+    "@app/routes/": "./routes/",
+    "@app/static/": "./static/",
+    "@app/var/": "./var/",
+    "@app/views/": "./views/",
+    "@ooneex/app": "../Packages/App/mod.ts",
+    "@ooneex/handler": "../Packages/Handler/mod.ts",
+    "@ooneex/http": "../Packages/Http/mod.ts",
+    "@ooneex/island": "../Packages/Island/mod.ts",
+    "@ooneex/routing": "../Packages/Routing/mod.ts",
+    "@ooneex/view": "../Packages/View/mod.ts",
+    "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
+    "preact": "https://esm.sh/preact@10.12.1",
+    "preact/": "https://esm.sh/preact@10.12.1/",
+    "vite": "npm:vite@^4.0.0",
+    "vite-plugin-solid": "npm:vite-plugin-solid@^2.4.0",
+    "solid-js": "https://cdn.skypack.dev/solid-js",
+    "solid-js/web": "https://cdn.skypack.dev/solid-js/web"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+    "lib": [
+      "deno.ns",
+      "deno.unstable"
+      "dom.asynciterable",
+      "dom.iterable",
+      "dom",
+    ]
+  }
+}

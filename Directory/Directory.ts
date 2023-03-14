@@ -298,16 +298,17 @@ export class Directory implements IDirectory {
   /**
    * Lists files.
    */
-  public files(
-    filters?: RegExp,
+  public static files(
+    path: string,
+    filters?: RegExp | null,
   ): IFile[] {
     const files: IFile[] = [];
 
     try {
-      for (const entry of Deno.readDirSync(this.path)) {
+      for (const entry of Deno.readDirSync(path)) {
         if (entry.isFile) {
           if (!filters || (filters.test(entry.name))) {
-            files.push(new File(this.path + "/" + entry.name));
+            files.push(new File(path + "/" + entry.name));
           }
         }
       }
@@ -316,6 +317,33 @@ export class Directory implements IDirectory {
     } catch (e) {
       throw new DirectoryException(`[files] ${e.message}`);
     }
+  }
+
+  /**
+   * Lists files.
+   */
+  public files(
+    filters?: RegExp | null,
+    recursive?: boolean,
+  ): IFile[] {
+    if (!filters) {
+      filters = null;
+    }
+
+    if (!recursive) {
+      recursive = false;
+    }
+
+    let files: IFile[] = Directory.files(this.path, filters);
+
+    if (recursive) {
+      const directories = this.directories(null, true);
+      directories.map((directory) => {
+        files = [...files, ...directory.files(filters)];
+      });
+    }
+
+    return files;
   }
 
   /**

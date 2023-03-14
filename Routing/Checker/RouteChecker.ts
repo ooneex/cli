@@ -2,13 +2,14 @@ import { Helper, HttpMethodType, HttpProtocolType } from "../deps.ts";
 import { IMatchedRoute } from "../Matched/types.ts";
 import { IRoute } from "../Route/types.ts";
 import { IRouteChecker, RouteCheckerErrorType } from "./types.ts";
+
 export class RouteChecker implements IRouteChecker {
   private errors: RouteCheckerErrorType[] = [];
 
   constructor(private route: IRoute, private matchedRoute: IMatchedRoute) {
   }
 
-  public check(): void {
+  public check(): this {
     this.checkMethod();
     this.checkIp();
     this.checkLocale();
@@ -18,6 +19,8 @@ export class RouteChecker implements IRouteChecker {
     this.checkProtocol();
     this.checkPort();
     this.checkConstraints();
+
+    return this;
   }
 
   public isValid(): boolean {
@@ -258,7 +261,7 @@ export class RouteChecker implements IRouteChecker {
       if (!reg.test(`${params[key]}`)) {
         errors.push({
           key: "regex constraints",
-          message: `${key} param must match with '${regexConstraints[key]}'`,
+          message: `${key} param must match with "${regexConstraints[key]}"`,
         });
       }
     });
@@ -280,7 +283,7 @@ export class RouteChecker implements IRouteChecker {
       if (!reg.test(`${params[key]}`)) {
         errors.push({
           key: "number constraints",
-          message: `${key} param must match with '${reg}'`,
+          message: `${key} param must match with "${reg}"`,
         });
       }
     });
@@ -299,14 +302,16 @@ export class RouteChecker implements IRouteChecker {
       const reg = /^[a-z0-9]+$/;
 
       // @ts-ignore: trust me
+      const p = params[key];
+
       if (
-        !reg.test(`${params[key]}`) || !/[a-z]+/.test(`${params[key]}`) ||
-        !/[0-9]+/.test(`${params[key]}`)
+        !reg.test(`${p}`) || !/[a-z]+/.test(`${p}`) ||
+        !/[0-9]+/.test(`${p}`)
       ) {
         errors.push({
           key: "alphaNumeric constraints",
           message:
-            `${key} param must match with '${/[a-z]+/}' and '${/[0-9]+/}'`,
+            `${key} param must match with "${/[a-z]+/}" and "${/[0-9]+/}"`,
         });
       }
     });
@@ -323,9 +328,9 @@ export class RouteChecker implements IRouteChecker {
       if (!inConstraints[key].includes(params[key])) {
         errors.push({
           key: "in constraints",
-          message: `${key} param must equal to ' ${
-            inConstraints[key].join("' or '")
-          }'`,
+          message: `${key} param must equal to " ${
+            inConstraints[key].join('" or "')
+          }"`,
         });
       }
     });

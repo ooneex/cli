@@ -1,34 +1,33 @@
-import { IException } from "../Exception/types.ts";
-import { AppStateType } from "./types.ts";
+import { AppConfigErrorType } from "./Config/types.ts";
+import { Collection, IMatchedRoute, IRoute, IRouter } from "./deps.ts";
+import { AppFullDirectoryType } from "./Directory/types.ts";
+import { IEnv } from "./Env/types.ts";
+import { AppStateType, IApp } from "./types.ts";
 
-export class App {
-  private state: AppStateType | null = null;
+export class App implements IApp {
+  public readonly env: IEnv;
+  public readonly errors: AppConfigErrorType;
+  public readonly directories: AppFullDirectoryType;
+  public readonly router: IRouter;
+  public readonly route?: IRoute;
+  public readonly matchedRoute?: IMatchedRoute;
+  public readonly data: Collection;
 
-  public setState(state: AppStateType): this {
-    this.state = state;
-
-    return this;
+  constructor(private readonly state: AppStateType) {
+    this.env = state.env;
+    this.errors = state.errors;
+    this.directories = state.directories;
+    this.router = state.router;
+    this.route = state.route;
+    this.matchedRoute = state.matchedRoute;
+    this.data = new Collection();
   }
 
-  public getState(): AppStateType | null {
-    return this.state;
+  public isFullApp(): boolean {
+    return this.env.isFullApp();
   }
 
-  public setError(error: IException): this {
-    if (this.state) {
-      this.state.error = error;
-    }
-
-    return this;
-  }
-
-  public hasError(): boolean {
-    return this.getError() !== null;
-  }
-
-  public getError(): IException | null {
-    return this.state?.error ?? null;
+  public isApi(): boolean {
+    return this.env.isApi();
   }
 }
-
-export const app = new App();

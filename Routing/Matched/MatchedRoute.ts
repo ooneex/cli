@@ -9,8 +9,9 @@ import {
   MatchedRouteParamsType,
   MatchedRouteType,
 } from "./types.ts";
+
 export class MatchedRoute implements IMatchedRoute {
-  constructor(public readonly matched: MatchedRouteType) {
+  constructor(private readonly matched: MatchedRouteType) {
   }
 
   public getName(): string {

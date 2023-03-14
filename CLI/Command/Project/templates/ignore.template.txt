@@ -1,0 +1,6 @@
+var
+*.local
+deno.lock
+static/dist
+static/manifest.json
+nodes_modules

@@ -1,10 +1,13 @@
 import { Helper } from "./deps.ts";
 import { CollectionKeyType, ICollection } from "./types.ts";
 
-export class Collection<K extends CollectionKeyType, V>
+export class Collection<K extends CollectionKeyType = string, V = unknown>
   implements ICollection<K, V> {
-  protected data: { [K in CollectionKeyType]: V } = {};
+  private data: { [K in CollectionKeyType]: V } = {};
 
+  /**
+   * Set multiple values
+   */
   public set(value: { [K in CollectionKeyType]: V }): this {
     Object.keys(value).map((key) => {
       this.data[key] = value[key];
@@ -24,7 +27,7 @@ export class Collection<K extends CollectionKeyType, V>
   }
 
   /**
-   * Get by key or by chained key (ex. "user.name")
+   * Get by key or by chained key (e.g. "user.name")
    */
   public get<T>(key: K): T | undefined {
     return Helper.getByKey(this.data, key);
@@ -39,6 +42,10 @@ export class Collection<K extends CollectionKeyType, V>
    */
   public has(key: K): boolean {
     return Helper.hasProperty(this.data, key);
+  }
+
+  public hasData(): boolean {
+    return this.count() > 0;
   }
 
   public entries(): K[] {
@@ -90,7 +97,7 @@ export class Collection<K extends CollectionKeyType, V>
   }
 
   /**
-   * Set new data for the collection
+   * Set new data for the collection (replace old data)
    */
   public setData(data: { [K in CollectionKeyType]: V }): this {
     this.data = data;

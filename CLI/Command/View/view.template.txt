@@ -1,0 +1,20 @@
+import { Island } from "@ooneex/island";
+import { Body, Head } from "@ooneex/app";
+
+interface I{{ name }}Props {
+  name: string;
+}
+
+const {{ name }} = (props: I{{ name }}Props) => {
+  return (
+    <>
+      <Head title={"{{ name }}"} styles={["{{ name }}.css"]} />
+      <Body scripts={["{{ name }}.js"]}>
+        {{ name }}.tsx
+      </Body>
+      <Island name={"..."} />
+    </>
+  );
+};
+
+export default {{ name }};

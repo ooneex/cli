@@ -13,12 +13,12 @@ export type MatchedRouteParamsType = Record<
 export type MatchedRouteType = {
   name: string;
   url: URL;
-  params?: MatchedRouteParamsType;
+  params?: MatchedRouteParamsType | null;
   method: HttpMethodType;
   ip: string;
   locale: AppLocaleType;
   env: AppEnvType;
-  version?: AppVersionType;
+  version?: AppVersionType | null;
 };
 
 export interface IMatchedRoute {

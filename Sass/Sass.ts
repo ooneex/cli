@@ -9,7 +9,7 @@ export class Sass {
 
   // TODO: add options for sourceMap minify watch and output
   // https://sass-lang.com/documentation/js-api/interfaces/Options
-  public compile(): void {
+  public compile(): this {
     const files = this.getFiles();
     files.map((file) => {
       const result = sass.compileString(file.read());
@@ -17,6 +17,8 @@ export class Sass {
       const cssFile = new File(cssFileName);
       cssFile.write(result.css);
     });
+
+    return this;
   }
 
   private getFiles(): IFile[] {

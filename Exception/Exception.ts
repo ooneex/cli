@@ -1,3 +1,4 @@
+import { Output } from "./deps.ts";
 import { IException, StackType } from "./types.ts";
 
 export class Exception extends Error implements IException {
@@ -7,6 +8,10 @@ export class Exception extends Error implements IException {
   private formatter: ((data: unknown) => unknown) | null = null;
 
   public getName(): string {
+    if (this.nativeError) {
+      return this.nativeError.constructor.name;
+    }
+
     return this.constructor.name;
   }
 
@@ -60,10 +65,18 @@ export class Exception extends Error implements IException {
     return this.formatter as (((data: T) => V) | null);
   }
 
-  public fromNativeError(error: Error): void {
+  public fromNativeError(error: Error): this {
     this.nativeError = error;
 
     this.errorStack = this.parseStack(error.stack as string);
+
+    return this;
+  }
+
+  public static print(error: IException, stack = true): void {
+    const output = new Output();
+
+    output.printException(error, stack);
   }
 
   private parseStack(stack: string): StackType[] {
@@ -71,10 +84,11 @@ export class Exception extends Error implements IException {
     const stacks = stack.split(/[\n\r]/) ?? [];
 
     stacks.map((stack) => {
-      const match = stack.trim().match(/at (.+):(\d+):(\d+)/i);
+      const match = stack.trim().match(/at (.+:(\d+):(\d+)\)?)/i);
       if (match) {
+        const file = match[1].replace(`file://${Deno.cwd()}/`, "");
         errorStack.push({
-          file: match[1].replace(`file://${Deno.cwd()}/`, ""),
+          file: file.replace(`:${match[2]}:${match[3]}`, ""),
           line: parseInt(match[2]),
           column: parseInt(match[3]),
         });

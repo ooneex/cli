@@ -1,15 +1,11 @@
 // export type CollectionKeyType = string | number | symbol;
 export type CollectionKeyType = string;
 
-export interface ICollection<K, V> {
-  clear(): this;
-  delete(key: K): boolean;
-  remove(key: K): boolean;
+export interface ICollection<K = string, V = unknown> {
   map(fn: (value: V, key: K) => void): this;
   get<T>(key: K): T | undefined;
   has(key: K): boolean;
-  set(value: { [K in CollectionKeyType]: V }): this;
-  add(key: K, value: V): this;
+  hasData(): boolean;
   entries(): K[];
   keys(): K[];
   values(): V[];

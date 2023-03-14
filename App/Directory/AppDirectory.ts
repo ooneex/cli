@@ -1,42 +1,20 @@
-import { AppDirectoryType } from "./types.ts";
+import { AppApiDirectoryType, AppFullDirectoryType } from "./types.ts";
 
-export class AppDirectory {
-  constructor(private data: AppDirectoryType) {
-  }
+export const AppApiDirectories: AppApiDirectoryType = {
+  bin: "bin",
+  config: "config",
+  fixtures: "fixtures",
+  handlers: "handlers",
+  middlewares: "middlewares",
+  migrations: "migrations",
+  routes: "routes",
+  var: "var",
+};
 
-  public getComponents(): string {
-    return this.data.components;
-  }
-
-  public getConfig(): string {
-    return this.data.config;
-  }
-
-  public getHandlers(): string {
-    return this.data.handlers;
-  }
-
-  public getIslands(): string {
-    return this.data.islands;
-  }
-
-  public getMiddlewares(): string {
-    return this.data.middlewares;
-  }
-
-  public getRoutes(): string {
-    return this.data.routes;
-  }
-
-  public getStatic(): string {
-    return this.data.static;
-  }
-
-  public getVar(): string {
-    return this.data.var;
-  }
-
-  public getViews(): string {
-    return this.data.views;
-  }
-}
+export const AppFullDirectories: AppFullDirectoryType = {
+  ...AppApiDirectories,
+  components: "components",
+  islands: "islands",
+  static: "static",
+  views: "views",
+};
