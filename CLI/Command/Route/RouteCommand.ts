@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createRoute } from "./create.ts";
+import { create } from "./create.ts";
 
 export class RouteCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -52,7 +52,7 @@ export class RouteCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createRoute(app);
+        return await create(app);
     }
 
     return {};

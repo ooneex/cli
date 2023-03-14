@@ -7,8 +7,8 @@ import {
 } from "../../deps.ts";
 
 export class RouteHelper {
-  public static async getDirectories(): Promise<string[]> {
-    const dir = await RouteHelper.getDirectory();
+  public static getDirectories(): string[] {
+    const dir = RouteHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -19,8 +19,8 @@ export class RouteHelper {
     return directories;
   }
 
-  public static async getRoutes(): Promise<string[]> {
-    const routesDir = await RouteHelper.getDirectory();
+  public static getRoutes(): string[] {
+    const routesDir = RouteHelper.getDirectory();
     const routes: string[] = [];
 
     const directory = new Directory(`${routesDir}`);

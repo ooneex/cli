@@ -5,10 +5,10 @@ import { HandlerHelper } from "../Handler/Helper.ts";
 import { ViewHelper } from "../View/Helper.ts";
 import { RouteHelper } from "./Helper.ts";
 
-export const createRoute = async (
+export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const routes = await RouteHelper.getDirectories();
+  const routes = RouteHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");
