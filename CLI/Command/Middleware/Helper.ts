@@ -7,8 +7,8 @@ import {
 } from "../../deps.ts";
 
 export class MiddlewareHelper {
-  public static async getDirectories(): Promise<string[]> {
-    const dir = await MiddlewareHelper.getDirectory();
+  public static getDirectories(): string[] {
+    const dir = MiddlewareHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -19,8 +19,8 @@ export class MiddlewareHelper {
     return directories;
   }
 
-  public static async getMiddlewares(): Promise<string[]> {
-    const middlewaresDir = await MiddlewareHelper.getDirectory();
+  public static getMiddlewares(): string[] {
+    const middlewaresDir = MiddlewareHelper.getDirectory();
     const middlewares: string[] = [];
 
     const directory = new Directory(`${middlewaresDir}`);

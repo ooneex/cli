@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createMiddleware } from "./create.ts";
+import { create } from "./create.ts";
 
 export class MiddlewareCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -52,7 +52,7 @@ export class MiddlewareCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createMiddleware(app);
+        return await create(app);
     }
 
     return {};
