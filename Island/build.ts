@@ -1,5 +1,5 @@
-import { build } from "vite";
-import solid from "vite-plugin-solid";
+import { build } from "npm:vite@^4.0.0";
+import solid from "npm:vite-plugin-solid@^2.4.0";
 
 await build(
   {

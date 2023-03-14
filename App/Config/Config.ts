@@ -2,19 +2,17 @@ import {
   AppApiDirectoryType,
   AppFullDirectoryType,
 } from "../Directory/types.ts";
-import { ConfigException } from "./ConfigException.ts";
 import { AppConfigErrorType, AppConfigType } from "./types.ts";
+import defaultConfig from "./app.config.ts";
 
 export class Config {
   private config: AppConfigType | null = null;
 
   public async parse(): Promise<this> {
     try {
-      this.config = (await import(`@app/config/app.config.ts`)).default;
-    } catch (e) {
-      throw new ConfigException(
-        `${e.message}. Check if "config/app.config.ts" file exists`,
-      );
+      this.config = (await import(`./config/app.config.ts`)).default;
+    } catch (_e) {
+      this.config = defaultConfig;
     }
 
     return this;

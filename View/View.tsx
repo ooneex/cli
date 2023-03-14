@@ -1,6 +1,7 @@
-import { env, File, getAssets, Helper, Path, renderToString } from "./deps.ts";
-import { IView, ViewType } from "./types.ts";
-import { ViewNotFoundException } from "./ViewNotFoundException.ts";
+import {render as renderToString} from "npm:preact-render-to-string";
+import {env, File, getAssets, Helper, Path} from "./deps.ts";
+import {IView, ViewType} from "./types.ts";
+import {ViewNotFoundException} from "./ViewNotFoundException.ts";
 
 export class View implements IView {
   public async render(

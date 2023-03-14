@@ -18,4 +18,3 @@ export * from "../Handler/mod.ts";
 export * from "../Helper/mod.ts";
 export * from "../Middleware/mod.ts";
 export * from "../Routing/mod.ts";
-export * from "../View/mod.ts";

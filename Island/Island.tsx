@@ -1,4 +1,4 @@
-import { ComponentChildren } from "preact";
+import { ComponentChildren } from "https://esm.sh/preact@10.12.1";
 import { AppFullDirectoryType, config, File, Helper } from "./deps.ts";
 
 interface IIslandProps {
