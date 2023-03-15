@@ -31,12 +31,10 @@ export const Island = (props: IIslandProps) => {
   );
 };
 
-export const getManifest = (
-  name: string,
-): Record<string, ManifestType> | null => {
+export const getManifest = (): Record<string, ManifestType> | null => {
   const directories = config.getDirectories() as AppFullDirectoryType;
   const staticDir = directories.static;
-  const file = new File(`${staticDir}/manifest.json`);
+  const file = new File(`${staticDir}/dist/manifest.json`);
 
   if (!file.exists()) {
     return null;
@@ -61,7 +59,7 @@ export const getId = (name: string): string | null => {
   }
 
   const match = file.read().match(
-    /document\.getElementById\(["']([a-z0-9]+\-[a-z0-9]+\-[a-z0-9]+\-[a-z0-9]+\-[a-z0-9]+)["']/i,
+    /document\.getElementById\(["']([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+)["']/i,
   );
 
   if (!match) {
@@ -75,7 +73,7 @@ export const getIsland = (
   name: string,
   isImport = false,
 ): ManifestType | null => {
-  const manifest = getManifest(name);
+  const manifest = getManifest();
   if (!manifest) {
     return null;
   }
@@ -91,7 +89,7 @@ export const getIsland = (
   return island;
 };
 
-export const getAssets = (name: string, isImport = false): ManifestType[] => {
+export const getAssets = (name: string): ManifestType[] => {
   const result: ManifestType[] = [];
   const island = getIsland(name);
 
