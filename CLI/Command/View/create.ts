@@ -3,10 +3,10 @@ import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { ViewHelper } from "./Helper.ts";
 
-export const createView = async (
+export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
-  const views = await ViewHelper.getDirectories();
+  const views = ViewHelper.getDirectories();
 
   // Select directory
   const prompt = new SelectPrompt("Choose the directory");

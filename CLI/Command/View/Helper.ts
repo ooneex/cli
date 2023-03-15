@@ -7,8 +7,8 @@ import {
 } from "../../deps.ts";
 
 export class ViewHelper {
-  public static async getDirectories(): Promise<string[]> {
-    const dir = await ViewHelper.getDirectory();
+  public static getDirectories(): string[] {
+    const dir = ViewHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -19,8 +19,8 @@ export class ViewHelper {
     return directories;
   }
 
-  public static async getViews(): Promise<string[]> {
-    const viewsDir = await ViewHelper.getDirectory();
+  public static getViews(): string[] {
+    const viewsDir = ViewHelper.getDirectory();
     const views: string[] = [];
 
     const directory = new Directory(`${viewsDir}`);

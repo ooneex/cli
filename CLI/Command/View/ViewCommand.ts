@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createView } from "./create.ts";
+import { create } from "./create.ts";
 
 export class ViewCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -52,7 +52,7 @@ export class ViewCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createView(app);
+        return await create(app);
     }
 
     return {};

@@ -1,11 +1,11 @@
 import { Island } from "@ooneex/island";
-import { Body, Head } from "@ooneex/app";
+import { Body, Head } from "@ooneex/view";
 
-interface I{{ name }}Props {
+interface I{{ name }} {
   name: string;
 }
 
-const {{ name }} = (props: I{{ name }}Props) => {
+const {{ name }} = (props: I{{ name }}) => {
   return (
     <>
       <Head title={"{{ name }}"} styles={["{{ name }}.css"]} />
