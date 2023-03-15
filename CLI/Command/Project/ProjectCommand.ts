@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createProject } from "./create.ts";
+import { create } from "./create.ts";
 
 export class ProjectCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -52,7 +52,7 @@ export class ProjectCommand implements ICommand {
     switch (app.action) {
       case "new":
       case "create":
-        return await createProject(app);
+        return await create(app);
     }
 
     return {};

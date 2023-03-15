@@ -7,7 +7,7 @@ import {
   LongFlagType,
   ShortFlagType,
 } from "../../types.ts";
-import { createProject } from "./create.ts";
+import { create } from "./create.ts";
 
 export class NewCommand implements ICommand {
   public getActions(): ActionType[] {
@@ -45,7 +45,7 @@ export class NewCommand implements ICommand {
   }
 
   public async run(app: CommandType): Promise<Record<string, unknown>> {
-    await createProject(app);
+    await create(app);
 
     return {};
   }

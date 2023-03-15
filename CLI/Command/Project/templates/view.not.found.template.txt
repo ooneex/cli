@@ -1,10 +1,10 @@
-interface INotFoundViewProps {
+interface INotFoundView {
   name: string;
 }
 
 // TODO: refactor
 
-const NotFoundView = (props: INotFoundViewProps) => {
+const NotFoundView = (props: INotFoundView) => {
   return (
     <div>
       NotFoundView.tsx
