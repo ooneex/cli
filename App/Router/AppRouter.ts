@@ -57,7 +57,7 @@ export class AppRouter {
     file.write(content);
 
     const routes: RouteDefinitionType[] =
-      (await import(`${varDir}/cache/routes.ts`)).default;
+      (await import(`${Deno.cwd()}/${varDir}/cache/routes.ts`)).default;
 
     routes.map((route) => {
       const r = new Route(route);

@@ -7,6 +7,7 @@ export * from "../File/mod.ts";
 export * from "../Handler/mod.ts";
 export * from "../Helper/mod.ts";
 export * from "../Http/mod.ts";
+export * from "../Island/mod.ts";
 export * from "../Path/mod.ts";
 export * from "../Routing/mod.ts";
 export * from "../Translation/mod.ts";

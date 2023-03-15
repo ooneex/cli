@@ -2,7 +2,6 @@ import { ComponentCommand } from "./Command/Component/ComponentCommand.ts";
 import { HandlerCommand } from "./Command/Handler/HandlerCommand.ts";
 import { HelpCommand } from "./Command/Help/HelpCommand.ts";
 import { IslandCommand } from "./Command/Island/IslandCommand.ts";
-import { MiddlewareCommand } from "./Command/Middleware/MiddlewareCommand.ts";
 import { NewCommand } from "./Command/Project/NewCommand.ts";
 import { ProjectCommand } from "./Command/Project/ProjectCommand.ts";
 import { RouteCommand } from "./Command/Route/RouteCommand.ts";
@@ -27,9 +26,6 @@ container.add(view.getName(), view);
 
 const handler = new HandlerCommand();
 container.add(handler.getName(), handler);
-
-const middleware = new MiddlewareCommand();
-container.add(middleware.getName(), middleware);
 
 const route = new RouteCommand();
 container.add(route.getName(), route);

@@ -63,10 +63,14 @@ const ooneex = async (): Promise<void> => {
 
   const command = commandChecker(request);
 
+  const output = new Output();
+
+  output.newLine();
+
   command.run({
     env,
     ...request,
-    output: new Output(),
+    output,
     style: new Style(),
     figure: new Figure(),
     container,

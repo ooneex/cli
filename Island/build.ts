@@ -1,11 +1,13 @@
 import { build } from "npm:vite@^4.0.0";
-import { ViteOptions } from "./ViteOptions.ts";
+import { getOptions } from "./ViteOptions.ts";
 
 export const buildIslands = async (): Promise<void> => {
-  ViteOptions.mode = "production";
-  ViteOptions.build.sourcemap = false;
-  ViteOptions.build.minify = true;
-  ViteOptions.build.css.devSourcemap = false;
-  ViteOptions.build.watch = null;
-  await build(ViteOptions);
+  const viteOptions = await getOptions();
+
+  viteOptions.mode = "production";
+  viteOptions.build.sourcemap = false;
+  viteOptions.build.minify = true;
+  viteOptions.build.css.devSourcemap = false;
+  viteOptions.build.watch = null;
+  await build(viteOptions);
 };

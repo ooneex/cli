@@ -77,7 +77,9 @@ export const create = async (
   content = (new File(`${__dirname}../Handler/handler.template.txt`)).read()
     .replaceAll("{{ name }}", "HomepageHandler");
   project.touch(`${AppApiDirectories.handlers}/HomepageHandler.ts`, content);
-  app.output.success(`File "${AppApiDirectories.handlers}/HomepageHandler.ts" created`);
+  app.output.success(
+    `File "${AppApiDirectories.handlers}/HomepageHandler.ts" created`,
+  );
   app.output.newLine();
 
   // Middleware
@@ -89,14 +91,18 @@ export const create = async (
     `${AppApiDirectories.middlewares}/HomepageMiddleware.ts`,
     content,
   );
-  app.output.success(`File "${AppApiDirectories.middlewares}/HomepageMiddleware.ts" created`);
+  app.output.success(
+    `File "${AppApiDirectories.middlewares}/HomepageMiddleware.ts" created`,
+  );
   app.output.newLine();
 
   // Route
   project.rm([`${AppApiDirectories.routes}/.gitkeep`]);
   content = (new File(`${__dirname}templates/route.template.txt`)).read();
   project.touch(`${AppApiDirectories.routes}/HomepageRoute.ts`, content);
-  app.output.success(`File "${AppApiDirectories.routes}/HomepageRoute.ts" created`);
+  app.output.success(
+    `File "${AppApiDirectories.routes}/HomepageRoute.ts" created`,
+  );
   app.output.newLine();
 
   // var
@@ -111,7 +117,9 @@ export const create = async (
     content = (new File(`${__dirname}../View/view.template.txt`)).read()
       .replaceAll("{{ name }}", "HomepageView");
     project.touch(`${AppFullDirectories.views}/HomepageView.tsx`, content);
-    app.output.success(`File "${AppFullDirectories.views}/HomepageView.tsx" created`);
+    app.output.success(
+      `File "${AppFullDirectories.views}/HomepageView.tsx" created`,
+    );
     app.output.newLine();
 
     content = (new File(`${__dirname}templates/view.not.found.template.txt`))
@@ -120,7 +128,9 @@ export const create = async (
       `${AppFullDirectories.views}/Exception/NotFoundView.tsx`,
       content,
     );
-    app.output.success(`File "${AppFullDirectories.views}/Exception/NotFoundView.tsx" created`);
+    app.output.success(
+      `File "${AppFullDirectories.views}/Exception/NotFoundView.tsx" created`,
+    );
     app.output.newLine();
 
     content = (new File(`${__dirname}templates/view.server.error.template.txt`))
@@ -129,7 +139,9 @@ export const create = async (
       `${AppFullDirectories.views}/Exception/ServerErrorView.tsx`,
       content,
     );
-    app.output.success(`File "${AppFullDirectories.views}/Exception/ServerErrorView.tsx" created`);
+    app.output.success(
+      `File "${AppFullDirectories.views}/Exception/ServerErrorView.tsx" created`,
+    );
     app.output.newLine();
   }
 

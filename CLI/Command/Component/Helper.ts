@@ -2,7 +2,8 @@ import {
   AppFullDirectoryType,
   config,
   ConfigException,
-  Directory, File,
+  Directory,
+  File,
 } from "../../deps.ts";
 
 const __dirname = new URL(".", import.meta.url).pathname;

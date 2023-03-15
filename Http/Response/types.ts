@@ -6,13 +6,14 @@ export interface IResponse extends IHandlerResponse {
   send: () => Response | Promise<Response>;
 }
 
-export interface IHandlerResponse extends INotFoundResponse {
+export interface IHandlerResponse extends IBaseResponse {
   renderNotFound: (data?: Record<string, unknown>) => this;
   setError: (error: IException | null) => this;
   setView: (view: ViewType | null) => this;
   setStatus: (status: HttpStatusType) => this;
   setCharset: (value: CharsetType) => this;
   isNotFound: () => boolean;
+  getError: () => IException | null;
 }
 
 export interface IServerErrorResponse extends IBaseResponse {

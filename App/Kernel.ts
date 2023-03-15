@@ -2,18 +2,20 @@ import { App } from "./App.ts";
 import { config } from "./Config/Config.ts";
 import { AppConfigErrorType } from "./Config/types.ts";
 import {
+  buildIslands,
   ConnInfo,
   HttpServer,
   OnServerError,
   OnServerListen,
   ServerHandler,
+  watchIslands
 } from "./deps.ts";
 import { AppFullDirectoryType } from "./Directory/types.ts";
 import { env } from "./Env/Env.ts";
 import { appRouter } from "./Router/AppRouter.ts";
 
 export class Kernel {
-  public static async boot(): Promise<void> {
+  public static async boot(abortController: AbortController): Promise<void> {
     await config.parse();
     await env.parse();
     const router = await appRouter.parse();
@@ -33,14 +35,22 @@ export class Kernel {
       onError: (error: unknown) => OnServerError(error, app),
       onListen: (params: { hostname: string; port: number }) =>
         OnServerListen(params.hostname, params.port, app),
+      signal: abortController.signal,
 
       // TODO:
-      signal: undefined,
       key: undefined,
       cert: undefined,
       keyFile: undefined,
       certFile: undefined,
     });
+
+    if (env.isDev()) {
+      await watchIslands();
+    }
+
+    if (env.isProd()) {
+      await buildIslands();
+    }
 
     await server.start();
   }
