@@ -45,6 +45,8 @@ export const create = async (
     return {};
   }
 
+  app.output.newLine();
+
   const id = crypto.randomUUID();
   const content = (new File(`${__dirname}island.template.txt`)).read()
     .replaceAll("{{ name }}", filename)

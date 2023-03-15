@@ -84,6 +84,8 @@ export const create = async (
   });
   const routeDescription = await routeDescriptionPrompt.prompt();
 
+  app.output.newLine();
+
   let content = "";
   content += `import { RouteDefinitionType } from "@ooneex/routing";\n`;
   content += `import RouteHandler from "@app/${routeHandler}.ts";\n\n`;
@@ -114,8 +116,6 @@ export const create = async (
   app.output.newLine();
   app.output.success(`File "${filePath}" created`);
   app.output.newLine();
-
-  // TODO: add end message
 
   return {};
 };

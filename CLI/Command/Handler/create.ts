@@ -3,6 +3,8 @@ import { ConfirmPrompt, InputPrompt, SelectPrompt } from "../../Prompt/mod.ts";
 import { CommandType } from "../../types.ts";
 import { HandlerHelper } from "./Helper.ts";
 
+const __dirname = new URL(".", import.meta.url).pathname;
+
 export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
@@ -47,7 +49,8 @@ export const create = async (
     return {};
   }
 
-  const __dirname = new URL(".", import.meta.url).pathname;
+  app.output.newLine();
+
   const filenameFormatted = filename.split("/");
   const content = (new File(`${__dirname}handler.template.txt`)).read()
     .replaceAll(

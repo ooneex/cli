@@ -47,6 +47,8 @@ export const create = async (
     return {};
   }
 
+  app.output.newLine();
+
   const __dirname = new URL(".", import.meta.url).pathname;
   const filenameFormatted = filename.split("/");
   const content = (new File(`${__dirname}middleware.template.txt`)).read()

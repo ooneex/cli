@@ -45,6 +45,8 @@ export const create = async (
     return {};
   }
 
+  app.output.newLine();
+
   const content = (new File(`${__dirname}component.template.txt`)).read()
     .replaceAll("{{ name }}", filename);
 
