@@ -15,16 +15,18 @@ import { env } from "./Env/Env.ts";
 import { appRouter } from "./Router/AppRouter.ts";
 
 export class Kernel {
-  public static async boot(abortController: AbortController): Promise<void> {
+  public static async boot(): Promise<void> {
     await config.parse();
     await env.parse();
     const router = await appRouter.parse();
+    const abortController = new AbortController();
 
     const app = new App({
       env,
       directories: config.getDirectories() as AppFullDirectoryType,
       errors: config.getErrors() as AppConfigErrorType,
       router,
+      abortController,
     });
 
     const server = new HttpServer({

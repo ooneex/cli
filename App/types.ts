@@ -4,7 +4,7 @@ import {
   IMatchedRoute,
   IRoute,
   IRouter,
-  LocaleType,
+  LocaleType
 } from "./deps.ts";
 import { AppFullDirectoryType } from "./Directory/types.ts";
 import { IEnv } from "./Env/types.ts";
@@ -25,6 +25,7 @@ export type AppStateType = {
   readonly errors: AppConfigErrorType;
   readonly directories: AppFullDirectoryType;
   readonly router: IRouter;
+  readonly abortController: AbortController;
   readonly route?: IRoute;
   readonly matchedRoute?: IMatchedRoute;
 };

@@ -11,6 +11,7 @@ export class App implements IApp {
   public readonly router: IRouter;
   public readonly route?: IRoute;
   public readonly matchedRoute?: IMatchedRoute;
+  public readonly abortController: AbortController;
   public readonly data: Collection;
 
   constructor(private readonly state: AppStateType) {
@@ -19,6 +20,7 @@ export class App implements IApp {
     this.directories = state.directories;
     this.router = state.router;
     this.route = state.route;
+    this.abortController = state.abortController;
     this.matchedRoute = state.matchedRoute;
     this.data = new Collection();
   }
