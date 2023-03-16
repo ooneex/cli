@@ -5,7 +5,7 @@ import {
   MatchedRouteType,
   RouteChecker,
   RouteNotFoundException,
-  serveFile,
+  serveFile
 } from "../deps.ts";
 import { HttpRequest } from "../Request/HttpRequest.ts";
 import { UrlPatternType } from "../Request/types.ts";
@@ -19,22 +19,23 @@ export const ServerHandler = async (
   const request = new HttpRequest(req);
   let response = new HttpResponse();
 
-  let pathname = request.url.pathname;
+  const pathname = request.url.pathname;
+  let filePath = pathname;
 
-  if (app.isFullApp() && /^\/public|dist\/.+/i.test(pathname)) {
+  if (app.isFullApp() && /^\/assets|dist\/.+/i.test(pathname)) {
     if (/^\/dist\/.+/i.test(pathname)) {
-      pathname = pathname.replace(
-        /dist/i,
-        `${app.directories.static ?? "static"}/dist`,
+      filePath = pathname.replace(
+        /^\/dist\//i,
+        `/${app.directories.static ?? "static"}/dist/`,
       );
     } else {
-      pathname = pathname.replace(
-        /public/i,
-        app.directories.static ?? "static",
+      filePath = pathname.replace(
+        /^\/assets\//i,
+        `/${app.directories.static ?? "static"}/`,
       );
     }
 
-    const path = `${Deno.cwd()}${pathname}`;
+    const path = `${Deno.cwd()}${filePath}`;
 
     return await serveFile(req, path);
   }

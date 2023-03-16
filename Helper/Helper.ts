@@ -127,6 +127,22 @@ export class Helper {
     return Math.floor(Math.random() * Math.floor(max));
   }
 
+  public static randomString(count = 15): string {
+    const buf = new Uint8Array(Math.floor(count / 2));
+    crypto.getRandomValues(buf);
+    let result = "";
+    for (let i = 0; i < buf.length; ++i) {
+      result += ("0" + buf[i].toString(16)).slice(-2);
+    }
+
+    if (result.length < count) {
+      const chars = "abcdefjhigklmnopqrstuvwxyz0987654321";
+      result += chars[Helper.randomInt(chars.length - 1)];
+    }
+
+    return result;
+  }
+
   public static randomColor(): string {
     return "#" + ("0123456789abcdef".split("").map((_v, i, a) => {
       return i > 5 ? null : a[Math.floor(Math.random() * 16)];

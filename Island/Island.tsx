@@ -3,7 +3,8 @@ import { AppFullDirectoryType, config, File, Helper } from "./deps.ts";
 
 interface IIslandProps {
   name: string;
-  data?: unknown;
+  key?: string;
+  data?: Record<string, unknown>;
   children?: ComponentChildren;
 }
 
@@ -24,8 +25,17 @@ export const Island = (props: IIslandProps) => {
     return null;
   }
 
+  const storageId = crypto.randomUUID();
+
+  if (props.key && props.data) {
+    localStorage.setItem(storageId, JSON.stringify({
+      key: props.key,
+      data: props.data,
+    }));
+  }
+
   return (
-    <div id={id} data-ooneex-island-64d2e8dc={`${props.name}--${id}`}>
+    <div id={id} data-ooneex-island-64d2e8dc={`${name}--${storageId}`}>
       {props.children}
     </div>
   );
@@ -34,7 +44,7 @@ export const Island = (props: IIslandProps) => {
 export const getManifest = (): Record<string, ManifestType> | null => {
   const directories = config.getDirectories() as AppFullDirectoryType;
   const staticDir = directories.static;
-  const file = new File(`${staticDir}/dist/manifest.json`);
+  const file = new File(`${staticDir}/manifest.json`);
 
   if (!file.exists()) {
     return null;

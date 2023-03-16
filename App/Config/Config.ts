@@ -1,16 +1,17 @@
 import {
   AppApiDirectoryType,
-  AppFullDirectoryType,
+  AppFullDirectoryType
 } from "../Directory/types.ts";
-import { AppConfigErrorType, AppConfigType } from "./types.ts";
 import defaultConfig from "./app.config.ts";
+import { AppConfigErrorType, AppConfigType } from "./types.ts";
 
 export class Config {
   private config: AppConfigType | null = null;
 
   public async parse(): Promise<this> {
     try {
-      this.config = (await import(`./config/app.config.ts`)).default;
+      this.config =
+        (await import(`${Deno.cwd()}/config/app.config.ts`)).default;
     } catch (_e) {
       this.config = defaultConfig;
     }

@@ -1,5 +1,10 @@
 import solid from "npm:vite-plugin-solid@^2.4.0";
-import { AppFullDirectoryType, config, Directory } from "./deps.ts";
+import {
+  AppFullDirectoryType,
+  config,
+  Directory,
+  getAssetFromCache,
+} from "./deps.ts";
 
 export const getOptions = async () => {
   await config.parse();
@@ -28,26 +33,25 @@ export const getOptions = async () => {
     mode: "development",
     cacheDir: directories.var,
     build: {
-      outDir: `${directories.static}/dist`,
-      assetsDir: ".",
+      outDir: `${directories.static}`,
+      assetsDir: "dist",
       sourcemap: false,
       minify: false,
       manifest: true,
       write: true,
-      emptyOutDir: true,
+      emptyOutDir: false,
       css: {
         devSourcemap: true,
       },
       rollupOptions: {
         input: inputs,
         output: {
-          entryFileNames: `[hash:15].js`,
-          assetFileNames: (assetInfo: Record<"name", string>) => {
-            return `${
-              assetInfo.name.replace(/.+\.([a-z0-9]+)/, (_match, ext) =>
-                `[hash:15].${ext}`)
-            }`;
-          },
+          entryFileNames: (chunkInfo: Record<"name", string>) =>
+            getAssetFromCache(`dist/${chunkInfo.name}.js`, "dist"),
+          chunkFileNames: (chunkInfo: Record<"name", string>) =>
+            getAssetFromCache(`dist/${chunkInfo.name}.js`, "dist"),
+          assetFileNames: (assetInfo: Record<"name", string>) =>
+            getAssetFromCache(`dist/${assetInfo.name}`, "dist"),
         },
       },
       watch: null,

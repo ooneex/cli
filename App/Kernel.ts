@@ -8,7 +8,7 @@ import {
   OnServerError,
   OnServerListen,
   ServerHandler,
-  watchIslands
+  watchIslands,
 } from "./deps.ts";
 import { AppFullDirectoryType } from "./Directory/types.ts";
 import { env } from "./Env/Env.ts";

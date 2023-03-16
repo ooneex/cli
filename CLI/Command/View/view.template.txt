@@ -1,5 +1,5 @@
 import { Island } from "@ooneex/island";
-import { Body, Head } from "@ooneex/view";
+import { asset, Body, Head } from "@ooneex/view";
 
 interface I{{ name }} {
   name: string;
@@ -8,8 +8,8 @@ interface I{{ name }} {
 const {{ name }} = (props: I{{ name }}) => {
   return (
     <>
-      <Head title={"{{ name }}"} styles={["{{ name }}.css"]} />
-      <Body scripts={["{{ name }}.js"]}>
+      <Head title={"{{ name }}"} styles={[asset("{{ name }}.css")]} />
+      <Body scripts={[asset("{{ name }}.js")]}>
         {{ name }}.tsx
       </Body>
       <Island name={"..."} />

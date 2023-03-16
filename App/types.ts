@@ -4,7 +4,7 @@ import {
   IMatchedRoute,
   IRoute,
   IRouter,
-  LocaleType
+  LocaleType,
 } from "./deps.ts";
 import { AppFullDirectoryType } from "./Directory/types.ts";
 import { IEnv } from "./Env/types.ts";

@@ -130,6 +130,11 @@ describe("Helper", () => {
     assertEquals(Helper.randomInt(5) <= 5, true);
   });
 
+  describe("randomString", () => {
+    assertEquals(Helper.randomString().length, 15);
+    assertEquals(Helper.randomString(10).length, 10);
+  });
+
   describe("randomColor", () => {
     assertEquals(/^#[0-9A-F]{6}/.test(Helper.randomColor()), true);
   });

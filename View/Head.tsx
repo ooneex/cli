@@ -1,5 +1,4 @@
 import { ComponentChildren } from "https://esm.sh/preact@10.12.1";
-import { asset } from "./asset.ts";
 
 export interface IHeaderProps {
   charset?: string;
@@ -24,7 +23,7 @@ export const Head = (
           <link
             rel={"icon"}
             type={"image/svg+xml"}
-            href={asset(favicon)}
+            href={favicon}
           />
         )
         : null}
@@ -37,11 +36,11 @@ export const Head = (
       {description ? <meta name={"description"} content={description} /> : null}
 
       {styles
-        ? styles.map((style) => <link rel={"stylesheet"} href={asset(style)} />)
+        ? styles.map((style) => <link rel={"stylesheet"} href={style} />)
         : null}
 
       <title>{title}</title>
-      ---ooneex-island-mark-64d2e8dc---
+      #-ooneex-island-mark-64d2e8dc-#
       {children}
     </head>
   );

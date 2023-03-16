@@ -46,7 +46,7 @@ export interface IDirectory {
   /**
    * Removes files or directories.
    */
-  rm(paths?: string[], recursive?: boolean): this;
+  rm(paths?: string[] | null, recursive?: boolean): this;
   /**
    * Renames directory.
    */

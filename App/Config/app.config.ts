@@ -6,11 +6,11 @@ const config: AppConfigType = {
   directories: AppFullDirectories,
   errors: {
     notFound: {
-      view: "NotFoundView",
+      view: "Exception/NotFoundView",
       handler: NotFoundHandler,
     },
     server: {
-      view: "ServerErrorView",
+      view: "Exception/ServerErrorView",
       handler: ServerErrorHandler,
     },
   },

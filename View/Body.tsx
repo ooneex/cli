@@ -19,7 +19,7 @@ export const Body = (
           if (Helper.isString(s)) {
             s = { src: s };
           }
-          return s.src ? <script {...s} src={asset(s.src)} /> : null;
+          return s.src ? <script {...s} src={s.src} /> : null;
         })
         : null}
     </body>

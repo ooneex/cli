@@ -176,7 +176,7 @@ export class Directory implements IDirectory {
   /**
    * Removes files or directories.
    */
-  public rm(paths?: string[], recursive = true): this {
+  public rm(paths?: string[] | null, recursive = true): this {
     try {
       if (paths) {
         paths.map((path) => {
