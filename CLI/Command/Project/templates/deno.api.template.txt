@@ -3,8 +3,7 @@
     "start": "deno run -A --watch=.env,.env.local,config/,handlers/,middlewares/,routes/ index.ts",
     "test": "deno test -A --unstable .",
     "fmt": "deno fmt",
-    "lint": "deno fmt --check && deno lint",
-    "ooneex": "deno run -A ../Packages/CLI/ooneex.ts"
+    "lint": "deno fmt --check && deno lint"
   },
   "imports": {
     "@app/bin/": "./bin/",
