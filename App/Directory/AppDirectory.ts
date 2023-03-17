@@ -7,6 +7,7 @@ export const AppApiDirectories: AppApiDirectoryType = {
   handlers: "handlers",
   middlewares: "middlewares",
   migrations: "migrations",
+  packages: "packages",
   routes: "routes",
   var: "var",
 };
