@@ -2,6 +2,7 @@ import { ComponentCommand } from "./Command/Component/ComponentCommand.ts";
 import { HandlerCommand } from "./Command/Handler/HandlerCommand.ts";
 import { HelpCommand } from "./Command/Help/HelpCommand.ts";
 import { IslandCommand } from "./Command/Island/IslandCommand.ts";
+import {MakeCommand} from "./Command/Make/MakeCommand.ts";
 import { NewCommand } from "./Command/Project/NewCommand.ts";
 import { ProjectCommand } from "./Command/Project/ProjectCommand.ts";
 import { RouteCommand } from "./Command/Route/RouteCommand.ts";
@@ -41,3 +42,6 @@ container.add(component.getName(), component);
 
 const island = new IslandCommand();
 container.add(island.getName(), island);
+
+const make = new MakeCommand();
+container.add(make.getName(), make);
