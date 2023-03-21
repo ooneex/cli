@@ -12,7 +12,6 @@ export type AppApiDirectoryType = {
   handlers: string;
   middlewares: string;
   migrations: string;
-  packages: string;
   routes: string;
   var: string;
 };
