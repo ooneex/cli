@@ -1,6 +1,5 @@
 import { ComponentChildren } from "https://esm.sh/preact@10.12.1";
-import { asset } from "./asset.ts";
-import { Helper } from "./deps.ts";
+import { Helper } from "../deps.ts";
 
 export interface IBodyProps {
   children?: ComponentChildren;

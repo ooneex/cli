@@ -59,7 +59,5 @@ export const getAssetFromCache = (name: string, directory?: string): string => {
     assetsCacheFile.write(JSON.stringify(assetsCacheManifest));
   }
 
-  const filename = assetsCacheManifest[name];
-
-  return filename;
+  return assetsCacheManifest[name];
 };

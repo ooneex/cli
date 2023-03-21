@@ -28,8 +28,8 @@ export class View implements IView {
     const resourcesCache: string[] = [];
 
     content = content.replace(
-      /data\-ooneex\-island\-64d2e8dc ?= ?['"]([a-z0-9-]+)--([a-z0-9-]+)['"]/ig,
-      (token, name, id) => {
+      /data-ooneex-island-64d2e8dc ?= ?['"]([a-z0-9-]+)--([a-z0-9-]+)['"]/ig,
+      (token: string, name: string, id: string) => {
         const resources = getAssets(name);
 
         resources.map((resource) => {

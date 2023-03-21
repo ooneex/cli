@@ -11,16 +11,17 @@
     ]
   },
   "imports": {
+    "uuid-v4": "https://deno.land/std@0.180.0/uuid/v4.ts",
+    "deno-dom": "https://deno.land/x/deno_dom/deno-dom-wasm.ts",
     "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
     "preact": "https://esm.sh/preact@10.12.1",
     "preact/": "https://esm.sh/preact@10.12.1/"
   },
   "tasks": {
     "test": "deno test -A .",
-    "test:watch": "deno test -A --watch .",
+    "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
-    "lint": "deno fmt --check && deno lint",
-    "ooneex": "deno run -A ./CLI/ooneex.ts"
+    "lint": "deno fmt --check && deno lint"
   },
   "test": {
     "files": {
