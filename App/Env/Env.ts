@@ -3,15 +3,30 @@ import { AppLocaleType, AppVersionType } from "../types.ts";
 import { AppEnvType, AppEnvVarsType, IEnv } from "./types.ts";
 
 export class Env implements IEnv {
-  private dotEnv: DotEnv = new DotEnv();
+  private data: DotEnv = new DotEnv();
 
   public async parse(): Promise<this> {
-    await this.dotEnv.parse(".env");
-    await this.dotEnv.parse(".env.test");
-    await this.dotEnv.parse(".env.prod");
-    await this.dotEnv.parse(".env.local");
-    await this.dotEnv.parse(".env.test.local");
-    await this.dotEnv.parse(".env.prod.local");
+    await this.data.parse(".env");
+    await this.data.parse(".env.test");
+    await this.data.parse(".env.prod");
+    await this.data.parse(".env.local");
+    await this.data.parse(".env.test.local");
+    await this.data.parse(".env.prod.local");
+
+    if (!this.data.hasData()) {
+      this.data.fromJson({
+        APP_ENV: "dev",
+        API: true,
+        LOCALE: "en-us",
+        COUNTRY: "United States",
+        VERSION: "1.0.0",
+        SECRET: crypto.randomUUID(),
+        DEBUG: true,
+        PORT: "3000",
+        HOST: "localhost",
+        SSL: false,
+      });
+    }
 
     return this;
   }
@@ -41,7 +56,17 @@ export class Env implements IEnv {
   }
 
   public getPort(): number | null {
-    return this.get<number>("PORT") ?? null;
+    let port: string | number | null = this.get<string>("PORT") ?? null;
+
+    if (port) {
+      try {
+        port = parseInt(port, 10);
+      } catch (_e) {
+        port = null;
+      }
+    }
+
+    return port as number | null;
   }
 
   public getHost(): string | null {
@@ -77,15 +102,15 @@ export class Env implements IEnv {
   }
 
   public get<T>(key: Uppercase<string>): T | undefined {
-    return this.dotEnv.get<T>(key);
+    return this.data.get<T>(key);
   }
 
   public getData(): AppEnvVarsType {
-    return this.dotEnv.getData() as AppEnvVarsType;
+    return this.data.getData() as AppEnvVarsType;
   }
 
   public setData(data: AppEnvVarsType): this {
-    this.dotEnv.setData(data);
+    this.data.setData(data);
 
     return this;
   }
