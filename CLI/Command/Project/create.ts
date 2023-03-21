@@ -62,7 +62,7 @@ export const create = async (
 
   // Config
   project.rm([`config/.gitkeep`]);
-  let content = (new File(`${__dirname}templates/app.config.template.txt`))
+  let content = (new File(`${__dirname}../../../App/Config/app.config.template.txt`))
     .read()
     .replaceAll(
       "{{ directories }}",
@@ -146,7 +146,7 @@ export const create = async (
   }
 
   // .env
-  content = (new File(`${__dirname}templates/env.template.txt`)).read()
+  content = (new File(`${__dirname}../../../App/Env/env.template.txt`)).read()
     .replaceAll("{{ api }}", `${isApi}`)
     .replaceAll("{{ secret }}", `${crypto.randomUUID()}`)
     .replaceAll("{{ port }}", `${projectPort}`);
