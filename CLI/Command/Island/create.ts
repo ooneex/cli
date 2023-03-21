@@ -5,6 +5,8 @@ import { IslandHelper } from "./Helper.ts";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 
+// TODO: generate unit test file
+
 export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {

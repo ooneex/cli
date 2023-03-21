@@ -5,6 +5,9 @@ import { ViewHelper } from "./Helper.ts";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 
+// TODO: generate unit test file
+// TODO: https://deno.land/x/deno_dom@v0.1.36-alpha
+
 export const create = async (
   app: CommandType,
 ): Promise<Record<string, unknown>> => {
