@@ -1,8 +1,9 @@
+import {NotFoundHandler, ServerErrorHandler} from "../deps.ts";
+import {AppFullDirectories} from "../Directory/AppDirectory.ts";
 import {
   AppApiDirectoryType,
   AppFullDirectoryType
 } from "../Directory/types.ts";
-import defaultConfig from "./app.config.ts";
 import { AppConfigErrorType, AppConfigType } from "./types.ts";
 
 export class Config {
@@ -13,7 +14,19 @@ export class Config {
       this.config =
         (await import(`${Deno.cwd()}/config/app.config.ts`)).default;
     } catch (_e) {
-      this.config = defaultConfig;
+      this.config = {
+        directories: AppFullDirectories,
+        errors: {
+          notFound: {
+            view: "Exception/NotFoundView",
+            handler: NotFoundHandler,
+          },
+          server: {
+            view: "Exception/ServerErrorView",
+            handler: ServerErrorHandler,
+          },
+        },
+      };
     }
 
     return this;
