@@ -6,7 +6,6 @@ export interface ICollection<K = string, V = unknown> {
   get<T>(key: K): T | undefined;
   has(key: K): boolean;
   hasData(): boolean;
-  entries(): K[];
   keys(): K[];
   values(): V[];
   count(): number;

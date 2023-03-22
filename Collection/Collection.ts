@@ -34,7 +34,7 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
   }
 
   public count(): number {
-    return this.entries().length;
+    return this.keys().length;
   }
 
   /**
@@ -48,12 +48,8 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     return this.count() > 0;
   }
 
-  public entries(): K[] {
-    return Object.keys(this.data) as K[];
-  }
-
   public keys(): K[] {
-    return this.entries();
+    return Object.keys(this.data) as K[];
   }
 
   public values(): V[] {
@@ -61,9 +57,9 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
   }
 
   public map(fn: (value: V, key: K) => void): this {
-    const entries = this.entries();
+    const keys = this.keys();
 
-    entries.map((entry) => {
+    keys.map((entry) => {
       fn(this.data[entry], entry);
     });
 

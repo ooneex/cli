@@ -16,8 +16,8 @@ describe("Collection", () => {
   });
 
   it("entries/keys", () => {
-    assertEquals(products.entries(), ["mouse", "monitor"]);
-    assertEquals(products.keys(), products.entries());
+    assertEquals(products.keys(), ["mouse", "monitor"]);
+    assertEquals(products.keys(), products.keys());
   });
 
   it("values", () => {
@@ -39,7 +39,7 @@ describe("Collection", () => {
   it("search", () => {
     const monitor = products.search(/R$/i);
     assertEquals(monitor.count(), 1);
-    assertEquals(monitor.entries(), ["monitor"]);
+    assertEquals(monitor.keys(), ["monitor"]);
   });
 
   it("remove", () => {
@@ -51,7 +51,7 @@ describe("Collection", () => {
   it("clear", () => {
     products.clear();
     assertEquals(products.count(), 0);
-    assertEquals(products.entries(), []);
+    assertEquals(products.keys(), []);
     assertEquals(products.values(), []);
   });
 });
