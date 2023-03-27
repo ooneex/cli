@@ -1,9 +1,8 @@
 import { Collection, IApp, IException, view, ViewType } from "../deps.ts";
-import { Header } from "../Header/Header.ts";
-import { HeaderContentType } from "../Header/types.ts";
+import { Header, HeaderContentTypeType } from "../Header/mod.ts";
 import { HttpRequest } from "../Request/HttpRequest.ts";
 import { HttpCodeType, HttpStatusType } from "../types.ts";
-import { CharsetType, IResponse } from "./types.ts";
+import { IResponse } from "./types.ts";
 
 export class HttpResponse implements IResponse {
   private status: HttpStatusType | null = null;
@@ -11,21 +10,14 @@ export class HttpResponse implements IResponse {
   private view: ViewType | null = null;
   private notFound = false;
   private response: Response | null = null;
-  private charset: CharsetType = "utf-8";
-  /**
-   * For view
-   */
   public readonly data: Collection;
-  /**
-   * For json response
-   */
   public readonly body: Collection;
-  public readonly headers: Header;
+  public readonly header: Header;
 
   constructor() {
     this.data = new Collection<string, unknown>();
     this.body = new Collection<string, unknown>();
-    this.headers = new Header(new Headers());
+    this.header = new Header(new Headers());
   }
 
   public getError(): IException | null {
@@ -54,16 +46,6 @@ export class HttpResponse implements IResponse {
 
   public setStatus(status: HttpStatusType): this {
     this.status = status;
-
-    return this;
-  }
-
-  public getCharset(): CharsetType {
-    return this.charset;
-  }
-
-  public setCharset(value: CharsetType): this {
-    this.charset = value;
 
     return this;
   }
@@ -205,7 +187,7 @@ export class HttpResponse implements IResponse {
     const status: HttpStatusType = this.status ?? HttpStatusType.OK;
 
     return {
-      headers: this.headers.getNative(),
+      headers: this.header.native,
       status: status,
       statusText: HttpCodeType[status],
     };
@@ -213,13 +195,14 @@ export class HttpResponse implements IResponse {
 
   private buildResponse(
     content: string,
-    contentType: HeaderContentType,
+    contentType: HeaderContentTypeType,
   ): Response {
     if (!this.status) {
       this.status = HttpStatusType.OK;
     }
 
-    this.headers.contentType(`${contentType}; charset=${this.charset}`);
+    this.header.contentType(contentType);
+    this.header.contentLength(content.length);
     return new Response(content, this.getInitOptions());
   }
 }

@@ -1,37 +1,5 @@
-/**
- * Map from status code to status text.
- *
- * @example
- *
- * ```ts
- * console.log(HttpStatusType.NotFound); // 404
- * console.log(HttpCodeType[HttpStatusType.NotFound]); // "Not Found"
- * ```
- */
-import {
-  ConnInfo,
-  Status as HttpStatusType,
-  STATUS_TEXT as HttpCodeType,
-} from "./deps.ts";
-
-export type HttpMethodType =
-  | "CONNECT"
-  | "DELETE"
-  | "GET"
-  | "HEAD"
-  | "OPTIONS"
-  | "PATCH"
-  | "POST"
-  | "PUT"
-  | "TRACE";
-
-export { HttpCodeType, HttpStatusType };
-
-export type HttpProtocolType =
-  | "https"
-  | "http"
-  | "socket"
-  | "tcp";
+import { ConnInfo } from "./deps.ts";
+export * from "../Module/Http/types.ts";
 
 export type ServerOptionsType = {
   port?: number;

@@ -20,7 +20,7 @@ describe("DotEnv", () => {
       "Get complex text",
     );
     assertEquals(
-      dotEnv.entries(),
+      dotEnv.keys(),
       [
         "ENV",
         "LOCALE",

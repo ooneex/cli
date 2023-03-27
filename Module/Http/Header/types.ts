@@ -1,30 +1,39 @@
-import { HttpMethodType } from "../types.ts";
+import { CharsetType, HttpMethodType } from "../types.ts";
 
 export interface IHeader {
+  readonly native: Headers;
   get: (name: HeaderKeyType) => string | null;
   getAllow: () => HttpMethodType | null;
   getAccept: () => HeaderAcceptType | null;
   getAcceptEncoding: () => AcceptEncodingType | null;
   getContentLength: () => string | null;
-  getContentType: () => HeaderContentType | null;
+  getContentType: () => HeaderContentTypeType | null;
   getUserAgent: () => string | null;
+  getAuthorization: () => string | null;
+  getBasicAuth: () => string | null;
+  getBearer: () => string | null;
   getCookie: () => string | null;
   getHost: () => string | null;
   getReferer: () => string | null;
   getRefererPolicy: () => string | null;
   getServer: () => string | null;
+  getCharset: () => CharsetType;
+  contentLength: (length: number) => IHeader;
+  isBlob: () => boolean;
   isJson: () => boolean;
   isText: () => boolean;
   isFormData: () => boolean;
   has: (name: HeaderKeyType) => boolean;
+  keys: () => string[];
+  count: () => number;
+  hasData: () => boolean;
   forEach: (
     callbackFn: (value: string, key: string, parent: Headers) => void,
     thisArg?: unknown,
   ) => void;
-  getNative: () => Headers;
 }
 
-export type HeaderContentType = HeaderAcceptType;
+export type HeaderContentTypeType = HeaderAcceptType;
 export type AcceptEncodingType =
   | "deflate"
   | "gzip"
@@ -114,7 +123,9 @@ export type HeaderKeyType =
   | "Via"
   | "WWW-Authenticate"
   | "Want-Digest"
+  | "X-API-KEY"
   | "X-Content-Type-Options"
+  | "X-Custom-Header"
   | "X-Frame-Options"
   | string;
 

@@ -1,4 +1,4 @@
-import { build } from "npm:vite@^4.0.0";
+import { build } from "./deps.ts";
 import { getOptions } from "./ViteOptions.ts";
 
 export const buildIslands = async (): Promise<void> => {

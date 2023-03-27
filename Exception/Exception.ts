@@ -6,6 +6,7 @@ export class Exception extends Error implements IException {
   private data: unknown | null = null;
   private nativeError: Error | null = null;
   private formatter: ((data: unknown) => unknown) | null = null;
+  // TODO: add status
 
   public getName(): string {
     if (this.nativeError) {

@@ -1,5 +1,10 @@
-import { ComponentChildren } from "https://esm.sh/preact@10.12.1";
-import { AppFullDirectoryType, config, File, Helper } from "./deps.ts";
+import {
+  AppFullDirectoryType,
+  ComponentChildren,
+  config,
+  File,
+  Helper,
+} from "./deps.ts";
 
 interface IIslandProps {
   name: string;
@@ -28,10 +33,13 @@ export const Island = (props: IIslandProps) => {
   const storageId = crypto.randomUUID();
 
   if (props.key && props.data) {
-    localStorage.setItem(storageId, JSON.stringify({
-      key: props.key,
-      data: props.data,
-    }));
+    localStorage.setItem(
+      storageId,
+      JSON.stringify({
+        key: props.key,
+        data: props.data,
+      }),
+    );
   }
 
   return (

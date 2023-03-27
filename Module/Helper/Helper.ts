@@ -128,16 +128,13 @@ export class Helper {
   }
 
   public static randomString(count = 15): string {
-    const buf = new Uint8Array(Math.floor(count / 2));
-    crypto.getRandomValues(buf);
     let result = "";
-    for (let i = 0; i < buf.length; ++i) {
-      result += ("0" + buf[i].toString(16)).slice(-2);
-    }
-
-    if (result.length < count) {
-      const chars = "abcdefjhigklmnopqrstuvwxyz0987654321";
-      result += chars[Helper.randomInt(chars.length - 1)];
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < count) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
     }
 
     return result;

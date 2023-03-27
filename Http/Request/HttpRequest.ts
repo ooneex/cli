@@ -1,53 +1,55 @@
 import { Helper } from "../deps.ts";
-import { Header } from "../Header/Header.ts";
-import { IHeader } from "../Header/types.ts";
+import { Header, IHeader } from "../Header/mod.ts";
 import { HttpMethodType } from "../types.ts";
 import { RequestBodyParserException } from "./RequestBodyParserException.ts";
 import { IRequest, UrlPatternType } from "./types.ts";
 
 export class HttpRequest implements IRequest {
   public readonly url: URL;
-  public readonly headers: IHeader;
+  public readonly header: IHeader;
   public readonly search: URLSearchParams;
 
-  constructor(public readonly nativeRequest: Request) {
-    this.url = new URL(nativeRequest.url);
+  constructor(public readonly native: Request) {
+    this.url = new URL(native.url);
     this.url.pathname = decodeURIComponent(this.url.pathname);
-    this.headers = new Header(nativeRequest.headers);
+    this.header = new Header(native.headers);
     this.search = this.url.searchParams;
   }
 
   public getMethod(): HttpMethodType {
-    return this.nativeRequest.method as HttpMethodType;
+    return this.native.method as HttpMethodType;
   }
 
   public isFormData(): boolean {
-    return this.headers.isFormData();
+    return this.header.isFormData();
   }
 
   public isJson(): boolean {
-    return this.headers.isJson();
+    return this.header.isJson();
   }
 
   public isText(): boolean {
-    return this.headers.isText();
+    return this.header.isText();
   }
 
   // TODO: arrayBuffer() blob()
+  // TODO: check for bodyUsed
   public async getBody<T = Record<string, unknown>>(): Promise<
     T | string | FormData | null
   > {
+    // TODO: check if body is null
+
     try {
       if (this.isJson()) {
-        return await this.nativeRequest.json();
+        return await this.native.json();
       }
 
       if (this.isText()) {
-        return await this.nativeRequest.text();
+        return await this.native.text();
       }
 
       if (this.isFormData()) {
-        return await this.nativeRequest.formData();
+        return await this.native.formData();
       }
     } catch (e) {
       throw new RequestBodyParserException(e.message);

@@ -1,12 +1,11 @@
 import { assertEquals } from "@ooneex/testing/asserts.ts";
 import { describe, it } from "@ooneex/testing/bdd.ts";
 import { validate } from "uuid-v4";
-import {env} from "./Env.ts";
+import { env } from "./Env.ts";
 
 await env.parse();
 
 describe("App/Env", () => {
-
   describe("APP_ENV", () => {
     it("isDev", () => {
       assertEquals(env.isDev(), true);

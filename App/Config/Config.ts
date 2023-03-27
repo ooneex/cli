@@ -1,8 +1,8 @@
-import {NotFoundHandler, ServerErrorHandler} from "../deps.ts";
-import {AppFullDirectories} from "../Directory/AppDirectory.ts";
+import { NotFoundHandler, ServerErrorHandler } from "../deps.ts";
+import { AppFullDirectories } from "../Directory/AppDirectory.ts";
 import {
   AppApiDirectoryType,
-  AppFullDirectoryType
+  AppFullDirectoryType,
 } from "../Directory/types.ts";
 import { AppConfigErrorType, AppConfigType } from "./types.ts";
 

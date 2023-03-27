@@ -5,7 +5,7 @@ import {
   MatchedRouteType,
   RouteChecker,
   RouteNotFoundException,
-  serveFile
+  serveFile,
 } from "../deps.ts";
 import { HttpRequest } from "../Request/HttpRequest.ts";
 import { UrlPatternType } from "../Request/types.ts";
@@ -65,9 +65,11 @@ export const ServerHandler = async (
 
   const routeChecker = new RouteChecker(route, new MatchedRoute(matchedRoute));
   if (!routeChecker.isValid()) {
+    // TODO: change error message
     const error = new RouteNotFoundException(
       `Route ${request.url.pathname} not found`,
     );
+    // TODO: add status code 405
     error.setData(routeChecker.getErrors());
 
     return await HttpResponse.renderNotFound(error, request, response, app);

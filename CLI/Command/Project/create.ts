@@ -62,12 +62,13 @@ export const create = async (
 
   // Config
   project.rm([`config/.gitkeep`]);
-  let content = (new File(`${__dirname}../../../App/Config/app.config.template.txt`))
-    .read()
-    .replaceAll(
-      "{{ directories }}",
-      isApi ? "AppApiDirectories" : "AppFullDirectories",
-    );
+  let content =
+    (new File(`${__dirname}../../../App/Config/app.config.template.txt`))
+      .read()
+      .replaceAll(
+        "{{ directories }}",
+        isApi ? "AppApiDirectories" : "AppFullDirectories",
+      );
   project.touch(`config/app.config.ts`, content);
   app.output.success(`File "config/app.config.ts" created`);
   app.output.newLine();

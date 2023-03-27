@@ -1,4 +1,4 @@
-import { ComponentChildren } from "https://esm.sh/preact@10.12.1";
+import { ComponentChildren } from "../deps.ts";
 
 export interface IHeaderProps {
   charset?: string;

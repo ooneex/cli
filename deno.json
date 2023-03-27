@@ -11,14 +11,16 @@
     ]
   },
   "imports": {
+    "dnt": "https://deno.land/x/dnt@0.33.1/mod.ts",
     "uuid-v4": "https://deno.land/std@0.180.0/uuid/v4.ts",
-    "deno-dom": "https://deno.land/x/deno_dom/deno-dom-wasm.ts",
+    "deno-dom": "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts",
     "@ooneex/testing/": "https://deno.land/std@0.171.0/testing/",
-    "preact": "https://esm.sh/preact@10.12.1",
-    "preact/": "https://esm.sh/preact@10.12.1/"
+    "preact": "https://esm.sh/preact@10.13.1",
+    "preact/": "https://esm.sh/preact@10.13.1/"
   },
   "tasks": {
-    "test": "deno test -A .",
+    "npm": "deno run -A --node-modules-dir ./Module/vite.ts",
+    "test": "deno test -A",
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
     "lint": "deno fmt --check && deno lint"

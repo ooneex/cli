@@ -1,2 +1,1 @@
-export * from "./Collection.ts";
-export * from "./types.ts";
+export * from "../Module/Collection/mod.ts";

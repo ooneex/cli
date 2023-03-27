@@ -1,7 +1,11 @@
+import { IHeader } from "../Header/mod.ts";
 import { HttpMethodType } from "../types.ts";
 
 export interface IRequest {
-  readonly nativeRequest: Request;
+  readonly url: URL;
+  readonly header: IHeader;
+  readonly search: URLSearchParams;
+  readonly native: Request;
   getMethod: () => HttpMethodType;
   isJson: () => boolean;
   isText: () => boolean;

@@ -1,3 +1,5 @@
+export * from "https://esm.sh/preact@10.13.1";
+export { build } from "npm:vite@^4.0.0";
 export * from "../App/Config/Config.ts";
 export * from "../App/Directory/types.ts";
 export * from "../Directory/mod.ts";

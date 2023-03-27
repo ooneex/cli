@@ -1,6 +1,5 @@
-import { render as renderToString } from "npm:preact-render-to-string";
 import { asset } from "./asset.ts";
-import { env, File, getAssets, Helper, Path } from "./deps.ts";
+import { env, File, getAssets, Helper, Path, renderToString } from "./deps.ts";
 import { IView, ViewType } from "./types.ts";
 import { ViewNotFoundException } from "./ViewNotFoundException.ts";
 
