@@ -1,12 +1,12 @@
 import { Collection } from "../Collection/mod.ts";
-import {IException} from "../Exception/types.ts";
+import { IException } from "../Exception/types.ts";
 import { Helper } from "../Helper/mod.ts";
 import { Header, HttpMethodType } from "../Http/mod.ts";
-import {BlobBodyParserException} from "./BlobBodyParserException.ts";
-import {ClientResponse} from "./ClientResponse.ts";
-import {FormDataBodyParserException} from "./FormDataBodyParserException.ts";
-import {JsonBodyParserException} from "./JsonBodyParserException.ts";
-import {TextBodyParserException} from "./TextBodyParserException.ts";
+import { BlobBodyParserException } from "./BlobBodyParserException.ts";
+import { ClientResponse } from "./ClientResponse.ts";
+import { FormDataBodyParserException } from "./FormDataBodyParserException.ts";
+import { JsonBodyParserException } from "./JsonBodyParserException.ts";
+import { TextBodyParserException } from "./TextBodyParserException.ts";
 import { IClientRequest } from "./types.ts";
 
 export class ClientRequest implements IClientRequest {
@@ -105,33 +105,66 @@ export class ClientRequest implements IClientRequest {
             collection.setData(result);
 
             return new ClientResponse({
-              status, text, error, data: collection, form, url, header, native: response
-            })
+              status,
+              text,
+              error,
+              data: collection,
+              form,
+              url,
+              header,
+              native: response,
+            });
           }).catch((reason) => {
-            throw new JsonBodyParserException(reason, {status, text, native: response});
-          })
+            throw new JsonBodyParserException(reason, {
+              status,
+              text,
+              native: response,
+            });
+          });
         }
 
         if (header.isText()) {
           return response.text().then((result) => {
-            collection.setData({content: result});
+            collection.setData({ content: result });
 
             return new ClientResponse({
-              status, text, error, data: collection, form, url, header, native: response
-            })
+              status,
+              text,
+              error,
+              data: collection,
+              form,
+              url,
+              header,
+              native: response,
+            });
           }).catch((reason) => {
-            throw new TextBodyParserException(reason, {status, text, native: response});
-          })
+            throw new TextBodyParserException(reason, {
+              status,
+              text,
+              native: response,
+            });
+          });
         }
 
         if (header.isFormData()) {
           return response.formData().then((result) => {
             return new ClientResponse({
-              status, text, error, data, form: result, url, header, native: response
-            })
+              status,
+              text,
+              error,
+              data,
+              form: result,
+              url,
+              header,
+              native: response,
+            });
           }).catch((reason) => {
-            throw new FormDataBodyParserException(reason, {status, text, native: response});
-          })
+            throw new FormDataBodyParserException(reason, {
+              status,
+              text,
+              native: response,
+            });
+          });
         }
 
         if (header.isBlob()) {
@@ -139,15 +172,25 @@ export class ClientRequest implements IClientRequest {
             const url = new URL(URL.createObjectURL(result));
 
             return new ClientResponse({
-              status, text, error, data, form, url , header, native: response
-            })
+              status,
+              text,
+              error,
+              data,
+              form,
+              url,
+              header,
+              native: response,
+            });
           }).catch((reason) => {
-            throw new BlobBodyParserException(reason, {status, text, native: response});
-          })
+            throw new BlobBodyParserException(reason, {
+              status,
+              text,
+              native: response,
+            });
+          });
         }
 
         // TODO: return default response with native data
-
       })
       .catch((reason) => {
         // TODO: return promise with response object

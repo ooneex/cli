@@ -1,6 +1,6 @@
-import { IException } from "../Exception/mod.ts";
 import { Collection, ICollection } from "../Collection/mod.ts";
-import {HttpMethodType, HttpStatusType, IHeader} from "../Http/mod.ts";
+import { IException } from "../Exception/mod.ts";
+import { HttpMethodType, HttpStatusType, IHeader } from "../Http/mod.ts";
 
 export interface IClientRequest {
   readonly baseUrl: string | null;

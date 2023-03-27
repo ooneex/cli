@@ -39,7 +39,7 @@ export class Kernel {
         OnServerListen(params.hostname, params.port, app),
       signal: abortController.signal,
 
-      // TODO:
+      // TODO: implement these features
       key: undefined,
       cert: undefined,
       keyFile: undefined,

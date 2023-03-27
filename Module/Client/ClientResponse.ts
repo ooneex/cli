@@ -1,6 +1,6 @@
 import { ICollection } from "../Collection/mod.ts";
-import { HttpStatusType, IHeader } from "../Http/mod.ts";
 import { IException } from "../Exception/mod.ts";
+import { HttpStatusType, IHeader } from "../Http/mod.ts";
 import { ClientResponseType } from "./types.ts";
 
 export class ClientResponse {
