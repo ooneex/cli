@@ -1,6 +1,5 @@
 import {
   basename,
-  delimiter,
   dirname,
   isAbsolute,
   join,
@@ -15,11 +14,6 @@ export class Path {
    * Directory separator
    */
   public static DS: string = sep;
-  /**
-   * Directory separator
-   */
-  public static SEPARATOR: string = sep;
-  public static DELIMITER: string = delimiter;
 
   /**
    * Verifies whether provided path is absolute.
@@ -46,7 +40,7 @@ export class Path {
    * Normalize the path, resolving '..' and '.' segments.
    */
   public static normalize(path: string): string {
-    path = path.replace(/[\\/]+/g, Path.SEPARATOR);
+    path = path.replace(/[\\/]+/g, Path.DS);
 
     return normalize(path);
   }

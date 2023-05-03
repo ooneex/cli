@@ -1,3 +1,4 @@
-export * from "../CLI/Figure/mod.ts";
-export * from "../CLI/Output/mod.ts";
-export * from "../CLI/Style/mod.ts";
+export * from "../Figure/mod.ts";
+export { container } from "../Ioc/Container.ts";
+export { Keys } from "../Ioc/types.ts";
+export * from "../Output/mod.ts";

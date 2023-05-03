@@ -1,37 +1,35 @@
 import {
-  AppEnvType,
-  AppLocaleType,
-  AppVersionType,
-  HandlerType,
+  ControllerType,
   HttpMethodType,
   HttpProtocolType,
-  MiddlewareType,
-  ViewType,
+  LocaleType,
 } from "../deps.ts";
-
-import { IRoute, RouteConstraintsType, RouteDefinitionType } from "./types.ts";
+import { EnvType, VersionType } from "../types.ts";
+import {
+  IRoute,
+  MiddlewareType,
+  RouteConstraintsType,
+  RouteDefinitionType,
+  RoutePathType,
+} from "./types.ts";
 
 export class Route implements IRoute {
   constructor(private readonly definition: RouteDefinitionType) {
   }
 
   public getData<T>(): Record<string, T> | null {
-    return (this.definition.data as T) ?? null;
+    return this.definition.data as Record<string, T> ?? null;
   }
 
   public getDefault(): Record<string, string | number> | null {
     return this.definition.default ?? null;
   }
 
-  public getFixture(): string | null {
-    return this.definition.fixture ?? null;
-  }
-
   public getDescription(): string | null {
     return this.definition.description ?? null;
   }
 
-  public getEnvs(): AppEnvType[] | null {
+  public getEnvs(): EnvType[] | null {
     return this.definition.envs ?? null;
   }
 
@@ -43,16 +41,12 @@ export class Route implements IRoute {
     return this.definition.ips ?? null;
   }
 
-  public getLocales(): AppLocaleType[] | null {
+  public getLocales(): LocaleType[] | null {
     return this.definition.locales ?? null;
   }
 
-  public getView(): ViewType | null {
-    return this.definition.view ?? null;
-  }
-
-  public getHandler(): HandlerType {
-    return this.definition.handler;
+  public getController(): ControllerType {
+    return this.definition.controller;
   }
 
   public getMiddlewares(): MiddlewareType[] | null {
@@ -71,7 +65,7 @@ export class Route implements IRoute {
     return this.definition.name;
   }
 
-  public getPath(): string {
+  public getPath(): RoutePathType {
     return this.definition.path;
   }
 
@@ -83,7 +77,7 @@ export class Route implements IRoute {
     return this.definition.protocols ?? null;
   }
 
-  public getVersions(): AppVersionType[] | null {
+  public getVersions(): VersionType[] | null {
     return this.definition.versions ?? null;
   }
 }

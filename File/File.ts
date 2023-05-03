@@ -10,6 +10,8 @@ import {
 import { FileException } from "./FileException.ts";
 import { FileCpConfigType, IFile } from "./types.ts";
 
+// export class FileException extends Error {}
+
 /**
  * File
  * This class allows you to manage files.
@@ -17,7 +19,10 @@ import { FileCpConfigType, IFile } from "./types.ts";
 export class File implements IFile {
   public static EOL: string = FS.EOL.CRLF;
 
-  constructor(private path: string) {
+  constructor(
+    private path: string,
+    public readonly tag: string | null = null,
+  ) {
     this.path = Path.normalize(this.path);
   }
 
@@ -29,9 +34,18 @@ export class File implements IFile {
   }
 
   /**
-   * Gets name of file.
+   * Gets file name without extension.
    */
   public getName(): string {
+    const name = Path.basename(this.path);
+    const ext = this.getExt();
+    return name.replace(new RegExp(`\.${ext}$`), "");
+  }
+
+  /**
+   * Gets file name with extension.
+   */
+  public getFullName(): string {
     return Path.basename(this.path);
   }
 
@@ -180,7 +194,7 @@ export class File implements IFile {
    */
   public mv(directory: string, overwrite = false): IFile {
     try {
-      const file = new File(directory + "/" + this.getName());
+      const file = new File(directory + "/" + this.getFullName());
       if (this.isEquals(file)) {
         return this;
       }

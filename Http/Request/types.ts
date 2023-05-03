@@ -1,12 +1,13 @@
-import { IHeader } from "../Header/mod.ts";
+import { ReadonlyHeader } from "../Header/mod.ts";
 import { HttpMethodType } from "../types.ts";
 
 export interface IRequest {
-  readonly url: URL;
-  readonly header: IHeader;
-  readonly search: URLSearchParams;
-  readonly native: Request;
-  getMethod: () => HttpMethodType;
+  readonly url: Readonly<URL> | null;
+  readonly header: ReadonlyHeader | null;
+  readonly search: Readonly<URLSearchParams> | null;
+  readonly native: Request | null;
+  current: () => this | null;
+  getMethod: () => HttpMethodType | null;
   isJson: () => boolean;
   isText: () => boolean;
   isFormData: () => boolean;

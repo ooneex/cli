@@ -1,83 +1,44 @@
-import { Output } from "./deps.ts";
+import { container, Keys } from "./deps.ts";
 import { IException, StackType } from "./types.ts";
 
 export class Exception extends Error implements IException {
-  private errorStack: StackType[] = [];
-  private data: unknown | null = null;
-  private nativeError: Error | null = null;
-  private formatter: ((data: unknown) => unknown) | null = null;
-  // TODO: add status
+  public readonly name: string;
+  public readonly stacks: StackType[];
+  public readonly file: string | null;
+  public readonly line: number | null;
+  public readonly column: number | null;
 
-  public getName(): string {
-    if (this.nativeError) {
-      return this.nativeError.constructor.name;
+  // deno-lint-ignore constructor-super
+  constructor(
+    message: string | Error,
+    public readonly status: number | null = null,
+    private readonly data: Readonly<unknown> | null = null,
+  ) {
+    if (message instanceof Error) {
+      super((message as Error).message);
+      this.name = message.constructor.name;
+      this.stacks = this.parseStack(message.stack as string);
+    } else {
+      super(message as string);
+      this.name = this.constructor.name;
+      this.stacks = this.parseStack(this.stack as string);
     }
 
-    return this.constructor.name;
-  }
-
-  public getMessage(): string {
-    return this.nativeError?.message ?? this.message;
-  }
-
-  public getStack(): StackType[] {
-    if (this.errorStack.length === 0) {
-      this.errorStack = this.parseStack(this.stack as string);
-    }
-
-    return this.errorStack;
-  }
-
-  public getFile(): string {
-    const stacks = this.getStack();
-
-    return stacks[0].file;
-  }
-
-  public getLine(): number {
-    const stacks = this.getStack();
-
-    return stacks[0].line;
-  }
-
-  public getColumn(): number {
-    const stacks = this.getStack();
-
-    return stacks[0].column;
-  }
-
-  public setData(data: unknown | null): this {
-    this.data = data;
-
-    return this;
+    this.file = this.stacks.length > 0 ? this.stacks[0].file : null;
+    this.line = this.stacks.length > 0 ? this.stacks[0].line : null;
+    this.column = this.stacks.length > 0 ? this.stacks[0].column : null;
   }
 
   public getData<T>(): T | null {
-    return this.data as T;
+    return this.data as (T | null);
   }
 
-  public setFormatter(formatter: ((data: unknown) => unknown) | null): this {
-    this.formatter = formatter;
+  public current(): this | null {
+    if (!container.isBound(Keys.Exception)) {
+      return null;
+    }
 
-    return this;
-  }
-
-  public getFormatter<T, V>(): ((data: T) => V) | null {
-    return this.formatter as (((data: T) => V) | null);
-  }
-
-  public fromNativeError(error: Error): this {
-    this.nativeError = error;
-
-    this.errorStack = this.parseStack(error.stack as string);
-
-    return this;
-  }
-
-  public static print(error: IException, stack = true): void {
-    const output = new Output();
-
-    output.printException(error, stack);
+    return container.get(Keys.Exception);
   }
 
   private parseStack(stack: string): StackType[] {

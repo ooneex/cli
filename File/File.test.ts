@@ -23,8 +23,12 @@ describe("File", () => {
     );
   });
 
+  it("full name", () => {
+    assertEquals(file.getFullName(), "test.txt");
+  });
+
   it("name", () => {
-    assertEquals(file.getName(), "test.txt");
+    assertEquals(file.getName(), "test");
   });
 
   it("directory", () => {
@@ -76,7 +80,8 @@ describe("File", () => {
       file.getPath(),
       `${tempDir}${Path.DS}${currentDir}${Path.DS}copy.txt`,
     );
-    assertEquals(file.getName(), "copy.txt");
+    assertEquals(file.getName(), "copy");
+    assertEquals(file.getFullName(), "copy.txt");
   });
 
   it("mv", () => {

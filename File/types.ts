@@ -1,20 +1,25 @@
 import { IDirectory } from "../Directory/types.ts";
 
 export interface IFile {
+  readonly tag: string | null;
   /**
-   * Gets normalized path of file.
+   * Gets normalized file path.
    */
   getPath(): string;
   /**
-   * Gets name of file.
+   * Gets file name without extension.
    */
   getName(): string;
   /**
-   * Gets directory of the file.
+   * Gets file name with extension.
+   */
+  getFullName(): string;
+  /**
+   * Gets file directory.
    */
   getDirectory(): IDirectory;
   /**
-   * Gets extension of the file.
+   * Gets file extension.
    */
   getExt(): string;
   /**

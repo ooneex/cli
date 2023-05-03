@@ -1,3 +1,2 @@
 export * from "./types.ts";
-export * from "./Header/types.ts";
-export * from "./Header/Header.ts";
+export * from "./Header/mod.ts";

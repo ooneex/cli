@@ -1,4 +1,4 @@
-import { File, FS, IFile, Path } from "./deps.ts";
+import { File, FS, IFile, Path, sep } from "./deps.ts";
 import { DirectoryException } from "./DirectoryException.ts";
 import { CpConfigType, IDirectory } from "./types.ts";
 
@@ -22,7 +22,12 @@ export class Directory implements IDirectory {
    */
   private path: string;
 
-  constructor(path: string) {
+  /**
+   * Directory separator
+   */
+  public static sep: string = sep;
+
+  constructor(path: string, public readonly tag: string | null = null) {
     this.path = Path.normalize(path);
   }
 

@@ -1,6 +1,9 @@
+import { HttpStatusType } from "../deps.ts";
+
 export type RouteCheckerErrorType = {
   key: string;
   message: string;
+  status: HttpStatusType;
 };
 
 export interface IRouteChecker {

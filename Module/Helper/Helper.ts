@@ -27,11 +27,11 @@ export class Helper {
     return (object as (T | undefined));
   }
 
-  public static getType(object: unknown): string | null {
+  public static getType(object: unknown): string | null | undefined {
     if (object === null) {
       return null;
     }
-    let t: unknown = typeof object;
+    let t: string | null | undefined = typeof object;
     if (t === "object") {
       object = String((object as Record<string, unknown>).constructor);
 
@@ -49,21 +49,24 @@ export class Helper {
       }
     }
 
-    return t as (string | null);
+    return t;
   }
 
   public static isObject(object: unknown): boolean {
-    return Helper.getType(object) === "Object";
+    return typeof object === "object" && !Array.isArray(object) &&
+      object !== null;
   }
 
   public static isNumber(object: unknown): boolean {
-    return Helper.getType(object) === "number";
+    return typeof object === "number" && Number.isFinite(object) &&
+      !isNaN(object);
   }
 
   public static isBoolean(object: unknown): boolean {
-    return Helper.getType(object) === "boolean";
+    return typeof object == "boolean";
   }
 
+  // TODO: refactor
   public static isEmpty(object: unknown): boolean {
     if (!object) {
       return true;
@@ -81,11 +84,11 @@ export class Helper {
   }
 
   public static isArray(object: unknown): boolean {
-    return Helper.getType(object) === "Array";
+    return Array.isArray(object);
   }
 
   public static isString(object: unknown): boolean {
-    return Helper.getType(object) === "string";
+    return typeof object === "string";
   }
 
   public static isRegExp(object: unknown): boolean {
@@ -100,11 +103,15 @@ export class Helper {
   }
 
   public static isFunction(object: unknown): boolean {
-    return Helper.getType(object) === "function";
+    return typeof object === "function";
   }
 
   public static isFormData(object: unknown): boolean {
-    return Helper.getType(object) === "FormData";
+    if (typeof object !== "object") {
+      return false;
+    }
+
+    return object instanceof FormData;
   }
 
   public static isNull(object: unknown): boolean {

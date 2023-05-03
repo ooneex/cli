@@ -7,27 +7,31 @@ class FakeException extends Exception {}
 describe("Exception", () => {
   const fakeException = new FakeException("Fake exception");
 
-  it("should valid name", () => {
-    assertEquals(fakeException.getName(), "FakeException");
+  it("name", () => {
+    assertEquals(fakeException.name, "FakeException");
   });
 
-  it("should valid message", () => {
-    assertEquals(fakeException.getMessage(), "Fake exception");
+  it("message", () => {
+    assertEquals(fakeException.message, "Fake exception");
   });
 
-  it("should valid stack", () => {
-    assertEquals(fakeException.getStack().length, 4);
+  it("stack", () => {
+    assertEquals(fakeException.stacks.length, 4);
   });
 
-  it("should valid file", () => {
-    assertEquals(fakeException.getFile(), "Exception/Exception.test.ts");
+  it("line", () => {
+    assertEquals(fakeException.line, 8);
   });
 
-  it("should valid line", () => {
-    assertEquals(fakeException.getLine(), 8);
+  it("column", () => {
+    assertEquals(fakeException.column, 25);
   });
 
-  it("should valid column", () => {
-    assertEquals(fakeException.getColumn(), 25);
+  it("status", () => {
+    assertEquals(fakeException.status, null);
+  });
+
+  it("data", () => {
+    assertEquals(fakeException.getData<null>(), null);
   });
 });

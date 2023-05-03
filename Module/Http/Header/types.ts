@@ -1,7 +1,10 @@
 import { CharsetType, HttpMethodType } from "../types.ts";
 
-export interface IHeader {
+export interface IHeader extends IReadonlyHeader {
   readonly native: Headers;
+}
+
+export interface IReadonlyHeader {
   get: (name: HeaderKeyType) => string | null;
   getAllow: () => HttpMethodType | null;
   getAccept: () => HeaderAcceptType | null;
@@ -18,7 +21,6 @@ export interface IHeader {
   getRefererPolicy: () => string | null;
   getServer: () => string | null;
   getCharset: () => CharsetType;
-  contentLength: (length: number) => IHeader;
   isBlob: () => boolean;
   isJson: () => boolean;
   isText: () => boolean;

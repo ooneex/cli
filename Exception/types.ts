@@ -1,12 +1,13 @@
 export interface IException {
-  getName: () => string;
-  getMessage: () => string;
-  getStack: () => StackType[];
-  getFile: () => string;
-  getLine: () => number;
-  getColumn: () => number;
+  readonly name: string;
+  readonly message: string;
+  readonly stacks: StackType[];
+  readonly file: string | null;
+  readonly line: number | null;
+  readonly column: number | null;
+  readonly status: number | null;
+  current: () => this | null;
   getData: <T>() => T | null;
-  getFormatter: <T, V>() => ((data: T) => V) | null;
 }
 
 export type StackType = {

@@ -1,9 +1,5 @@
-import {
-  AppEnvType,
-  AppLocaleType,
-  AppVersionType,
-  HttpMethodType,
-} from "../deps.ts";
+import { HttpMethodType, LocaleType } from "../deps.ts";
+import { EnvType, VersionType } from "../types.ts";
 import {
   IMatchedRoute,
   MatchedRouteParamsType,
@@ -34,15 +30,15 @@ export class MatchedRoute implements IMatchedRoute {
     return this.matched.ip;
   }
 
-  public getLocale(): AppLocaleType {
+  public getLocale(): LocaleType {
     return this.matched.locale;
   }
 
-  public getEnv(): AppEnvType {
+  public getEnv(): EnvType {
     return this.matched.env;
   }
 
-  public getVersion(): AppVersionType | null {
+  public getVersion(): VersionType | null {
     return this.matched.version ?? null;
   }
 }

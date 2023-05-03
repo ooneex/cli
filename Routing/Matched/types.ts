@@ -1,9 +1,5 @@
-import {
-  AppEnvType,
-  AppLocaleType,
-  AppVersionType,
-  HttpMethodType,
-} from "../deps.ts";
+import { HttpMethodType, LocaleType } from "../deps.ts";
+import { EnvType, VersionType } from "../types.ts";
 
 export type MatchedRouteParamsType = Record<
   string | number,
@@ -16,9 +12,9 @@ export type MatchedRouteType = {
   params?: MatchedRouteParamsType | null;
   method: HttpMethodType;
   ip: string;
-  locale: AppLocaleType;
-  env: AppEnvType;
-  version?: AppVersionType | null;
+  locale: LocaleType;
+  env: EnvType;
+  version?: VersionType | null;
 };
 
 export interface IMatchedRoute {
@@ -27,7 +23,7 @@ export interface IMatchedRoute {
   getParams(): MatchedRouteParamsType | null;
   getMethod(): HttpMethodType | null;
   getIp(): string;
-  getLocale(): AppLocaleType;
-  getEnv(): AppEnvType;
-  getVersion(): AppVersionType | null;
+  getLocale(): LocaleType;
+  getEnv(): EnvType;
+  getVersion(): VersionType | null;
 }

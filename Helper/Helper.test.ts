@@ -20,32 +20,45 @@ describe("Helper", () => {
   });
 
   describe("Types", () => {
-    it("object", () => {
+    it("isObject", () => {
       const object = {};
       assertEquals(Helper.isObject(object), true);
       assertEquals(Helper.isObject(42), false);
+      assertEquals(Helper.isObject(null), false);
+      assertEquals(Helper.isObject([]), false);
+      assertEquals(Helper.isObject(new Array(2)), false);
     });
 
-    it("number", () => {
+    it("isNumber", () => {
       assertEquals(Helper.isNumber(42), true);
+      assertEquals(Helper.isNumber(49.3), true);
+      assertEquals(Helper.isNumber(0), true);
+      assertEquals(Helper.isNumber(""), false);
+      assertEquals(Helper.isNumber("49.3"), false);
     });
 
-    it("string", () => {
+    it("isString", () => {
+      assertEquals(Helper.isString(""), true);
       assertEquals(Helper.isString("hey"), true);
+      assertEquals(Helper.isString(String("hello")), true);
     });
 
-    it("boolean", () => {
+    it("isBoolean", () => {
       assertEquals(Helper.isBoolean(false), true);
       assertEquals(Helper.isBoolean(true), true);
     });
 
-    it("array", () => {
+    it("isArray", () => {
       assertEquals(Helper.isArray([]), true);
       assertEquals(Helper.isArray({}), false);
     });
 
-    it("regexp", () => {
+    it("isRegExp", () => {
       assertEquals(Helper.isRegExp(/[a-z]/), true);
+    });
+
+    it("isFormData", () => {
+      assertEquals(Helper.isFormData(new FormData()), true);
     });
 
     it("isFunction", () => {

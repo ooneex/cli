@@ -26,11 +26,8 @@ const routeDefinition: RouteDefinitionType = {
   locales: ["fr", "en"],
   envs: ["dev", "test", "prod"],
   versions: ["1.2.3", "2.0.0"],
-  view: undefined,
-  handler: (_req, _resp, _app) => _resp,
+  controller: (): Response => new Response(),
   middlewares: undefined,
-  csp: undefined,
-  fixture: "users.ts",
   description: "Route description",
 };
 

@@ -1,4 +1,4 @@
-import { assertEquals } from "@ooneex/testing/asserts.ts";
+import { assertEquals, assertNotEquals } from "@ooneex/testing/asserts.ts";
 import { describe, it } from "@ooneex/testing/bdd.ts";
 import { Collection } from "./mod.ts";
 
@@ -7,24 +7,27 @@ type ValueType = { name: string; price: number };
 describe("Collection", () => {
   const products = new Collection<string, ValueType>();
 
-  products
-    .add("mouse", { name: "mouse", price: 20 })
-    .add("monitor", { name: "monitor", price: 400 });
+  products.add("mouse", { name: "mouse", price: 20 });
+  products.add("monitor", { name: "monitor", price: 400 });
 
   it("count", () => {
     assertEquals(products.count(), 2);
   });
 
-  it("entries/keys", () => {
-    assertEquals(products.keys(), ["mouse", "monitor"]);
-    assertEquals(products.keys(), products.keys());
+  it("keys", () => {
+    const keys = products.keys();
+    let key = keys.next();
+    assertEquals(key.value, "mouse");
+    key = keys.next();
+    assertEquals(key.value, "monitor");
   });
 
   it("values", () => {
-    assertEquals(products.values(), [{ name: "mouse", price: 20 }, {
-      name: "monitor",
-      price: 400,
-    }]);
+    const values = products.values();
+    let key = values.next();
+    assertEquals(key.value, { name: "mouse", price: 20 });
+    key = values.next();
+    assertEquals(key.value, { name: "monitor", price: 400 });
   });
 
   it("has", () => {
@@ -33,13 +36,21 @@ describe("Collection", () => {
   });
 
   it("get", () => {
-    assertEquals(products.get<ValueType>("mouse")?.price, 20);
+    assertEquals(products.get("mouse")?.price, 20);
   });
 
   it("search", () => {
     const monitor = products.search(/R$/i);
     assertEquals(monitor.count(), 1);
-    assertEquals(monitor.keys(), ["monitor"]);
+    const keys = monitor.keys();
+    const key = keys.next();
+    assertEquals(key.value, "monitor");
+  });
+
+  it("find", () => {
+    const mouse = products.find((value, _key, _map) => value.price < 30);
+    assertNotEquals(mouse?.first(), null);
+    assertEquals(mouse?.first()?.key, "mouse");
   });
 
   it("remove", () => {
@@ -51,7 +62,5 @@ describe("Collection", () => {
   it("clear", () => {
     products.clear();
     assertEquals(products.count(), 0);
-    assertEquals(products.keys(), []);
-    assertEquals(products.values(), []);
   });
 });

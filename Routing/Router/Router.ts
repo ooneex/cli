@@ -1,28 +1,27 @@
-import { Collection } from "../deps.ts";
 import { IRoute } from "../Route/types.ts";
+import { ICollection } from "../deps.ts";
 import { IRouter } from "./types.ts";
 
 // TODO: generatePath() and generateUrl() methods
 export class Router implements IRouter {
-  public readonly collection: Collection<string, IRoute>;
-
-  constructor() {
-    this.collection = new Collection<string, IRoute>();
+  constructor(public readonly routes: ICollection<string, IRoute>) {
   }
 
   public findByName(name: string): IRoute | null {
-    return this.collection.get(name) ?? null;
+    return this.routes.get(name) ?? null;
   }
 
   public findByPathname(url: URL): IRoute | null {
-    const routes = this.collection.values();
+    let route: IRoute | null = null;
 
-    const route = routes.find((r) => {
-      const pattern = new URLPattern({ pathname: r.getPath() });
+    for (const [_key, value] of this.routes) {
+      const pattern = new URLPattern({ pathname: value.getPath() });
 
-      return pattern.test(url);
-    });
+      if (pattern.test(url)) {
+        route = value;
+      }
+    }
 
-    return route ?? null;
+    return route;
   }
 }

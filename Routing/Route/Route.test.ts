@@ -8,7 +8,7 @@ describe("Route", () => {
     const route = new Route({
       name: "route_name",
       path: "/products",
-      handler: (_req, _resp, _app) => _resp,
+      controller: (): Response => new Response(),
     });
     assertEquals(route.getProtocols(), null);
     assertEquals(route.getHosts(), null);
@@ -20,9 +20,7 @@ describe("Route", () => {
     assertEquals(route.getLocales(), null);
     assertEquals(route.getEnvs(), null);
     assertEquals(route.getVersions(), null);
-    assertEquals(route.getView(), null);
     assertEquals(route.getMiddlewares(), null);
-    assertEquals(route.getFixture(), null);
     assertEquals(route.getDescription(), null);
   });
 
@@ -46,9 +44,7 @@ describe("Route", () => {
     assertEquals(route.getLocales(), ["fr", "en"]);
     assertEquals(route.getEnvs(), ["dev", "test", "prod"]);
     assertEquals(route.getVersions(), ["1.2.3", "2.0.0"]);
-    assertEquals(route.getView(), null);
     assertEquals(route.getMiddlewares(), null);
-    assertEquals(route.getFixture(), "users.ts");
     assertEquals(route.getDescription(), "Route description");
 
     const constraints = route.getConstraints();

@@ -1,6 +1,7 @@
 import { IFile } from "./deps.ts";
 
 export interface IDirectory {
+  readonly tag: string | null;
   /**
    * Gets normalized path of directory.
    */

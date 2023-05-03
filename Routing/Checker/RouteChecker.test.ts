@@ -1,17 +1,13 @@
 import { assertEquals } from "@ooneex/testing/asserts.ts";
 import { describe, it } from "@ooneex/testing/bdd.ts";
-import {
-  MatchedRoute,
-  Route,
-  RouteChecker,
-  RouteCheckerErrorType,
-} from "../mod.ts";
+import { MatchedRoute, Route } from "../mod.ts";
+import { RouteChecker, RouteCheckerErrorType } from "./mod.ts";
 
 describe("Route Checker", () => {
   let route = new Route({
     name: "user_show",
     path: "/users/:id",
-    handler: (_req, _resp, _app) => _resp,
+    controller: () => new Response(),
   });
 
   const matched = new MatchedRoute({
@@ -24,7 +20,7 @@ describe("Route Checker", () => {
     method: "GET",
     ip: "127.0.0.1",
     locale: "en",
-    env: "dev",
+    env: "development",
     version: "1.0.0",
   });
 
@@ -37,7 +33,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       methods: ["POST", "GET"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkMethod(), true);
@@ -46,10 +42,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       methods: ["POST"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkMethod(), "Method GET not matched");
+    assertEquals(checker.checkMethod(), `Method "GET" not matched`);
   });
 
   it("Should check ip", () => {
@@ -59,7 +55,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       ips: ["127.0.0.1", "127.0.0.2"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkIp(), true);
@@ -68,10 +64,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       ips: ["127.0.0.2"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkIp(), "IP 127.0.0.1 not matched");
+    assertEquals(checker.checkIp(), `IP "127.0.0.1" not matched`);
   });
 
   it("Should check locale", () => {
@@ -81,7 +77,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       locales: ["da", "en", "fr"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkLocale(), true);
@@ -90,10 +86,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       locales: ["da", "fr"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkLocale(), "Locale en not matched");
+    assertEquals(checker.checkLocale(), `Locale "en" not matched`);
   });
 
   it("Should check env", () => {
@@ -102,8 +98,8 @@ describe("Route Checker", () => {
     route = new Route({
       name: "user_show",
       path: "/users/:id",
-      envs: ["dev", "prod"],
-      handler: (_req, _resp, _app) => _resp,
+      envs: ["development", "production"],
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkEnv(), true);
@@ -111,11 +107,11 @@ describe("Route Checker", () => {
     route = new Route({
       name: "user_show",
       path: "/users/:id",
-      envs: ["test", "prod"],
-      handler: (_req, _resp, _app) => _resp,
+      envs: ["testing", "production"],
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkEnv(), "Env dev not matched");
+    assertEquals(checker.checkEnv(), `Env "development" not matched`);
   });
 
   it("Should check version", () => {
@@ -125,7 +121,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       versions: ["1.0.0", "1.0.1"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkVersion(), true);
@@ -134,10 +130,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       versions: ["1.0.1", "1.0.2"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkVersion(), "Version 1.0.0 not matched");
+    assertEquals(checker.checkVersion(), `Version "1.0.0" not matched`);
   });
 
   it("Should check host", () => {
@@ -147,7 +143,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       hosts: ["localhost", "api.ooneex.com"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkHost(), true);
@@ -156,10 +152,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       hosts: ["api.ooneex.com"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkHost(), "Host localhost not matched");
+    assertEquals(checker.checkHost(), `Host "localhost" not matched`);
   });
 
   it("Should check protocol", () => {
@@ -169,7 +165,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       protocols: ["http"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkProtocol(), true);
@@ -178,10 +174,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       protocols: ["https"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkProtocol(), "Protocol http not matched");
+    assertEquals(checker.checkProtocol(), `Protocol "http" not matched`);
   });
 
   it("Should check port", () => {
@@ -191,7 +187,7 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       ports: ["8080", "3000", "8000"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
     assertEquals(checker.checkPort(), true);
@@ -200,10 +196,10 @@ describe("Route Checker", () => {
       name: "user_show",
       path: "/users/:id",
       ports: ["3000", "8000"],
-      handler: (_req, _resp, _app) => _resp,
+      controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
-    assertEquals(checker.checkPort(), "Port 8080 not matched");
+    assertEquals(checker.checkPort(), `Port "8080" not matched`);
   });
 
   describe("Router checker Constraints", () => {
@@ -216,7 +212,7 @@ describe("Route Checker", () => {
         name: "user_show",
         path: "/users/:id/follower/:follower",
         constraints: {},
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       const matched = new MatchedRoute({
         name: "user_show",
@@ -228,7 +224,7 @@ describe("Route Checker", () => {
         method: "GET",
         ip: "127.0.0.1",
         locale: "en",
-        env: "dev",
+        env: "development",
         version: "1.0.0",
       });
       checker = new RouteChecker(route, matched);
@@ -239,7 +235,7 @@ describe("Route Checker", () => {
         constraints: {
           where: { id: crypto.randomUUID(), follower: crypto.randomUUID() },
         },
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       checker = new RouteChecker(route, matched);
       assertEquals(
@@ -253,7 +249,7 @@ describe("Route Checker", () => {
         name: "user_show",
         path: "/users/:id/follower/:follower",
         constraints: {},
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       const matched = new MatchedRoute({
         name: "user_show",
@@ -265,7 +261,7 @@ describe("Route Checker", () => {
         method: "GET",
         ip: "127.0.0.1",
         locale: "en",
-        env: "dev",
+        env: "development",
         version: "1.0.0",
       });
       checker = new RouteChecker(route, matched);
@@ -276,7 +272,7 @@ describe("Route Checker", () => {
         constraints: {
           regex: { count: "d+", ref: "[a-z]+" },
         },
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       checker = new RouteChecker(route, matched);
       assertEquals(
@@ -290,7 +286,7 @@ describe("Route Checker", () => {
         name: "user_show",
         path: "/users/:id/follower/:follower",
         constraints: {},
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       const matched = new MatchedRoute({
         name: "user_show",
@@ -303,7 +299,7 @@ describe("Route Checker", () => {
         method: "GET",
         ip: "127.0.0.1",
         locale: "en",
-        env: "dev",
+        env: "development",
         version: "1.0.0",
       });
       checker = new RouteChecker(route, matched);
@@ -314,7 +310,7 @@ describe("Route Checker", () => {
         constraints: {
           number: ["follower", "user"],
         },
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       checker = new RouteChecker(route, matched);
       assertEquals(
@@ -328,7 +324,7 @@ describe("Route Checker", () => {
         name: "user_show",
         path: "/users/:id/follower/:follower",
         constraints: {},
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       const matched = new MatchedRoute({
         name: "user_show",
@@ -341,7 +337,7 @@ describe("Route Checker", () => {
         method: "GET",
         ip: "127.0.0.1",
         locale: "en",
-        env: "dev",
+        env: "development",
         version: "1.0.0",
       });
       checker = new RouteChecker(route, matched);
@@ -352,7 +348,7 @@ describe("Route Checker", () => {
         constraints: {
           alphaNumeric: ["follower", "user"],
         },
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       checker = new RouteChecker(route, matched);
       assertEquals(
@@ -366,7 +362,7 @@ describe("Route Checker", () => {
         name: "user_show",
         path: "/users/:id/follower/:follower",
         constraints: {},
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       const matched = new MatchedRoute({
         name: "user_show",
@@ -378,7 +374,7 @@ describe("Route Checker", () => {
         method: "GET",
         ip: "127.0.0.1",
         locale: "en",
-        env: "dev",
+        env: "development",
         version: "1.0.0",
       });
       checker = new RouteChecker(route, matched);
@@ -389,7 +385,7 @@ describe("Route Checker", () => {
         constraints: {
           in: { count: [45, "doe"], ref: [] },
         },
-        handler: (_req, _resp, _app) => _resp,
+        controller: () => new Response(),
       });
       checker = new RouteChecker(route, matched);
       assertEquals(checker.isValid(), false);

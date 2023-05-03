@@ -1,4 +1,9 @@
-import { Helper, HttpMethodType, HttpProtocolType } from "../deps.ts";
+import {
+  Helper,
+  HttpMethodType,
+  HttpProtocolType,
+  HttpStatusType,
+} from "../deps.ts";
 import { IMatchedRoute } from "../Matched/types.ts";
 import { IRoute } from "../Route/types.ts";
 import { IRouteChecker, RouteCheckerErrorType } from "./types.ts";
@@ -47,11 +52,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Method ${method} not matched`;
+    const message = `Method "${method}" not matched`;
 
     this.errors.push({
       key: "method",
       message,
+      status: HttpStatusType.MethodNotAllowed,
     });
 
     return message;
@@ -69,11 +75,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `IP ${ip} not matched`;
+    const message = `IP "${ip}" not matched`;
 
     this.errors.push({
       key: "ip",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -91,11 +98,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Locale ${locale} not matched`;
+    const message = `Locale "${locale}" not matched`;
 
     this.errors.push({
       key: "locale",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -113,11 +121,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Env ${env} not matched`;
+    const message = `Env "${env}" not matched`;
 
     this.errors.push({
       key: "env",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -135,11 +144,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Version ${version} not matched`;
+    const message = `Version "${version}" not matched`;
 
     this.errors.push({
       key: "version",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -158,11 +168,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Host ${host} not matched`;
+    const message = `Host "${host}" not matched`;
 
     this.errors.push({
       key: "host",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -181,11 +192,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Protocol ${protocol} not matched`;
+    const message = `Protocol "${protocol}" not matched`;
 
     this.errors.push({
       key: "protocol",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -204,11 +216,12 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const message = `Port ${port} not matched`;
+    const message = `Port "${port}" not matched`;
 
     this.errors.push({
       key: "port",
       message,
+      status: HttpStatusType.NotAcceptable,
     });
 
     return message;
@@ -233,7 +246,8 @@ export class RouteChecker implements IRouteChecker {
       if (!Helper.hasProperty(params, key)) {
         errors.push({
           key: "where constraints",
-          message: `[where] ${key} param missing`,
+          message: `[where] "${key}" param missing`,
+          status: HttpStatusType.NotAcceptable,
         });
         return;
       }
@@ -241,7 +255,8 @@ export class RouteChecker implements IRouteChecker {
       if (`${params[key]}` !== `${whereConstraints[key]}`) {
         errors.push({
           key: "constraints",
-          message: `${key} param must be equal to ${whereConstraints[key]}`,
+          message: `"${key}" param must be equal to ${whereConstraints[key]}`,
+          status: HttpStatusType.NotAcceptable,
         });
       }
     });
@@ -252,7 +267,8 @@ export class RouteChecker implements IRouteChecker {
       if (!Helper.hasProperty(params, key)) {
         errors.push({
           key: "regex constraints",
-          message: `${key} param missing`,
+          message: `"${key}" param missing`,
+          status: HttpStatusType.NotAcceptable,
         });
         return;
       }
@@ -263,7 +279,8 @@ export class RouteChecker implements IRouteChecker {
       if (!reg.test(`${params[key]}`)) {
         errors.push({
           key: "regex constraints",
-          message: `${key} param must match with "${regexConstraints[key]}"`,
+          message: `"${key}" param must match with "${regexConstraints[key]}"`,
+          status: HttpStatusType.NotAcceptable,
         });
       }
     });
@@ -274,7 +291,8 @@ export class RouteChecker implements IRouteChecker {
       if (!Helper.hasProperty(params, key)) {
         errors.push({
           key: "number constraints",
-          message: `${key} param missing`,
+          message: `"${key}" param missing`,
+          status: HttpStatusType.NotAcceptable,
         });
         return;
       }
@@ -285,7 +303,8 @@ export class RouteChecker implements IRouteChecker {
       if (!reg.test(`${params[key]}`)) {
         errors.push({
           key: "number constraints",
-          message: `${key} param must match with "${reg}"`,
+          message: `"${key}" param must match with "${reg}"`,
+          status: HttpStatusType.NotAcceptable,
         });
       }
     });
@@ -296,7 +315,8 @@ export class RouteChecker implements IRouteChecker {
       if (!Helper.hasProperty(params, key)) {
         errors.push({
           key: "alphaNumeric constraints",
-          message: `${key} param missing`,
+          message: `"${key}" param missing`,
+          status: HttpStatusType.NotAcceptable,
         });
         return;
       }
@@ -313,7 +333,8 @@ export class RouteChecker implements IRouteChecker {
         errors.push({
           key: "alphaNumeric constraints",
           message:
-            `${key} param must match with "${/[a-z]+/}" and "${/[0-9]+/}"`,
+            `"${key}" param must match with "${/[a-z]+/}" and "${/[0-9]+/}"`,
+          status: HttpStatusType.NotAcceptable,
         });
       }
     });
@@ -322,7 +343,11 @@ export class RouteChecker implements IRouteChecker {
     const inConstraints = constraints.in ?? {};
     Object.keys(inConstraints).map((key) => {
       if (!Helper.hasProperty(params, key)) {
-        errors.push({ key: "in constraints", message: `${key} param missing` });
+        errors.push({
+          key: "in constraints",
+          message: `"${key}" param missing`,
+          status: HttpStatusType.NotAcceptable,
+        });
         return;
       }
 
@@ -330,9 +355,10 @@ export class RouteChecker implements IRouteChecker {
       if (!inConstraints[key].includes(params[key])) {
         errors.push({
           key: "in constraints",
-          message: `${key} param must equal to " ${
+          message: `"${key}" param must equal to " ${
             inConstraints[key].join('" or "')
           }"`,
+          status: HttpStatusType.NotAcceptable,
         });
       }
     });
