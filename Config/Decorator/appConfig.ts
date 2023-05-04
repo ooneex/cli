@@ -1,4 +1,4 @@
-import { DotEnvValueType, get, ICollection, Keys } from "../deps.ts";
+import { get, Keys } from "../deps.ts";
 
 export const appConfig = (
   // deno-lint-ignore ban-types
@@ -8,7 +8,7 @@ export const appConfig = (
 ): void => {
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
-  parameters[parameterIndex] = get<ICollection<string, DotEnvValueType>>(
+  parameters[parameterIndex] = get<unknown>(
     Keys.Config.App,
   );
   Reflect.defineMetadata(
