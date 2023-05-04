@@ -9,6 +9,7 @@ export const envHelper = (
 ): void => {
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
+  // getOrNull
   parameters[parameterIndex] = get<EnvHelper>(Keys.Env.Helper);
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
