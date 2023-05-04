@@ -2,7 +2,7 @@ import { assertEquals, assertInstanceOf } from "@ooneex/testing/asserts.ts";
 import { describe, it } from "@ooneex/testing/bdd.ts";
 import { Keys, registerConstant } from "../../Ioc/mod.ts";
 import { ROUTE } from "../../Routing/Route/Decorator/mod.ts";
-import { appConfig } from "./appConfig.ts";
+import { appConfig } from "./mod.ts";
 
 registerConstant(Keys.Config.App, "appConfig");
 
