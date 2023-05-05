@@ -6,6 +6,5 @@ export * from "./Options.ts";
 export * from "./Patch.ts";
 export * from "./Post.ts";
 export * from "./Put.ts";
-export * from "./ServerError.ts";
 export * from "./Trace.ts";
 export * from "./route.ts";

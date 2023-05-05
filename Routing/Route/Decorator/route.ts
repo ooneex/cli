@@ -1,9 +1,10 @@
 import {
   Collection,
-  get,
+  getOrNull,
   Helper,
   Keys,
   MethodDecoratorReturnType,
+  registerConstant,
 } from "../../deps.ts";
 import { Route } from "../Route.ts";
 import { RouteException } from "../RouteException.ts";
@@ -51,7 +52,12 @@ export const ROUTE = (
       return method.apply(this, parameters);
     };
 
-    const routes = get<Collection<string, Route>>(Keys.Routes);
+    let routes = getOrNull<Collection<string, Route>>(Keys.Routes);
+
+    if (!routes) {
+      routes = new Collection<string, Route>();
+      registerConstant(Keys.Routes, routes);
+    }
 
     if (routes.has(name)) {
       throw new RouteException(
