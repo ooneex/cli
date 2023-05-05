@@ -7,4 +7,4 @@ export * from "./Patch.ts";
 export * from "./Post.ts";
 export * from "./Put.ts";
 export * from "./Trace.ts";
-export * from "./route.ts";
+export * from "./Route.ts";

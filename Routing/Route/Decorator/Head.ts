@@ -1,6 +1,6 @@
 import { MethodDecoratorReturnType } from "../../deps.ts";
 import { RouteDefinitionType, RoutePathType } from "../types.ts";
-import { ROUTE } from "./route.ts";
+import { ROUTE } from "./Route.ts";
 
 export const HEAD = (
   name: string,
