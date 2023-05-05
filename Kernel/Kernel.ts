@@ -26,9 +26,6 @@ export class Kernel {
     const config: LocalConfigType = await parseConfig() as LocalConfigType;
     registerConstant(Keys.Config.App, config);
 
-    // Register initial exception
-    // registerConstant(Keys.Exception, new Exception(""));
-
     // Load routes
     const routes = new Collection<string, Route>();
     registerConstant(Keys.Routes, routes);
