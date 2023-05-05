@@ -34,6 +34,8 @@ export const serverHandler = async (
     );
   }
 
+  registerConstant(Keys.Route.Default, route);
+
   const envHelper = get<EnvHelper>(Keys.Env.Helper);
 
   const params = request.getParams(route.getPath() as UrlPatternType);
