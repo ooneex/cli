@@ -22,8 +22,9 @@ export const serverHandler = async (
 ): Promise<Response> => {
   const request = new HttpRequest(req);
   registerConstant(Keys.Request, request);
+  const response = new HttpResponse();
+  registerConstant(Keys.Response, response);
   // const pathname = decodeURIComponent(request.url.pathname);
-  const response = get<HttpResponse>(Keys.Response);
   const router = get<Router>(Keys.Router);
   const route = router.findByPathname(request.url as Readonly<URL>);
 

@@ -1,3 +1,4 @@
+import { HttpResponse } from "../Response/mod.ts";
 import {
   ControllerType,
   Exception,
@@ -11,6 +12,7 @@ export const onServerError = (
 ): Response => {
   // TODO: set exception data if needed
   registerConstant(Keys.Exception, new Exception(error as Error));
+  registerConstant(Keys.Response, new HttpResponse());
 
   const ServerError = get<ControllerType>(
     Keys.Controller.ServerError,

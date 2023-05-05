@@ -9,7 +9,7 @@ export const request = (
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) ||
     [];
-  parameters[parameterIndex] = getOrNull(Keys.Request);
+  parameters[parameterIndex] = () => getOrNull(Keys.Request);
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
     parameters,

@@ -6,7 +6,6 @@ export interface IException {
   readonly line: number | null;
   readonly column: number | null;
   readonly status: number | null;
-  current: () => this | null;
   getData: <T>() => T | null;
 }
 

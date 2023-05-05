@@ -8,6 +8,10 @@ export const Keys = {
   },
   Router: Symbol.for(`router-${crypto.randomUUID()}`),
   Routes: Symbol.for(`routes-${crypto.randomUUID()}`),
+  Route: {
+    Default: Symbol.for(`routes-${crypto.randomUUID()}`),
+    Params: Symbol.for(`routes-${crypto.randomUUID()}`),
+  },
   Response: Symbol.for(`response-${crypto.randomUUID()}`),
   Request: Symbol.for(`request-${crypto.randomUUID()}`),
   Exception: Symbol.for(`exception-${crypto.randomUUID()}`),

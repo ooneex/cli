@@ -1,4 +1,3 @@
-import { container, Keys } from "./deps.ts";
 import { IException, StackType } from "./types.ts";
 
 export class Exception extends Error implements IException {
@@ -31,14 +30,6 @@ export class Exception extends Error implements IException {
 
   public getData<T>(): T | null {
     return this.data as (T | null);
-  }
-
-  public current(): this | null {
-    if (!container.isBound(Keys.Exception)) {
-      return null;
-    }
-
-    return container.get(Keys.Exception);
   }
 
   private parseStack(stack: string): StackType[] {

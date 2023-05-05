@@ -12,7 +12,7 @@ export const exception = (
   if (!container.isBound(Keys.Exception)) {
     parameters[parameterIndex] = null;
   } else {
-    parameters[parameterIndex] = container.get(Keys.Exception);
+    parameters[parameterIndex] = () => container.get(Keys.Exception);
   }
 
   Reflect.defineMetadata(

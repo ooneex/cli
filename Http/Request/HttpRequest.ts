@@ -1,4 +1,4 @@
-import { getOrNull, Helper, Keys } from "../deps.ts";
+import { Helper } from "../deps.ts";
 import { ReadonlyHeader } from "../Header/mod.ts";
 import { HttpMethodType } from "../types.ts";
 import { RequestBodyParserException } from "./RequestBodyParserException.ts";
@@ -20,10 +20,6 @@ export class HttpRequest implements IRequest {
       this.header = new ReadonlyHeader(native.headers);
       this.search = this.url.searchParams;
     }
-  }
-
-  public current(): this | null {
-    return getOrNull<this>(Keys.Request);
   }
 
   public getMethod(): HttpMethodType | null {

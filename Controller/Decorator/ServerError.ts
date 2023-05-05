@@ -24,11 +24,19 @@ export const ServerError = (): MethodDecoratorReturnType => {
     const method = descriptor.value!;
 
     descriptor.value = function ServerErrorController(): Response {
-      const parameters = Reflect.getOwnMetadata(
+      let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,
         propertyName,
       );
+
+      parameters = (parameters ?? []).map((parameter: unknown) => {
+        if (typeof parameter === "function") {
+          return parameter.apply(target);
+        }
+
+        return parameter;
+      });
 
       return method.apply(this, parameters);
     };

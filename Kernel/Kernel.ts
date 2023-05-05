@@ -1,9 +1,6 @@
 import {
   Collection,
   EnvHelper,
-  Exception,
-  HttpRequest,
-  HttpResponse,
   Keys,
   loadControllers,
   parseConfig,
@@ -29,14 +26,8 @@ export class Kernel {
     const config: LocalConfigType = await parseConfig() as LocalConfigType;
     registerConstant(Keys.Config.App, config);
 
-    // Register initial response
-    registerConstant(Keys.Response, new HttpResponse());
-
-    // Register initial request
-    registerConstant(Keys.Request, new HttpRequest());
-
     // Register initial exception
-    registerConstant(Keys.Exception, new Exception(""));
+    // registerConstant(Keys.Exception, new Exception(""));
 
     // Load routes
     const routes = new Collection<string, Route>();
