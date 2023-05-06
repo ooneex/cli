@@ -19,15 +19,16 @@ export class NotFoundController {
     @response response: HttpResponse,
     @exception exception: Exception,
   ): Promise<Response> {
-    const e = exception.current() as Exception;
-
     const data: Record<string, unknown> = {};
     data["exception"] = {
-      name: e.name,
-      message: e.message,
-      data: e.getData<NotFoundExceptionDataType>(),
+      name: exception.name,
+      message: exception.message,
+      data: exception.getData<NotFoundExceptionDataType>(),
     };
 
-    return await response.json(data, e.status ?? HttpStatusType.NotFound);
+    return await response.json(
+      data,
+      exception.status ?? HttpStatusType.NotFound,
+    );
   }
 }

@@ -8,4 +8,6 @@ export * from "./Post.ts";
 export * from "./Put.ts";
 export * from "./Route.ts";
 export * from "./Trace.ts";
+export * from "./param.ts";
+export * from "./params.ts";
 export * from "./routeParameter.ts";

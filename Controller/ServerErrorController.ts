@@ -13,16 +13,14 @@ export class ServerErrorController {
     @response response: HttpResponse,
     @exception exception: Exception,
   ): Response {
-    const e = exception.current() as Exception;
-
     const body: Record<string, unknown> = {};
     body["exception"] = {
-      name: e.name,
-      message: e.message,
-      file: e.file,
-      line: e.line,
-      column: e.column,
-      data: e.getData(),
+      name: exception.name,
+      message: exception.message,
+      file: exception.file,
+      line: exception.line,
+      column: exception.column,
+      data: exception.getData(),
     };
 
     return response.json(body, HttpStatusType.InternalServerError);

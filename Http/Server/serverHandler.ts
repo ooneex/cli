@@ -39,6 +39,8 @@ export const serverHandler = async (
   const envHelper = get<EnvHelper>(Keys.Env.Helper);
 
   const params = request.getParams(route.getPath() as UrlPatternType);
+  registerConstant(Keys.Route.Params, params ?? {});
+
   const matchedRoute: MatchedRouteType = {
     name: route.getName(),
     url: request.url as URL,

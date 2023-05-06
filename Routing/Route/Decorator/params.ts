@@ -1,6 +1,6 @@
-import { get, Keys } from "../deps.ts";
+import { getOrNull, Keys } from "../../deps.ts";
 
-export const appConfig = (
+export const params = (
   // deno-lint-ignore ban-types
   target: Object,
   propertyKey: string | symbol,
@@ -8,7 +8,7 @@ export const appConfig = (
 ): void => {
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
-  parameters[parameterIndex] = get(Keys.Config.App);
+  parameters[parameterIndex] = () => getOrNull(Keys.Route.Params) ?? {};
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
     parameters,

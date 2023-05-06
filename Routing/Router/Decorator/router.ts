@@ -1,4 +1,4 @@
-import { get, Keys } from "../deps.ts";
+import { getOrNull, Keys } from "../deps.ts";
 
 export const router = (
   // deno-lint-ignore ban-types
@@ -8,7 +8,7 @@ export const router = (
 ): void => {
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
-  parameters[parameterIndex] = () => get(Keys.Router);
+  parameters[parameterIndex] = () => getOrNull(Keys.Router);
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
     parameters,

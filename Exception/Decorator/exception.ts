@@ -1,4 +1,4 @@
-import { container, Keys } from "../deps.ts";
+import { getOrNull, Keys } from "../deps.ts";
 
 export const exception = (
   // deno-lint-ignore ban-types
@@ -9,11 +9,8 @@ export const exception = (
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) ||
     [];
-  if (!container.isBound(Keys.Exception)) {
-    parameters[parameterIndex] = null;
-  } else {
-    parameters[parameterIndex] = () => container.get(Keys.Exception);
-  }
+
+  parameters[parameterIndex] = () => getOrNull(Keys.Exception);
 
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
