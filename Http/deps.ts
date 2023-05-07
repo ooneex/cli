@@ -9,3 +9,4 @@ export * from "../Ioc/mod.ts";
 export * from "../Output/mod.ts";
 export * from "../Routing/mod.ts";
 export * from "../Translation/mod.ts";
+export * from "../View/mod.ts";

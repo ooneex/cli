@@ -5,7 +5,9 @@ import {
   get,
   Keys,
   registerConstant,
+  renderView,
   RouteNotFoundException,
+  ViewType,
 } from "../deps.ts";
 import { HttpCodeType, HttpStatusType } from "../types.ts";
 import { IResponse } from "./types.ts";
@@ -56,15 +58,14 @@ export class HttpResponse implements IResponse {
   /**
    * Render component response
    */
-  public render(_view: string, _status?: HttpStatusType): Response {
-    return this.string("TODO: to implement");
-  }
+  public render<T = unknown>(
+    view: ViewType<T>,
+    data?: T,
+    status?: HttpStatusType,
+  ): Response {
+    const content = renderView(view, data);
 
-  /**
-   * Render component response
-   */
-  public view(view: string, status?: HttpStatusType): Response {
-    return this.render(view, status);
+    return this.html(content, status);
   }
 
   /**

@@ -13,7 +13,9 @@
     "dnt": "https://deno.land/x/dnt@0.33.1/mod.ts",
     "uuid-v4": "https://deno.land/std@0.180.0/uuid/v4.ts",
     "deno-dom": "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts",
-    "@ooneex/testing/": "https://deno.land/std@0.182.0/testing/"
+    "@ooneex/testing/": "https://deno.land/std@0.182.0/testing/",
+    "preact": "https://esm.sh/preact@10.13.2",
+    "preact/": "https://esm.sh/preact@10.13.2/"
   },
   "tasks": {
     "start": "deno run -A --watch=.env,.env.local,config/,controllers/,middlewares/ index.ts",

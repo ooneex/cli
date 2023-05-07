@@ -1,5 +1,5 @@
 import { Header } from "../Header/mod.ts";
-import { Collection } from "../deps.ts";
+import { Collection, ViewType } from "../deps.ts";
 import { HttpStatusType } from "../types.ts";
 
 export interface IResponse {
@@ -9,7 +9,11 @@ export interface IResponse {
   string: (content: string, status?: HttpStatusType) => Response;
   html: (content: string, status?: HttpStatusType) => Response;
   json: (data: Record<string, unknown>, status?: HttpStatusType) => Response;
-  render(view: string, status?: HttpStatusType): Response;
-  view(view: string, status?: HttpStatusType): Response;
+  render: <T>(
+    view: ViewType<T>,
+    data?: T,
+    status?: HttpStatusType,
+  ) => Response;
+
   notFound(message: string, status?: HttpStatusType): Promise<Response>;
 }

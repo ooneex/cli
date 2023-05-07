@@ -1,6 +1,8 @@
-export type renderViewType = (
-  view: ViewType,
-  data: Record<string, unknown>,
-) => Promise<string>;
+import { JSX } from "./deps.ts";
 
-export type ViewType = `${string}View`;
+export type renderViewType = <T = unknown>(
+  view: ViewType<T>,
+  data?: T,
+) => string;
+
+export type ViewType<T = unknown> = (props: T) => JSX.Element;
