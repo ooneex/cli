@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "emitDecoratorMetadata": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "lib": [
       "dom",
       "dom.iterable",
