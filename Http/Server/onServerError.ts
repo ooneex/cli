@@ -1,5 +1,5 @@
 import { Exception, get, Keys, ServerErrorControllerType } from "../deps.ts";
-import { HttpResponse } from "../Response/mod.ts";
+import { Response as HttpResponse } from "../Response/mod.ts";
 
 export const onServerError = (
   error: unknown,

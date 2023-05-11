@@ -1,5 +1,5 @@
 import { ServerError } from "./Decorator/ServerError.ts";
-import { Exception, HttpResponse, HttpStatusType } from "./deps.ts";
+import { Exception, HttpStatusType, Response as HttpResponse } from "./deps.ts";
 
 export class ServerErrorController {
   @ServerError()

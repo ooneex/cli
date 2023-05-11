@@ -1,4 +1,4 @@
-import { HttpResponse, HttpStatusType, Request } from "@http";
+import { HttpStatusType, Request, Response as HttpResponse } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import {
   assertEquals,

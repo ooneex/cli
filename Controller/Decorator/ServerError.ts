@@ -2,9 +2,9 @@ import {
   Decorator,
   Exception,
   Helper,
-  HttpResponse,
   Keys,
   registerConstant,
+  Response as HttpResponse,
   RouteException,
 } from "../deps.ts";
 import { ControllerType } from "../types.ts";

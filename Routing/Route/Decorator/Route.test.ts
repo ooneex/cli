@@ -1,6 +1,6 @@
 import { Collection } from "@collection";
 import { ControllerType } from "@controller";
-import { HttpResponse, Request } from "@http";
+import { Request, Response as HttpResponse } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import { Router } from "@routing";
 import { assertInstanceOf, assertNotEquals } from "testing/asserts.ts";

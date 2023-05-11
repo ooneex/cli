@@ -1,7 +1,7 @@
 import {
   Exception,
-  HttpResponse,
   Request,
+  Response as HttpResponse,
   RouteCheckerErrorType,
 } from "./deps.ts";
 

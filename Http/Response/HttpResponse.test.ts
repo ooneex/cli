@@ -2,7 +2,7 @@ import { Collection } from "@collection";
 import { assertEquals, assertInstanceOf } from "testing/asserts.ts";
 import { describe, it } from "testing/bdd.ts";
 import { Header } from "../Header/mod.ts";
-import { HttpResponse, HttpStatusType } from "../mod.ts";
+import { HttpStatusType, Response as HttpResponse } from "../mod.ts";
 
 describe("Http", () => {
   describe("HttpResponse", () => {

@@ -1,5 +1,5 @@
 import { Exception } from "@exception";
-import { HttpResponse, HttpStatusType } from "@http";
+import { HttpStatusType, Response as HttpResponse } from "@http";
 import { get, Keys } from "@ioc";
 import {
   assertEquals,

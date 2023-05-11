@@ -36,6 +36,8 @@ export type RouteDefinitionType = {
    * Middlewares to trigger if this route matched
    */
   middlewares?: MiddlewareType[];
+
+  // TODO: add before and after event as decorator
   /**
    * Allowed methods for this route
    */

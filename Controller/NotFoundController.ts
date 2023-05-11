@@ -2,9 +2,9 @@ import { NotFound } from "./Decorator/NotFound.ts";
 import {
   Exception,
   exception,
-  HttpResponse,
   HttpStatusType,
   Request,
+  Response as HttpResponse,
 } from "./deps.ts";
 import { NotFoundExceptionDataType } from "./types.ts";
 

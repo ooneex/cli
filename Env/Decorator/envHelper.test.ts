@@ -1,7 +1,7 @@
 import { Collection } from "@collection";
 import { ControllerType } from "@controller";
 import { Route } from "@decorator";
-import { HttpResponse, Request } from "@http";
+import { Request, Response as HttpResponse } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import { Route as HttpRoute, Router } from "@routing";
 import {
