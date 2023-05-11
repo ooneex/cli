@@ -1,6 +1,6 @@
 import { Collection } from "@collection";
 import { ControllerType } from "@controller";
-import { HttpRequest, HttpResponse } from "@http";
+import { HttpResponse, Request } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import { Router } from "@routing";
 import {
@@ -12,7 +12,7 @@ import { describe, it } from "testing/bdd.ts";
 import { Route as HttpRoute } from "../mod.ts";
 import { params, Route } from "./mod.ts";
 
-const req = new HttpRequest();
+const req = new Request();
 
 const K = {
   Response: Symbol.for(`response-${crypto.randomUUID()}`),
@@ -30,7 +30,7 @@ registerConstant(K.Response, response);
 class Controller {
   @Route("index", "/")
   public index(
-    _request: HttpRequest,
+    _request: Request,
     response: HttpResponse,
     @params params: Record<string, string>,
   ): Response {

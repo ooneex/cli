@@ -1,5 +1,5 @@
 import { Header, HeaderContentTypeType } from "../Header/mod.ts";
-import { HttpRequest } from "../Request/mod.ts";
+import { Request } from "../Request/mod.ts";
 import {
   Collection,
   ControllerType,
@@ -76,7 +76,7 @@ export class HttpResponse implements IResponse {
    */
   public async notFound(
     message: string,
-    request: HttpRequest,
+    request: Request,
     status?: HttpStatusType,
   ): Promise<Response> {
     const NotFoundController = get<ControllerType>(Keys.Controller.NotFound);

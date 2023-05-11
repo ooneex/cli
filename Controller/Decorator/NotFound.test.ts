@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse, HttpStatusType } from "@http";
+import { HttpResponse, HttpStatusType, Request } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import {
   assertEquals,
@@ -9,7 +9,7 @@ import { describe, it } from "testing/bdd.ts";
 import { ControllerType } from "../types.ts";
 import { NotFound } from "./mod.ts";
 
-const request = new HttpRequest();
+const request = new Request();
 const K = {
   Response: Symbol.for(`response-${crypto.randomUUID()}`),
   Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
@@ -19,7 +19,7 @@ registerConstant(K.Response, new HttpResponse());
 
 class NotFoundController {
   @NotFound()
-  public index(_request: HttpRequest, response: HttpResponse): Response {
+  public index(_request: Request, response: HttpResponse): Response {
     return response.string("not found", HttpStatusType.NotFound);
   }
 }

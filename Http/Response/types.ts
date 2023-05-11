@@ -1,5 +1,5 @@
 import { Header } from "../Header/mod.ts";
-import { HttpRequest } from "../Request/mod.ts";
+import { Request } from "../Request/mod.ts";
 import { Collection, ViewType } from "../deps.ts";
 import { HttpStatusType } from "../types.ts";
 
@@ -19,7 +19,7 @@ export interface IResponse {
 
   notFound(
     message: string,
-    request: HttpRequest,
+    request: Request,
     status?: HttpStatusType,
   ): Promise<Response>;
 }

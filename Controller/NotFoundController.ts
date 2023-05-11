@@ -2,9 +2,9 @@ import { NotFound } from "./Decorator/NotFound.ts";
 import {
   Exception,
   exception,
-  HttpRequest,
   HttpResponse,
   HttpStatusType,
+  Request,
 } from "./deps.ts";
 import { NotFoundExceptionDataType } from "./types.ts";
 
@@ -13,7 +13,7 @@ import { NotFoundExceptionDataType } from "./types.ts";
 export class NotFoundController {
   @NotFound()
   public async index(
-    _request: HttpRequest,
+    _request: Request,
     response: HttpResponse,
     @exception exception: Exception,
   ): Promise<Response> {

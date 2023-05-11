@@ -3,10 +3,10 @@ import {
   get,
   getOrNull,
   Helper,
-  HttpRequest,
   Keys,
   MethodDecoratorReturnType,
   registerConstant,
+  Request,
 } from "../../deps.ts";
 import { Route as HttpRoute } from "../Route.ts";
 import { RouteException } from "../RouteException.ts";
@@ -44,7 +44,7 @@ export const Route = (
 
     const method = descriptor.value!;
 
-    descriptor.value = function Controller(request: HttpRequest): Response {
+    descriptor.value = function Controller(request: Request): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,

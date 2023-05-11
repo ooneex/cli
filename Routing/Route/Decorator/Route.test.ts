@@ -1,6 +1,6 @@
 import { Collection } from "@collection";
 import { ControllerType } from "@controller";
-import { HttpRequest, HttpResponse } from "@http";
+import { HttpResponse, Request } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import { Router } from "@routing";
 import { assertInstanceOf, assertNotEquals } from "testing/asserts.ts";
@@ -8,7 +8,7 @@ import { describe, it } from "testing/bdd.ts";
 import { Route as HttpRoute } from "../mod.ts";
 import { Route } from "./mod.ts";
 
-const req = new HttpRequest();
+const req = new Request();
 
 const K = {
   Response: Symbol.for(`response-${crypto.randomUUID()}`),
@@ -25,7 +25,7 @@ registerConstant(K.Response, response);
 
 class Controller {
   @Route("index", "/")
-  public index(_request: HttpRequest, response: HttpResponse): Response {
+  public index(_request: Request, response: HttpResponse): Response {
     return response.json({ message: "hi" });
   }
 }

@@ -1,4 +1,4 @@
-import { get, getOrNull, HttpRequest, Keys } from "../../deps.ts";
+import { get, getOrNull, Keys, Request } from "../../deps.ts";
 
 export const params = (
   // deno-lint-ignore ban-types
@@ -9,9 +9,9 @@ export const params = (
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
   parameters[parameterIndex] = () => {
-    const request: HttpRequest | null = parameters[0] as HttpRequest;
+    const request: Request | null = parameters[0] as Request;
 
-    if (!(request instanceof HttpRequest)) {
+    if (!(request instanceof Request)) {
       return {};
     }
 

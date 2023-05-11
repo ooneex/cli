@@ -2,9 +2,9 @@ import {
   Decorator,
   get,
   Helper,
-  HttpRequest,
   Keys,
   registerConstant,
+  Request,
   RouteException,
 } from "../deps.ts";
 import { ControllerType } from "../types.ts";
@@ -26,7 +26,7 @@ export const NotFound = (): Decorator.MethodDecoratorReturnType => {
     const method = descriptor.value!;
 
     descriptor.value = function NotFoundController(
-      request: HttpRequest,
+      request: Request,
     ): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,

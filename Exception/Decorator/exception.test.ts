@@ -1,6 +1,6 @@
 import { Collection } from "@collection";
 import { Route } from "@decorator";
-import { HttpRequest, HttpResponse } from "@http";
+import { HttpResponse, Request } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import { Route as HttpRoute, Router } from "@routing";
 import {
@@ -14,7 +14,7 @@ import { exception } from "./mod.ts";
 
 class FakeException extends Exception {}
 
-const request = new HttpRequest();
+const request = new Request();
 const K = {
   Response: Symbol.for(`response-${crypto.randomUUID()}`),
   Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
@@ -28,7 +28,7 @@ registerConstant(K.Exception, fakeException);
 class FakeController {
   @Route("index", "/")
   public index(
-    _request: HttpRequest,
+    _request: Request,
     response: HttpResponse,
     @exception exception: Exception,
   ): Response {

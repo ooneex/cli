@@ -1,9 +1,9 @@
 import {
   get,
   getOrNull,
-  HttpRequest,
   Keys,
   ParameterDecoratorReturnType,
+  Request,
 } from "../../deps.ts";
 import { ParamInjectionException } from "../ParamInjectionException.ts";
 
@@ -19,9 +19,9 @@ export const param = (key: string): ParameterDecoratorReturnType => {
       [];
 
     parameters[parameterIndex] = () => {
-      const request: HttpRequest | null = parameters[0] as HttpRequest;
+      const request: Request | null = parameters[0] as Request;
 
-      if (!(request instanceof HttpRequest)) {
+      if (!(request instanceof Request)) {
         return null;
       }
 

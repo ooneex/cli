@@ -1,11 +1,11 @@
 import {
   Exception,
-  HttpRequest,
   HttpResponse,
+  Request,
   RouteCheckerErrorType,
 } from "./deps.ts";
 
-export type ControllerType = (request: HttpRequest) => Response;
+export type ControllerType = (request: Request) => Response;
 export type ServerErrorControllerType = (
   exception: Exception,
   response: HttpResponse,

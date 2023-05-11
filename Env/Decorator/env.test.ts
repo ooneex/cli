@@ -1,7 +1,7 @@
 import { Collection } from "@collection";
 import { ControllerType } from "@controller";
 import { Route } from "@decorator";
-import { HttpRequest, HttpResponse } from "@http";
+import { HttpResponse, Request } from "@http";
 import { get, Keys, registerConstant } from "@ioc";
 import { Route as HttpRoute, Router } from "@routing";
 import {
@@ -26,7 +26,7 @@ const envValue = {
 
 registerConstant(Keys.Env.Default, envValue);
 
-const req = new HttpRequest();
+const req = new Request();
 
 const K = {
   Response: Symbol.for(`response-${crypto.randomUUID()}`),
@@ -44,7 +44,7 @@ registerConstant(K.Response, response);
 class FakeController {
   @Route("index", "/")
   public index(
-    _request: HttpRequest,
+    _request: Request,
     response: HttpResponse,
     @env() env: Record<string, DotEnvValueType>,
   ): Response {
