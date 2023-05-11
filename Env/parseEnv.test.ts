@@ -1,5 +1,5 @@
-import { assertEquals } from "@ooneex/testing/asserts.ts";
-import { it } from "@ooneex/testing/bdd.ts";
+import { assertEquals } from "testing/asserts.ts";
+import { it } from "testing/bdd.ts";
 import { DotEnvValueType, parseEnv } from "./mod.ts";
 
 const content = `# dev | prod | test | demo

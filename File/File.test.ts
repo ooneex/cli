@@ -1,6 +1,6 @@
-import { assertEquals, assertNotEquals } from "@ooneex/testing/asserts.ts";
-import { afterAll, describe, it } from "@ooneex/testing/bdd.ts";
-import { Path } from "./deps.ts";
+import { assertEquals, assertNotEquals } from "testing/asserts.ts";
+import { afterAll, describe, it } from "testing/bdd.ts";
+import { Path } from "@path";
 import { File } from "./mod.ts";
 
 describe("File", () => {

@@ -1,5 +1,5 @@
-import { assertEquals, assertInstanceOf } from "@ooneex/testing/asserts.ts";
-import { describe, it } from "@ooneex/testing/bdd.ts";
+import { assertEquals, assertInstanceOf } from "testing/asserts.ts";
+import { describe, it } from "testing/bdd.ts";
 import { ConfigException } from "./ConfigException.ts";
 import { parseConfig } from "./parseConfig.ts";
 

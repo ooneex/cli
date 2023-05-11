@@ -1,22 +1,15 @@
+import { Exception, get, Keys, ServerErrorControllerType } from "../deps.ts";
 import { HttpResponse } from "../Response/mod.ts";
-import {
-  ControllerType,
-  Exception,
-  get,
-  Keys,
-  registerConstant,
-} from "../deps.ts";
 
 export const onServerError = (
   error: unknown,
 ): Response => {
-  // TODO: set exception data if needed
-  registerConstant(Keys.Exception, new Exception(error as Error));
-  registerConstant(Keys.Response, new HttpResponse());
-
-  const ServerError = get<ControllerType>(
+  const ServerErrorController = get<ServerErrorControllerType>(
     Keys.Controller.ServerError,
   );
 
-  return ServerError();
+  const exception = new Exception(error as Error);
+  const response = new HttpResponse();
+
+  return ServerErrorController(exception, response);
 };

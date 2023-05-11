@@ -21,26 +21,36 @@ export const serverHandler = async (
   connInfo: ConnInfo,
 ): Promise<Response> => {
   const request = new HttpRequest(req);
-  registerConstant(Keys.Request, request);
+  const K = {
+    Response: Symbol.for(`response-${crypto.randomUUID()}`),
+    Route: {
+      Default: Symbol.for(`route-default-${crypto.randomUUID()}`),
+      Params: Symbol.for(`route-params-${crypto.randomUUID()}`),
+    },
+    Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
+  };
+  registerConstant(request.id, K);
+
   const response = new HttpResponse();
-  registerConstant(Keys.Response, response);
+  registerConstant(K.Response, response);
   // const pathname = decodeURIComponent(request.url.pathname);
   const router = get<Router>(Keys.Router);
   const route = router.findByPathname(request.url as Readonly<URL>);
+  registerConstant(K.Route.Default, route);
 
   if (!route) {
     return await response.notFound(
       `Route ${(request.url as Readonly<URL>).pathname} not found`,
+      request,
     );
   }
-
-  registerConstant(Keys.Route.Default, route);
 
   const envHelper = get<EnvHelper>(Keys.Env.Helper);
 
   const params = request.getParams(route.getPath() as UrlPatternType);
-  registerConstant(Keys.Route.Params, params ?? {});
+  registerConstant(K.Route.Params, params ?? {});
 
+  // Todo: add this values to request
   const matchedRoute: MatchedRouteType = {
     name: route.getName(),
     url: request.url as URL,
@@ -60,11 +70,12 @@ export const serverHandler = async (
 
     return await response.notFound(
       constraintError.message,
+      request,
       constraintError.status,
     );
   }
 
   const controller = route.getController();
 
-  return await controller();
+  return await controller(request);
 };

@@ -5,6 +5,7 @@ export interface IRequest {
   readonly url: Readonly<URL> | null;
   readonly header: ReadonlyHeader | null;
   readonly search: Readonly<URLSearchParams> | null;
+  readonly id: string;
   readonly native: Request | null;
   getMethod: () => HttpMethodType | null;
   isJson: () => boolean;

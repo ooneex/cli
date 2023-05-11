@@ -1,6 +1,7 @@
 import {
   Collection,
   EnvHelper,
+  get,
   Keys,
   loadControllers,
   parseConfig,
@@ -10,11 +11,6 @@ import {
 } from "./deps.ts";
 import { parseEnv } from "./parseEnv.ts";
 
-type LocalConfigType = {
-  controllers: string;
-  var: string;
-};
-
 export class Kernel {
   public static async boot(): Promise<void> {
     // Load env vars
@@ -23,18 +19,15 @@ export class Kernel {
     registerConstant(Keys.Env.Helper, new EnvHelper());
 
     // Load config
-    const config: LocalConfigType = await parseConfig() as LocalConfigType;
+    const config = await parseConfig();
     registerConstant(Keys.Config.App, config);
-
-    // Load routes
-    const routes = new Collection<string, Route>();
-    registerConstant(Keys.Routes, routes);
 
     // Load controllers
     const controllers = await loadControllers();
     registerConstant(Keys.Controller.Default, controllers);
 
     // Register router
+    const routes = get<Collection<string, Route>>(Keys.Routes);
     registerConstant(Keys.Router, new Router(routes));
 
     // Abort Controller

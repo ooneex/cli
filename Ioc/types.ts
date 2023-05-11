@@ -8,20 +8,12 @@ export const Keys = {
   },
   Router: Symbol.for(`router-${crypto.randomUUID()}`),
   Routes: Symbol.for(`routes-${crypto.randomUUID()}`),
-  Route: {
-    Default: Symbol.for(`routes-${crypto.randomUUID()}`),
-    Params: Symbol.for(`routes-${crypto.randomUUID()}`),
-  },
-  Response: Symbol.for(`response-${crypto.randomUUID()}`),
-  Request: Symbol.for(`request-${crypto.randomUUID()}`),
-  Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
   Controller: {
     Default: Symbol.for(`controller-default-${crypto.randomUUID()}`),
     NotFound: Symbol.for(`controller-notFound-${crypto.randomUUID()}`),
     ServerError: Symbol.for(`controller-serverError-${crypto.randomUUID()}`),
   },
   AbortController: Symbol.for(`abortController${crypto.randomUUID()}`),
-
   Internal: {
     // For parameter decorators
     Parameters: Symbol.for(`internal-parameters-${crypto.randomUUID()}`),

@@ -1,16 +1,18 @@
 import {
   Collection,
+  get,
   getOrNull,
   Helper,
+  HttpRequest,
   Keys,
   MethodDecoratorReturnType,
   registerConstant,
 } from "../../deps.ts";
-import { Route } from "../Route.ts";
+import { Route as HttpRoute } from "../Route.ts";
 import { RouteException } from "../RouteException.ts";
 import { RouteDefinitionType, RoutePathType } from "../types.ts";
 
-export const ROUTE = (
+export const Route = (
   name: string,
   path: RoutePathType,
   config?: Omit<RouteDefinitionType, "name" | "path" | "controller">,
@@ -42,14 +44,19 @@ export const ROUTE = (
 
     const method = descriptor.value!;
 
-    descriptor.value = function Controller(): Response {
+    descriptor.value = function Controller(request: HttpRequest): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,
         propertyName,
-      );
+      ) ?? [];
 
-      parameters = (parameters ?? []).map((parameter: unknown) => {
+      parameters[0] = request;
+      const K = get<{ Response: symbol }>(request.id);
+      const response = get(K.Response);
+      parameters[1] = response;
+
+      parameters = parameters.map((parameter: unknown) => {
         if (typeof parameter === "function") {
           return parameter.apply(target);
         }
@@ -60,10 +67,10 @@ export const ROUTE = (
       return method.apply(this, parameters);
     };
 
-    let routes = getOrNull<Collection<string, Route>>(Keys.Routes);
+    let routes = getOrNull<Collection<string, HttpRoute>>(Keys.Routes);
 
     if (!routes) {
-      routes = new Collection<string, Route>();
+      routes = new Collection<string, HttpRoute>();
       registerConstant(Keys.Routes, routes);
     }
 
@@ -73,7 +80,7 @@ export const ROUTE = (
       );
     }
 
-    const route = new Route({
+    const route = new HttpRoute({
       name,
       path,
       controller: descriptor.value,

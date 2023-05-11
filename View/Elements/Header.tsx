@@ -38,6 +38,8 @@ export const Header = (
 
       {description && <meta name={"description"} content={description} />}
 
+      {/*__island__styles__*/}
+
       {styles &&
         styles.forEach((style) => <link rel={"stylesheet"} href={style} />)}
 

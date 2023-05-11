@@ -8,7 +8,7 @@ export const appConfig = (
 ): void => {
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
-  parameters[parameterIndex] = get(Keys.Config.App);
+  parameters[parameterIndex] = () => get(Keys.Config.App);
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
     parameters,

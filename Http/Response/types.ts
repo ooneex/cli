@@ -1,8 +1,10 @@
 import { Header } from "../Header/mod.ts";
+import { HttpRequest } from "../Request/mod.ts";
 import { Collection, ViewType } from "../deps.ts";
 import { HttpStatusType } from "../types.ts";
 
 export interface IResponse {
+  readonly data: Collection;
   readonly body: Collection;
   readonly status: HttpStatusType;
   readonly header: Header;
@@ -15,5 +17,9 @@ export interface IResponse {
     status?: HttpStatusType,
   ) => Response;
 
-  notFound(message: string, status?: HttpStatusType): Promise<Response>;
+  notFound(
+    message: string,
+    request: HttpRequest,
+    status?: HttpStatusType,
+  ): Promise<Response>;
 }

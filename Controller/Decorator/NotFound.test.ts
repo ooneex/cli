@@ -1,17 +1,26 @@
+import { HttpRequest, HttpResponse, HttpStatusType } from "@http";
+import { get, Keys, registerConstant } from "@ioc";
 import {
   assertEquals,
   assertInstanceOf,
   assertNotEquals,
-} from "@ooneex/testing/asserts.ts";
-import { describe, it } from "@ooneex/testing/bdd.ts";
-import { get, Keys } from "../../Ioc/mod.ts";
+} from "testing/asserts.ts";
+import { describe, it } from "testing/bdd.ts";
 import { ControllerType } from "../types.ts";
 import { NotFound } from "./mod.ts";
 
+const request = new HttpRequest();
+const K = {
+  Response: Symbol.for(`response-${crypto.randomUUID()}`),
+  Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
+};
+registerConstant(request.id, K);
+registerConstant(K.Response, new HttpResponse());
+
 class NotFoundController {
   @NotFound()
-  public index(): Response {
-    return new Response("not found", { status: 404 });
+  public index(_request: HttpRequest, response: HttpResponse): Response {
+    return response.string("not found", HttpStatusType.NotFound);
   }
 }
 
@@ -28,7 +37,7 @@ describe("Controller", () => {
       });
 
       it("response", async () => {
-        const response = controller();
+        const response = controller(request);
         assertInstanceOf(response, Response);
         assertEquals(response.status, 404);
         assertEquals(await response.text(), "not found");

@@ -1,24 +1,37 @@
+import { Collection } from "@collection";
+import { ControllerType } from "@controller";
+import { HttpRequest, HttpResponse } from "@http";
+import { get, Keys, registerConstant } from "@ioc";
+import { Router } from "@routing";
 import {
   assertEquals,
   assertInstanceOf,
   assertNotEquals,
-} from "@ooneex/testing/asserts.ts";
-import { describe, it } from "@ooneex/testing/bdd.ts";
-import { Collection } from "../../../Collection/mod.ts";
-import { ControllerType } from "../../../Controller/mod.ts";
-import { response } from "../../../Http/Decorator/mod.ts";
-import { HttpResponse } from "../../../Http/mod.ts";
-import { get, Keys, registerConstant } from "../../../Ioc/mod.ts";
-import { Router } from "../../Router/mod.ts";
-import { Route } from "../mod.ts";
-import { params, ROUTE } from "./mod.ts";
+} from "testing/asserts.ts";
+import { describe, it } from "testing/bdd.ts";
+import { Route as HttpRoute } from "../mod.ts";
+import { params, Route } from "./mod.ts";
 
-registerConstant(Keys.Response, new HttpResponse());
+const req = new HttpRequest();
+
+const K = {
+  Response: Symbol.for(`response-${crypto.randomUUID()}`),
+  Route: {
+    Default: Symbol.for(`route-default-${crypto.randomUUID()}`),
+    Params: Symbol.for(`route-params-${crypto.randomUUID()}`),
+  },
+  Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
+};
+registerConstant(req.id, K);
+
+const response = new HttpResponse();
+registerConstant(K.Response, response);
 
 class Controller {
-  @ROUTE("index", "/")
+  @Route("index", "/")
   public index(
-    @response response: HttpResponse,
+    _request: HttpRequest,
+    response: HttpResponse,
     @params params: Record<string, string>,
   ): Response {
     assertEquals(params, {});
@@ -30,7 +43,7 @@ describe("Routing", () => {
   describe("Route", () => {
     describe("Decorator", () => {
       new Controller();
-      const routes = get<Collection<string, Route>>(Keys.Routes);
+      const routes = get<Collection<string, HttpRoute>>(Keys.Routes);
       const router = new Router(routes);
 
       it("get params", () => {
@@ -40,8 +53,8 @@ describe("Routing", () => {
         assertEquals(route?.getName(), "index");
         assertEquals(route?.getPath(), "/");
 
-        const method = route?.getController() as ControllerType;
-        const response = method();
+        const controller = route?.getController() as ControllerType;
+        const response = controller(req);
 
         assertInstanceOf(response, Response);
       });

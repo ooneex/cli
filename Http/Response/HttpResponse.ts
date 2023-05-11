@@ -1,4 +1,5 @@
 import { Header, HeaderContentTypeType } from "../Header/mod.ts";
+import { HttpRequest } from "../Request/mod.ts";
 import {
   Collection,
   ControllerType,
@@ -13,6 +14,7 @@ import { HttpCodeType, HttpStatusType } from "../types.ts";
 import { IResponse } from "./types.ts";
 
 export class HttpResponse implements IResponse {
+  public readonly data: Collection;
   public readonly body: Collection;
   public readonly status: HttpStatusType;
   public readonly header: Header;
@@ -22,6 +24,7 @@ export class HttpResponse implements IResponse {
     status: HttpStatusType | null = null,
     header: Header | null = null,
   ) {
+    this.data = new Collection();
     this.body = body ?? new Collection();
     this.status = status ?? HttpStatusType.OK;
     this.header = header ?? new Header();
@@ -73,6 +76,7 @@ export class HttpResponse implements IResponse {
    */
   public async notFound(
     message: string,
+    request: HttpRequest,
     status?: HttpStatusType,
   ): Promise<Response> {
     const NotFoundController = get<ControllerType>(Keys.Controller.NotFound);
@@ -81,9 +85,10 @@ export class HttpResponse implements IResponse {
       status ?? HttpStatusType.NotFound,
     );
 
-    registerConstant(Keys.Exception, error);
+    const K = get<{ Exception: symbol }>(request.id);
+    registerConstant(K.Exception, error);
 
-    return await NotFoundController();
+    return await NotFoundController(request);
   }
 
   /**

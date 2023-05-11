@@ -1,18 +1,37 @@
-import { assertEquals, assertInstanceOf } from "@ooneex/testing/asserts.ts";
-import { describe, it } from "@ooneex/testing/bdd.ts";
-import { Keys, registerConstant } from "../../Ioc/mod.ts";
-import { ROUTE } from "../../Routing/Route/Decorator/mod.ts";
+import { Collection } from "@collection";
+import { Route } from "@decorator";
+import { HttpRequest, HttpResponse } from "@http";
+import { get, Keys, registerConstant } from "@ioc";
+import { Route as HttpRoute, Router } from "@routing";
+import {
+  assertEquals,
+  assertInstanceOf,
+  assertNotEquals,
+} from "testing/asserts.ts";
+import { describe, it } from "testing/bdd.ts";
 import { Exception } from "../mod.ts";
 import { exception } from "./mod.ts";
 
 class FakeException extends Exception {}
 
+const request = new HttpRequest();
+const K = {
+  Response: Symbol.for(`response-${crypto.randomUUID()}`),
+  Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
+};
+registerConstant(request.id, K);
+registerConstant(K.Response, new HttpResponse());
+
 const fakeException = new FakeException("Fake exception");
-registerConstant(Keys.Exception, fakeException);
+registerConstant(K.Exception, fakeException);
 
 class FakeController {
-  @ROUTE("index", "/")
-  public index(@exception exception: unknown): Response {
+  @Route("index", "/")
+  public index(
+    _request: HttpRequest,
+    response: HttpResponse,
+    @exception exception: Exception,
+  ): Response {
     it("instance", () => {
       assertInstanceOf(exception, FakeException);
     });
@@ -25,14 +44,20 @@ class FakeController {
       assertEquals((exception as FakeException).name, "FakeException");
     });
 
-    return new Response();
+    return response.string("");
   }
 }
 
 describe("Exception", () => {
-  describe("Decorator", () => {
-    const controller = new FakeController();
-    const response = controller.index("");
+  describe("Decorator", async () => {
+    new FakeController();
+    const routes = get<Collection<string, HttpRoute>>(Keys.Routes);
+    const router = new Router(routes);
+    const route = router.findByName("index");
+    assertNotEquals(route, null);
+
+    const controller = route?.getController();
+    const response = controller ? await controller(request) : null;
 
     it("response", () => {
       assertInstanceOf(response, Response);

@@ -1,6 +1,6 @@
-import { assertEquals, assertInstanceOf } from "@ooneex/testing/asserts.ts";
-import { describe, it } from "@ooneex/testing/bdd.ts";
-import { Collection } from "../../Collection/mod.ts";
+import { Collection } from "@collection";
+import { assertEquals, assertInstanceOf } from "testing/asserts.ts";
+import { describe, it } from "testing/bdd.ts";
 import { Header } from "../Header/mod.ts";
 import { HttpResponse, HttpStatusType } from "../mod.ts";
 

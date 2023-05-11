@@ -5,4 +5,5 @@ export * from "../Exception/mod.ts";
 export * from "../File/mod.ts";
 export * from "../Helper/mod.ts";
 export * from "../Ioc/mod.ts";
+export * from "../Island/mod.ts";
 export * from "../Path/mod.ts";

@@ -1,12 +1,7 @@
-import {
-  get,
-  ICollection,
-  Keys,
-  ParameterDecoratorReturnType,
-} from "../deps.ts";
+import { Decorator, get, ICollection, Keys } from "../deps.ts";
 import { DotEnvValueType } from "../types.ts";
 
-export const env = (key?: string): ParameterDecoratorReturnType => {
+export const env = (key?: string): Decorator.ParameterDecoratorReturnType => {
   return (
     // deno-lint-ignore ban-types
     target: Object,
@@ -17,7 +12,8 @@ export const env = (key?: string): ParameterDecoratorReturnType => {
       Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) ||
       [];
     const env = get<ICollection<string, DotEnvValueType>>(Keys.Env.Default);
-    parameters[parameterIndex] = key ? env.get(key) : env;
+
+    parameters[parameterIndex] = () => key ? env.get(key) : env;
     Reflect.defineMetadata(
       Keys.Internal.Parameters,
       parameters,

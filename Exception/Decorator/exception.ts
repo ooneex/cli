@@ -1,4 +1,4 @@
-import { getOrNull, Keys } from "../deps.ts";
+import { get, getOrNull, HttpRequest, Keys } from "../deps.ts";
 
 export const exception = (
   // deno-lint-ignore ban-types
@@ -10,7 +10,17 @@ export const exception = (
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) ||
     [];
 
-  parameters[parameterIndex] = () => getOrNull(Keys.Exception);
+  parameters[parameterIndex] = () => {
+    const request: HttpRequest | null = parameters[0] as HttpRequest;
+
+    if (!(request instanceof HttpRequest)) {
+      return null;
+    }
+
+    const K = get<{ Exception: symbol }>(request.id);
+
+    return getOrNull(K.Exception);
+  };
 
   Reflect.defineMetadata(
     Keys.Internal.Parameters,

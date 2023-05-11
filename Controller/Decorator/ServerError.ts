@@ -1,13 +1,15 @@
 import {
+  Decorator,
+  Exception,
   Helper,
+  HttpResponse,
   Keys,
-  MethodDecoratorReturnType,
   registerConstant,
   RouteException,
 } from "../deps.ts";
 import { ControllerType } from "../types.ts";
 
-export const ServerError = (): MethodDecoratorReturnType => {
+export const ServerError = (): Decorator.MethodDecoratorReturnType => {
   return (
     // deno-lint-ignore ban-types
     target: Object,
@@ -23,12 +25,18 @@ export const ServerError = (): MethodDecoratorReturnType => {
 
     const method = descriptor.value!;
 
-    descriptor.value = function ServerErrorController(): Response {
+    descriptor.value = function ServerErrorController(
+      exception: Exception,
+      response: HttpResponse,
+    ): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,
         propertyName,
-      );
+      ) ?? [];
+
+      parameters[0] = exception;
+      parameters[1] = response;
 
       parameters = (parameters ?? []).map((parameter: unknown) => {
         if (typeof parameter === "function") {

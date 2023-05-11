@@ -1,8 +1,8 @@
 import { MethodDecoratorReturnType } from "../../deps.ts";
 import { RouteDefinitionType, RoutePathType } from "../types.ts";
-import { ROUTE } from "./Route.ts";
+import { Route } from "./Route.ts";
 
-export const POST = (
+export const Post = (
   name: string,
   path: RoutePathType,
   config?: Omit<
@@ -10,7 +10,7 @@ export const POST = (
     "name" | "path" | "controller" | "methods"
   >,
 ): MethodDecoratorReturnType => {
-  return ROUTE(name, path, {
+  return Route(name, path, {
     ...config,
     methods: ["POST"],
   });

@@ -1,4 +1,10 @@
-import { getOrNull, Keys, ParameterDecoratorReturnType } from "../../deps.ts";
+import {
+  get,
+  getOrNull,
+  HttpRequest,
+  Keys,
+  ParameterDecoratorReturnType,
+} from "../../deps.ts";
 import { ParamInjectionException } from "../ParamInjectionException.ts";
 
 export const param = (key: string): ParameterDecoratorReturnType => {
@@ -13,7 +19,15 @@ export const param = (key: string): ParameterDecoratorReturnType => {
       [];
 
     parameters[parameterIndex] = () => {
-      const params: Record<string, unknown> = getOrNull(Keys.Route.Params) ??
+      const request: HttpRequest | null = parameters[0] as HttpRequest;
+
+      if (!(request instanceof HttpRequest)) {
+        return null;
+      }
+
+      const K = get<{ Route: { Params: symbol } }>(request.id);
+
+      const params: Record<string, unknown> = getOrNull(K.Route.Params) ??
         {};
 
       if (!params[key]) {

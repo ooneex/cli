@@ -1,6 +1,15 @@
-import { RouteCheckerErrorType } from "./deps.ts";
+import {
+  Exception,
+  HttpRequest,
+  HttpResponse,
+  RouteCheckerErrorType,
+} from "./deps.ts";
 
-export type ControllerType = () => Response;
+export type ControllerType = (request: HttpRequest) => Response;
+export type ServerErrorControllerType = (
+  exception: Exception,
+  response: HttpResponse,
+) => Response;
 
 export type NotFoundExceptionDataType = {
   constraints: RouteCheckerErrorType[];

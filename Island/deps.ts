@@ -1,0 +1,10 @@
+export * from "npm:solid-js@^1.6.3";
+export { build } from "npm:vite@^4.0.4";
+export * from "../Config/mod.ts";
+export * from "../Directory/mod.ts";
+export * from "../File/mod.ts";
+export * from "../Helper/mod.ts";
+export * from "../Ioc/mod.ts";
+export * from "../View/mod.ts";
+export { solid };
+import solid from "npm:vite-plugin-solid@^2.4.0";

@@ -1,18 +1,13 @@
 import { ServerError } from "./Decorator/ServerError.ts";
-import {
-  Exception,
-  exception,
-  HttpResponse,
-  HttpStatusType,
-  response,
-} from "./deps.ts";
+import { Exception, HttpResponse, HttpStatusType } from "./deps.ts";
 
 export class ServerErrorController {
   @ServerError()
   public index(
-    @response response: HttpResponse,
-    @exception exception: Exception,
+    exception: Exception,
+    response: HttpResponse,
   ): Response {
+    // Todo: Add date
     const body: Record<string, unknown> = {};
     body["exception"] = {
       name: exception.name,

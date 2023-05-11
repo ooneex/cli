@@ -1,13 +1,15 @@
 import {
+  Decorator,
+  get,
   Helper,
+  HttpRequest,
   Keys,
-  MethodDecoratorReturnType,
   registerConstant,
   RouteException,
 } from "../deps.ts";
 import { ControllerType } from "../types.ts";
 
-export const NotFound = (): MethodDecoratorReturnType => {
+export const NotFound = (): Decorator.MethodDecoratorReturnType => {
   return (
     // deno-lint-ignore ban-types
     target: Object,
@@ -23,12 +25,19 @@ export const NotFound = (): MethodDecoratorReturnType => {
 
     const method = descriptor.value!;
 
-    descriptor.value = function NotFoundController(): Response {
+    descriptor.value = function NotFoundController(
+      request: HttpRequest,
+    ): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,
         propertyName,
-      );
+      ) ?? [];
+
+      parameters[0] = request;
+      const K = get<{ Response: symbol }>(request.id);
+      const response = get(K.Response);
+      parameters[1] = response;
 
       parameters = (parameters ?? []).map((parameter: unknown) => {
         if (typeof parameter === "function") {

@@ -12,6 +12,7 @@ export const Body = (
   return (
     <body>
       {children}
+      {/*__island__scripts__*/}
       {scripts &&
         scripts.forEach((s) => {
           if (Helper.isString(s)) {

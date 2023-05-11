@@ -5,8 +5,6 @@ import {
   HttpRequest,
   HttpResponse,
   HttpStatusType,
-  request,
-  response,
 } from "./deps.ts";
 import { NotFoundExceptionDataType } from "./types.ts";
 
@@ -15,8 +13,8 @@ import { NotFoundExceptionDataType } from "./types.ts";
 export class NotFoundController {
   @NotFound()
   public async index(
-    @request _request: HttpRequest,
-    @response response: HttpResponse,
+    _request: HttpRequest,
+    response: HttpResponse,
     @exception exception: Exception,
   ): Promise<Response> {
     const data: Record<string, unknown> = {};

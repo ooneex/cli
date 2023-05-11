@@ -8,6 +8,7 @@ export class HttpRequest implements IRequest {
   public readonly url: Readonly<URL> | null;
   public readonly header: ReadonlyHeader | null;
   public readonly search: Readonly<URLSearchParams> | null;
+  public readonly id: string = crypto.randomUUID();
 
   constructor(public readonly native: Request | null = null) {
     this.url = null;

@@ -1,4 +1,4 @@
-import { getOrNull, Keys } from "../../deps.ts";
+import { get, getOrNull, HttpRequest, Keys } from "../../deps.ts";
 
 export const route = (
   // deno-lint-ignore ban-types
@@ -8,7 +8,17 @@ export const route = (
 ): void => {
   const parameters: unknown[] =
     Reflect.getOwnMetadata(Keys.Internal.Parameters, target, propertyKey) || [];
-  parameters[parameterIndex] = () => getOrNull(Keys.Route.Default);
+  parameters[parameterIndex] = () => {
+    const request: HttpRequest | null = parameters[0] as HttpRequest;
+
+    if (!(request instanceof HttpRequest)) {
+      return null;
+    }
+
+    const K = get<{ Route: { Default: symbol } }>(request.id);
+
+    return getOrNull(K.Route.Default);
+  };
   Reflect.defineMetadata(
     Keys.Internal.Parameters,
     parameters,
