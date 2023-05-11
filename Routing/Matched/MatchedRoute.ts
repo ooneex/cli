@@ -18,8 +18,8 @@ export class MatchedRoute implements IMatchedRoute {
     return this.matched.url;
   }
 
-  public getParams(): MatchedRouteParamsType | null {
-    return this.matched.params ?? null;
+  public getParams(): MatchedRouteParamsType {
+    return this.matched.params ?? {};
   }
 
   public getMethod(): HttpMethodType | null {

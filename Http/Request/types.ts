@@ -1,4 +1,5 @@
 import { ReadonlyHeader } from "../Header/mod.ts";
+import { EnvType, LocaleType, VersionType } from "../deps.ts";
 import { HttpMethodType } from "../types.ts";
 
 export interface IRequest {
@@ -8,6 +9,11 @@ export interface IRequest {
   readonly id: string;
   readonly native: Request | null;
   getMethod: () => HttpMethodType | null;
+  getRouteName: () => string;
+  getIp: () => string;
+  getLocale: () => LocaleType;
+  getEnv: () => EnvType;
+  getVersion: () => VersionType | null;
   isJson: () => boolean;
   isText: () => boolean;
   isFormData: () => boolean;

@@ -26,6 +26,7 @@ export const serverHandler = async (
     Route: {
       Default: Symbol.for(`route-default-${crypto.randomUUID()}`),
       Params: Symbol.for(`route-params-${crypto.randomUUID()}`),
+      Matched: Symbol.for(`route-matched-${crypto.randomUUID()}`),
     },
     Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
   };
@@ -50,7 +51,6 @@ export const serverHandler = async (
   const params = request.getParams(route.getPath() as UrlPatternType);
   registerConstant(K.Route.Params, params ?? {});
 
-  // Todo: add this values to request
   const matchedRoute: MatchedRouteType = {
     name: route.getName(),
     url: request.url as URL,
@@ -62,6 +62,8 @@ export const serverHandler = async (
     env: envHelper.getAppEnv() as string,
     version: envHelper.getVersion() as VersionType,
   };
+
+  registerConstant(K.Route.Matched, matchedRoute);
 
   const routeChecker = new RouteChecker(route, new MatchedRoute(matchedRoute));
   if (!routeChecker.isValid()) {

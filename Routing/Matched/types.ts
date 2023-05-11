@@ -9,18 +9,18 @@ export type MatchedRouteParamsType = Record<
 export type MatchedRouteType = {
   name: string;
   url: URL;
-  params?: MatchedRouteParamsType | null;
+  params: MatchedRouteParamsType;
   method: HttpMethodType;
   ip: string;
   locale: LocaleType;
   env: EnvType;
-  version?: VersionType | null;
+  version: VersionType | null;
 };
 
 export interface IMatchedRoute {
   getName(): string;
   getUrl(): URL;
-  getParams(): MatchedRouteParamsType | null;
+  getParams(): MatchedRouteParamsType;
   getMethod(): HttpMethodType | null;
   getIp(): string;
   getLocale(): LocaleType;

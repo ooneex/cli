@@ -1,5 +1,13 @@
-import { Helper } from "../deps.ts";
 import { ReadonlyHeader } from "../Header/mod.ts";
+import {
+  EnvType,
+  get,
+  Helper,
+  LocaleType,
+  MatchedRouteParamsType,
+  MatchedRouteType,
+  VersionType,
+} from "../deps.ts";
 import { HttpMethodType } from "../types.ts";
 import { RequestBodyParserException } from "./RequestBodyParserException.ts";
 import { IRequest, UrlPatternType } from "./types.ts";
@@ -21,6 +29,41 @@ export class HttpRequest implements IRequest {
       this.header = new ReadonlyHeader(native.headers);
       this.search = this.url.searchParams;
     }
+  }
+
+  public getRouteName(): string {
+    const K = get<{ Route: { Matched: symbol } }>(this.id);
+    const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
+
+    return matchedRoute.name;
+  }
+
+  public getIp(): string {
+    const K = get<{ Route: { Matched: symbol } }>(this.id);
+    const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
+
+    return matchedRoute.ip;
+  }
+
+  public getLocale(): LocaleType {
+    const K = get<{ Route: { Matched: symbol } }>(this.id);
+    const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
+
+    return matchedRoute.locale;
+  }
+
+  public getEnv(): EnvType {
+    const K = get<{ Route: { Matched: symbol } }>(this.id);
+    const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
+
+    return matchedRoute.env;
+  }
+
+  public getVersion(): VersionType | null {
+    const K = get<{ Route: { Matched: symbol } }>(this.id);
+    const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
+
+    return matchedRoute.version;
   }
 
   public getMethod(): HttpMethodType | null {
@@ -84,26 +127,26 @@ export class HttpRequest implements IRequest {
   /**
    * Check if an url pattern (like /books/:id) matches with this request
    */
-  public getParams<T = Record<string, string>>(
+  public getParams(
     pattern: UrlPatternType,
-  ): T | null {
+  ): MatchedRouteParamsType {
     if (!this.url) {
-      return null;
+      return {};
     }
 
     const urlPattern = new URLPattern({ pathname: pattern });
     const match = urlPattern.exec(this.url);
 
     if (!match) {
-      return null;
+      return {};
     }
 
     const params = match.pathname.groups;
 
     if (Helper.isEmpty(params)) {
-      return null;
+      return {};
     }
 
-    return (match.pathname.groups as T) ?? null;
+    return match.pathname.groups ?? {};
   }
 }

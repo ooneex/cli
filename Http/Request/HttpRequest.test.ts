@@ -7,10 +7,10 @@ describe("Http Request", () => {
     const request = new Request("https://github.com/issues/12959");
     const httpRequest = new HttpRequest(request);
 
-    assertEquals(httpRequest.getParams("/user"), null);
-    assertEquals(httpRequest.getParams<Record<"id", string>>("/issues/:id"), {
+    assertEquals(httpRequest.getParams("/user"), {});
+    assertEquals(httpRequest.getParams("/issues/:id"), {
       id: "12959",
     });
-    assertEquals(httpRequest.getParams("/issues/12959"), null);
+    assertEquals(httpRequest.getParams("/issues/12959"), {});
   });
 });
