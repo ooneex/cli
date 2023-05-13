@@ -19,7 +19,7 @@ export const getIslandId = (name: string): string | null => {
   }
 
   const match = file.read().match(
-    /div.__([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+)__/i,
+    /div\[data\-ooneex\-island\-id="([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+)"\]/i,
   );
 
   if (!match) {

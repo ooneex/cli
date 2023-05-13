@@ -7,7 +7,8 @@ export class ServerErrorController {
     exception: Exception,
     response: HttpResponse,
   ): Response {
-    // Todo: Add date
+    // TODO: Add date
+    // TODO: hide some data if the env is not local or development
     const body: Record<string, unknown> = {};
     body["exception"] = {
       name: exception.name,
@@ -15,6 +16,7 @@ export class ServerErrorController {
       file: exception.file,
       line: exception.line,
       column: exception.column,
+      status: HttpStatusType.InternalServerError,
       data: exception.getData(),
     };
 

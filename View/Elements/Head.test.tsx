@@ -2,10 +2,10 @@ import { DOMParser } from "deno-dom";
 import { assert, assertEquals } from "testing/asserts.ts";
 import { describe, it } from "testing/bdd.ts";
 import { renderToString } from "../deps.ts";
-import { Header } from "../mod.ts";
+import { Head } from "../mod.ts";
 
 describe("View", () => {
-  const content = renderToString(<Header title={"Fake title"} />);
+  const content = renderToString(<Head title={"Fake title"} />);
   const head = (new DOMParser()).parseFromString(content, "text/html");
 
   it("head element", () => {

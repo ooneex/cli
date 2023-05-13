@@ -10,7 +10,7 @@ export interface IHeaderProps {
   title: string;
 }
 
-export const Header = (
+export const Head = (
   {
     charset = "UTF-8",
     favicon,
@@ -38,7 +38,10 @@ export const Header = (
 
       {description && <meta name={"description"} content={description} />}
 
-      {/*__island__styles__*/}
+      <meta
+        name={"description"}
+        content={"ooneex-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"}
+      />
 
       {styles &&
         styles.forEach((style) => <link rel={"stylesheet"} href={style} />)}

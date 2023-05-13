@@ -44,8 +44,14 @@ export const renderView: renderViewType = <T = unknown>(
     },
   );
 
-  console.log("🚀 ~ file: render.tsx:17 ~ styles:", styles);
-  console.log("🚀 ~ file: render.tsx:19 ~ scripts:", scripts);
+  html = html.replace(
+    `<meta name="description" content="ooneex-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"/>`,
+    styles,
+  );
+  html = html.replace(
+    `<span style="display:none;" class="ooneex-island-scripts-e10a91b1-a672-4ff1-9d72-1150f3becaa0"></span>`,
+    scripts,
+  );
 
   return html;
 };

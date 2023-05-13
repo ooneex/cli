@@ -5,7 +5,7 @@ import { Exception } from "./Exception.ts";
 class FakeException extends Exception {}
 
 describe("Exception", () => {
-  const fakeException = new FakeException("Fake exception");
+  const fakeException = new FakeException("Fake exception", 404);
 
   it("name", () => {
     assertEquals(fakeException.name, "FakeException");
@@ -28,7 +28,7 @@ describe("Exception", () => {
   });
 
   it("status", () => {
-    assertEquals(fakeException.status, null);
+    assertEquals(fakeException.status, 404);
   });
 
   it("data", () => {

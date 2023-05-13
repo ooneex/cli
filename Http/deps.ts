@@ -1,3 +1,4 @@
+export * from "https://deno.land/std@0.177.0/http/file_server.ts";
 export * from "https://deno.land/std@0.177.0/http/mod.ts";
 export * from "../Collection/mod.ts";
 export * from "../Controller/mod.ts";

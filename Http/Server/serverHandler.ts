@@ -9,6 +9,7 @@ import {
   registerConstant,
   RouteChecker,
   Router,
+  serveFile,
   VersionType,
 } from "../deps.ts";
 import { HttpRequest } from "../Request/HttpRequest.ts";
@@ -21,6 +22,14 @@ export const serverHandler = async (
   connInfo: ConnInfo,
 ): Promise<Response> => {
   const request = new HttpRequest(req);
+  const pathname = request.url?.pathname;
+
+  if (pathname && /^\/public\/.+/i.test(pathname)) {
+    const path = `${Deno.cwd()}${pathname}`;
+
+    return await serveFile(req, path);
+  }
+
   const K = {
     Response: Symbol.for(`response-${crypto.randomUUID()}`),
     Route: {
