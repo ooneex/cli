@@ -1,5 +1,5 @@
-export * from "../Figure/mod.ts";
-export * from "../Http/mod.ts";
+export { Figure } from "../Figure/Figure.ts";
+export { HttpRequest as Request } from "../Http/Request/HttpRequest.ts";
 export { get, getOrNull } from "../Ioc/get.ts";
 export { Keys } from "../Ioc/types.ts";
-export * from "../Output/mod.ts";
+export { Output } from "../Output/Output.ts";

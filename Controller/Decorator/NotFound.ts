@@ -2,9 +2,9 @@ import {
   Decorator,
   get,
   Helper,
+  HttpRequest as Request,
   Keys,
   registerConstant,
-  Request,
   RouteException,
 } from "../deps.ts";
 import { ControllerType } from "../types.ts";

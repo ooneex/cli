@@ -4,12 +4,15 @@ import {
   get,
   Keys,
   loadControllers,
+  Log,
   parseConfig,
   registerConstant,
   Route,
   Router,
 } from "./deps.ts";
 import { parseEnv } from "./parseEnv.ts";
+
+window.Log = Log;
 
 export class Kernel {
   public static async boot(): Promise<void> {

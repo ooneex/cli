@@ -1,9 +1,12 @@
 import {
+  copySync,
   Directory,
+  ensureFileSync,
+  EOL,
   extname,
-  FS,
   Helper,
   IDirectory,
+  moveSync,
   Path,
   readLines,
 } from "./deps.ts";
@@ -17,7 +20,7 @@ import { FileCpConfigType, IFile } from "./types.ts";
  * This class allows you to manage files.
  */
 export class File implements IFile {
-  public static EOL: string = FS.EOL.CRLF;
+  public static EOL: string = EOL.CRLF;
 
   constructor(
     private path: string,
@@ -70,7 +73,7 @@ export class File implements IFile {
    */
   public ensure(): this | false {
     try {
-      FS.ensureFileSync(this.path);
+      ensureFileSync(this.path);
     } catch (e) {
       throw new FileException(`[ensure] ${e.message}`);
     }
@@ -211,7 +214,7 @@ export class File implements IFile {
   ): IFile {
     try {
       const file = new File(destination);
-      FS.copySync(this.path, file.getPath(), config);
+      copySync(this.path, file.getPath(), config);
 
       return file;
     } catch (e) {
@@ -230,7 +233,7 @@ export class File implements IFile {
       }
 
       file.getDirectory().ensure();
-      FS.moveSync(this.path, file.getPath(), { overwrite });
+      moveSync(this.path, file.getPath(), { overwrite });
       this.path = file.getPath();
 
       return this;
