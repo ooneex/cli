@@ -21,7 +21,7 @@ export const parseEnv = (): ICollection<string, DotEnvValueType> => {
 
   if (data.isEmpty()) {
     data.setData({
-      APP_ENV: "dev",
+      APP_ENV: "local",
       LOCALE: "en-us",
       COUNTRY: "United States",
       VERSION: "1.0.0",
@@ -30,6 +30,26 @@ export const parseEnv = (): ICollection<string, DotEnvValueType> => {
       PORT: "3000",
       HOST: "localhost",
     });
+  }
+
+  if (!data.has("APP_ENV")) {
+    data.set("APP_ENV", "local");
+  }
+
+  if (!data.has("LOCALE")) {
+    data.set("LOCALE", "en-us");
+  }
+
+  if (!data.has("DEBUG")) {
+    data.set("DEBUG", true);
+  }
+
+  if (!data.has("PORT")) {
+    data.set("PORT", "3000");
+  }
+
+  if (!data.has("HOST")) {
+    data.set("HOST", "localhost");
   }
 
   return data;

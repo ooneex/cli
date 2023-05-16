@@ -120,11 +120,26 @@ export class File implements IFile {
    */
   public write(content: string): this {
     try {
+      this.ensure();
       Deno.writeTextFileSync(this.path, content, { create: true });
 
       return this;
     } catch (e) {
       throw new FileException(`[write] ${e.message}`);
+    }
+  }
+
+  /**
+   *  Writes json content, by default creating a new file if needed, else overwriting.
+   */
+  public writeJson(data: Record<string, unknown>): this {
+    try {
+      this.ensure();
+      this.write(JSON.stringify(data));
+
+      return this;
+    } catch (e) {
+      throw new FileException(`[writeJson] ${e.message}`);
     }
   }
 
@@ -170,6 +185,21 @@ export class File implements IFile {
     } catch (e) {
       throw new FileException(`[read] ${e.message}`);
     }
+  }
+
+  /**
+   * Ensures that a file is empty.
+   */
+  public json<T = string>(): Record<string, T> {
+    let data = {};
+
+    try {
+      data = JSON.parse(this.read());
+    } catch (e) {
+      throw new FileException(`[json] ${e.message}`);
+    }
+
+    return data;
   }
 
   /**

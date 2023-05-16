@@ -61,12 +61,12 @@ export class HttpResponse implements IResponse {
   /**
    * Render component response
    */
-  public render<T = unknown>(
+  public async render<T = unknown>(
     view: ViewType<T>,
     data?: T,
     status?: HttpStatusType,
-  ): Response {
-    const content = renderView(view, data);
+  ): Promise<Response> {
+    const content = await renderView(view, data);
 
     return this.html(content, status);
   }

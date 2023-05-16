@@ -41,6 +41,10 @@ export interface IFile {
    */
   write(content: string): this;
   /**
+   *  Writes json content, by default creating a new file if needed, else overwriting.
+   */
+  writeJson(data: Record<string, unknown>): this;
+  /**
    *  Appends `content` to the file.
    */
   addContent(content: string, lien: boolean): this;
@@ -49,9 +53,13 @@ export interface IFile {
    */
   replaceText(search: RegExp, newText: string): this;
   /**
-   *  Writes string `content`, by default creating a new file if needed, else overwriting.
+   *  Reads file content
    */
   read(): string;
+  /**
+   *  Reads file content as json
+   */
+  json<T = string>(): Record<string, T>;
   /**
    * Copies a file. Overwrites it if option provided.
    */

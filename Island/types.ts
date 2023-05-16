@@ -1,7 +1,9 @@
-import { Component } from "./deps.ts";
+import { JSX } from "./deps.ts";
+
+export type ViteOptionsModeType = "development" | "production";
 
 export type ViteOptionsType = Record<string, unknown> & {
-  mode: "development" | "production";
+  mode: ViteOptionsModeType;
   build: Record<string, unknown> & {
     sourcemap: boolean;
     minify: boolean;
@@ -20,12 +22,16 @@ export type LocalConfigType = {
   };
 };
 
-export interface IIslandProps {
-  name: string;
-  key?: string;
-  data?: Record<string, unknown>;
-  children?: Component;
-}
+export type IslandConfigType = { id: string; name: string; updatedAt: number };
+
+export type IslandPropsType = {
+  config: IslandConfigType;
+  data?: {
+    key: string | number;
+    value: Record<string, unknown>;
+  };
+  children?: JSX.Element;
+};
 
 export type ManifestType = {
   assets?: string[];

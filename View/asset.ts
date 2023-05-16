@@ -19,11 +19,10 @@ export const getAssetFromCache = (name: string, directory?: string): string => {
   const assetsCacheFile = new File(`${varDir}/cache/assets.json`);
 
   if (!assetsCacheFile.exists()) {
-    assetsCacheFile.ensure();
-    assetsCacheFile.write(JSON.stringify({}));
+    assetsCacheFile.writeJson({});
   }
 
-  const assetsCacheManifest = JSON.parse(assetsCacheFile.read());
+  const assetsCacheManifest = assetsCacheFile.json();
 
   let hash = "a";
   for (let i = 0; i < 10; i++) {

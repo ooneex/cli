@@ -15,7 +15,7 @@ export interface IResponse {
     view: ViewType<T>,
     data?: T,
     status?: HttpStatusType,
-  ) => Response;
+  ) => Promise<Response>;
 
   notFound(
     message: string,

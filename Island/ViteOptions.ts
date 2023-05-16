@@ -1,7 +1,14 @@
 import { Directory, get, getAssetFromCache, Keys, solid } from "./deps.ts";
-import { LocalConfigType, ViteOptionsType } from "./types.ts";
+import {
+  LocalConfigType,
+  ViteOptionsModeType,
+  ViteOptionsType,
+} from "./types.ts";
 
-export const getOptions = () => {
+export const getOptions = (
+  island: string,
+  mode: ViteOptionsModeType,
+) => {
   const config = get<LocalConfigType>(Keys.Config.App);
   const directories = config.directories;
   const directory = new Directory(directories.islands);
@@ -15,28 +22,37 @@ export const getOptions = () => {
   const ViteOptions: ViteOptionsType = {
     appType: "custom",
     logLevel: "info",
-    mode: "development",
+    mode,
     cacheDir: directories.var,
     build: {
       outDir: `${directories.public}`,
-      assetsDir: "islands",
-      sourcemap: false,
-      minify: false,
+      assetsDir: `${directories.islands}`,
+      sourcemap: mode === "development",
+      minify: mode === "production",
       manifest: true,
       write: true,
       emptyOutDir: false,
       css: {
-        devSourcemap: true,
+        devSourcemap: mode === "development",
       },
       rollupOptions: {
-        input: inputs,
+        input: island,
         output: {
           entryFileNames: (chunkInfo: Record<"name", string>) =>
-            getAssetFromCache(`islands/${chunkInfo.name}.js`, "islands"),
+            getAssetFromCache(
+              `${directories.islands}/${chunkInfo.name}.js`,
+              directories.islands,
+            ),
           chunkFileNames: (chunkInfo: Record<"name", string>) =>
-            getAssetFromCache(`islands/${chunkInfo.name}.js`, "islands"),
+            getAssetFromCache(
+              `${directories.islands}/${chunkInfo.name}.js`,
+              directories.islands,
+            ),
           assetFileNames: (assetInfo: Record<"name", string>) =>
-            getAssetFromCache(`islands/${assetInfo.name}`, "islands"),
+            getAssetFromCache(
+              `${directories.islands}/${assetInfo.name}`,
+              directories.islands,
+            ),
         },
       },
       watch: null,

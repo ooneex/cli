@@ -1,28 +1,29 @@
-import { File, get, Helper, HttpStatusType, Keys } from "./deps.ts";
-import { getIslandId } from "./getIslandId.ts";
-import { IslandNotFoundException } from "./IslandNotFoundException.ts";
-import { IIslandProps } from "./types.ts";
+import { File, get, Keys } from "./deps.ts";
+import { IslandPropsType, LocalConfigType } from "./types.ts";
 
-export const Island = (props: IIslandProps) => {
-  const name = Helper.trim(props.name, "/").replace(/\.tsx/i, "");
+export const Island = (props: IslandPropsType) => {
+  const config = get<LocalConfigType>(Keys.Config.App);
 
-  const config = get<{ directories: { islands: string } }>(Keys.Config.App);
+  const cacheFile = new File(
+    `${config.directories.var}/cache/islands/${props.config.name}/${props.config.id}.json`,
+  );
 
-  const file = new File(`${config.directories.islands}/${name}.tsx`);
-  if (!file.exists()) {
-    throw new IslandNotFoundException(`Cannot found island ${name}.tsx`);
+  if (!cacheFile.exists()) {
+    cacheFile.writeJson({});
   }
 
-  const id = getIslandId(name);
-
-  if (!id) {
-    return null;
+  if (props.data) {
+    const data = cacheFile.json();
+    // @ts-ignore: trust me
+    data[props.data.key] = props.data.value;
+    cacheFile.writeJson(data);
   }
-
-  const data = props.data ?? {};
 
   return (
-    <div data-ooneex-island-id={id} data-ooneex-island-name={name}>
+    <div
+      data-ooneex-island-id={props.config.id}
+      data-ooneex-island={`${props.config.name}__${props.config.id}`}
+    >
       {props.children}
     </div>
   );
