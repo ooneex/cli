@@ -47,7 +47,7 @@ elements.forEach((element) => {
   const data = window.ooneex.store.islands.data;
   const useData = (key: string) => data[key] ?? null;
   element.innerHTML = "";
-  render(() => <ShowUsers useData={useData} />, element);
+  render(() => <${file.getName()} useData={useData} />, element);
 });
   `;
 
