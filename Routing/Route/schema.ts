@@ -1,11 +1,8 @@
 import {
-  AppEnvSchema,
   HttpMethodSchema,
   HttpProtocolSchema,
-  LocaleSchema,
-  VersionSchema,
-  z,
-} from "../deps.ts";
+} from "../../Module/Http/schema.ts";
+import { AppEnvSchema, LocaleSchema, VersionSchema, z } from "../deps.ts";
 
 export const RouteConstraintsSchema = z.object({
   where: z.record(z.string(), z.string().or(z.number())).optional(),
