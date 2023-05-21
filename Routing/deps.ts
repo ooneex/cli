@@ -1,4 +1,4 @@
-export type { EnvType, VersionType } from "../App/types.ts";
+export type { AppEnvType, VersionType } from "../App/types.ts";
 export { Collection } from "../Collection/mod.ts";
 export type { ICollection } from "../Collection/mod.ts";
 export type { ControllerType } from "../Controller/types.ts";

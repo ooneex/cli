@@ -1,5 +1,6 @@
 import { LocaleSchema, z } from "./deps.ts";
 
+// TODO: Use https://deno.land/std@0.188.0/semver/mod.ts
 export const VersionSchema = z.custom<`${number}.${number}.${number}`>(
   (value: unknown): boolean => {
     return /^\d+\.\d+\.\d+$/.test(value as string);

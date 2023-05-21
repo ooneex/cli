@@ -1,6 +1,6 @@
 import { ReadonlyHeader } from "../Header/mod.ts";
 import {
-  EnvType,
+  AppEnvType,
   get,
   Helper,
   LocaleType,
@@ -52,7 +52,7 @@ export class HttpRequest implements IRequest {
     return matchedRoute.locale;
   }
 
-  public getEnv(): EnvType {
+  public getEnv(): AppEnvType {
     const K = get<{ Route: { Matched: symbol } }>(this.id);
     const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
 

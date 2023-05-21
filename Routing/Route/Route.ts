@@ -1,6 +1,6 @@
 import {
+  AppEnvType,
   ControllerType,
-  EnvType,
   HttpMethodType,
   HttpProtocolType,
   LocaleType,
@@ -30,7 +30,7 @@ export class Route implements IRoute {
     return this.definition.description ?? null;
   }
 
-  public getEnvs(): EnvType[] | null {
+  public getEnvs(): AppEnvType[] | null {
     return this.definition.envs ?? null;
   }
 

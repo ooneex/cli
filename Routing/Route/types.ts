@@ -1,6 +1,6 @@
 import {
+  AppEnvType,
   ControllerType,
-  EnvType,
   HttpMethodType,
   HttpProtocolType,
   LocaleType,
@@ -85,7 +85,7 @@ export type RouteDefinitionType = {
    * Allowed environment for this route
    * @example ["dev"] ["prod", "dev"] ["test", "demo"]
    */
-  envs?: EnvType[];
+  envs?: AppEnvType[];
   /**
    * Version of this route
    */
@@ -110,7 +110,7 @@ export interface IRoute {
   getMethods: () => HttpMethodType[] | null;
   getData: <T>() => Record<string, T> | null;
   getLocales: () => LocaleType[] | null;
-  getEnvs: () => EnvType[] | null;
+  getEnvs: () => AppEnvType[] | null;
   getVersions: () => VersionType[] | null;
   getDescription: () => string | null;
 }

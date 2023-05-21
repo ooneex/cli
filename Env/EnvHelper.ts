@@ -1,5 +1,5 @@
 import {
-  EnvType,
+  AppEnvType,
   get,
   ICollection,
   Keys,
@@ -14,8 +14,8 @@ export class EnvHelper {
     this.env = get<ICollection<string, DotEnvValueType>>(Keys.Env.Default);
   }
 
-  public getAppEnv(): EnvType {
-    return this.env.get<EnvType>("APP_ENV") as EnvType;
+  public getAppEnv(): AppEnvType {
+    return this.env.get<AppEnvType>("APP_ENV") as AppEnvType;
   }
 
   public isDevelopment(): boolean {

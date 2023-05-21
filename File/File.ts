@@ -13,8 +13,6 @@ import {
 import { FileException } from "./FileException.ts";
 import { FileCpConfigType, IFile } from "./types.ts";
 
-// export class FileException extends Error {}
-
 /**
  * File
  * This class allows you to manage files.
