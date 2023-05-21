@@ -39,6 +39,7 @@
   },
   "tasks": {
     "start": "deno run -A --watch=.env,.env.local,config/,controllers/,middlewares/ index.ts",
+    "test": "deno test -A",
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
     "lint": "deno fmt --check && deno lint"
