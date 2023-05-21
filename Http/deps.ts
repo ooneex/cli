@@ -1,7 +1,7 @@
 export { serveFile } from "https://deno.land/std@0.188.0/http/file_server.ts";
 export { serve } from "https://deno.land/std@0.188.0/http/mod.ts";
 export type { ConnInfo } from "https://deno.land/std@0.188.0/http/mod.ts";
-export type { AppEnvType, VersionType } from "../App/types.ts";
+export type { AppEnvType } from "../App/types.ts";
 export { Collection } from "../Collection/mod.ts";
 export type { ICollection } from "../Collection/mod.ts";
 export type {
@@ -26,5 +26,6 @@ export type {
 export { RouteNotFoundException } from "../Routing/Route/RouteNotFoundException.ts";
 export { Router } from "../Routing/Router/Router.ts";
 export type { LocaleType } from "../Translation/types.ts";
+export type { VersionType } from "../Version/types.ts";
 export { renderView } from "../View/render.tsx";
 export type { ViewType } from "../View/types.ts";
