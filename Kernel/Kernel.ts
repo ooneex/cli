@@ -33,7 +33,7 @@ export class Kernel {
       const error = result.error.issues[0];
 
       throw new EnvValidationException(
-        `[${error.path.join(",")}] ${error.message}`,
+        `${error.path.join(".")}: ${error.message}`,
       );
     }
 
@@ -62,7 +62,7 @@ export class Kernel {
       const error = configValidationError.issues[0];
 
       throw new ConfigValidationException(
-        `"${error.path.join(".")}" ${error.message}`,
+        `${error.path.join(".")}: ${error.message}`,
       );
     }
 
