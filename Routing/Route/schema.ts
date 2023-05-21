@@ -24,7 +24,8 @@ export const RouteDefinitionSchema = z.object({
   ips: z.string().ip({ message: "Invalid IP address" }).array().optional(),
   ports: z.number().positive().array().optional(),
   constraints: RouteConstraintsSchema.optional(),
-  default: z.record(z.string(), z.string().or(z.number())).optional(),
+  default: z.record(z.string().or(z.number()), z.string().or(z.number()))
+    .optional(),
   data: z.record(z.string(), z.unknown()).optional(),
   locales: LocaleSchema.array().optional(),
   envs: AppEnvSchema.array().optional(),

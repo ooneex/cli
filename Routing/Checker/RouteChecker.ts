@@ -236,10 +236,10 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    let params = this.matchedRoute.getParams();
-    if (!params) {
-      params = {};
-    }
+    const params = {
+      ...this.route.getDefault(),
+      ...this.matchedRoute.getParams(),
+    };
 
     const errors: RouteCheckerErrorType[] = [];
 

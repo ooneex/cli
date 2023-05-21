@@ -4,6 +4,7 @@ import {
   get,
   Keys,
   MatchedRoute,
+  MatchedRouteParamsType,
   MatchedRouteType,
   registerConstant,
   RouteChecker,
@@ -61,8 +62,7 @@ export const serverHandler = async (
   const matchedRoute: MatchedRouteType = {
     name: route.getName(),
     url: request.url as URL,
-    // TODO: combine default values and params
-    params: params,
+    params: { ...(route.getDefault() as MatchedRouteParamsType), ...params },
     method: request.getMethod() as HttpMethodType,
     // @ts-ignore: trust me
     ip: connInfo.localAddr.hostname,

@@ -9,6 +9,7 @@ import {
 import {
   IRoute,
   RouteConstraintsType,
+  RouteDefaultValuesType,
   RouteDefinitionType,
   RoutePathType,
 } from "./types.ts";
@@ -21,8 +22,8 @@ export class Route implements IRoute {
     return this.definition.data as Record<string, T> ?? null;
   }
 
-  public getDefault(): Record<string, string | number> | null {
-    return this.definition.default ?? null;
+  public getDefault(): RouteDefaultValuesType {
+    return this.definition.default ?? {};
   }
 
   public getDescription(): string | null {

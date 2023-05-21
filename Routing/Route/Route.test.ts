@@ -19,7 +19,7 @@ describe("Route", () => {
     assertEquals(route.getHosts(), null);
     assertEquals(route.getIps(), null);
     assertEquals(route.getPorts(), null);
-    assertEquals(route.getDefault(), null);
+    assertEquals(route.getDefault(), {});
     assertEquals(route.getMethods(), null);
     assertEquals(route.getData(), null);
     assertEquals(route.getLocales(), null);

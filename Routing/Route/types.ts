@@ -10,6 +10,9 @@ import {
 import { RouteConstraintsSchema, RouteDefinitionSchema } from "./schema.ts";
 
 export type RoutePathType = z.infer<typeof RouteDefinitionSchema.shape.path>;
+export type RouteDefaultValuesType = z.infer<
+  typeof RouteDefinitionSchema.shape.default
+>;
 
 export type RouteConstraintsType = z.infer<typeof RouteConstraintsSchema>;
 
@@ -65,7 +68,7 @@ export type RouteDefinitionType = {
   /**
    * Default values for route params
    */
-  default?: z.infer<typeof RouteDefinitionSchema.shape.default>;
+  default?: RouteDefaultValuesType;
   /**
    * Additional data for this route
    */
@@ -96,7 +99,7 @@ export interface IRoute {
   getHosts: () => string[] | null;
   getIps: () => string[] | null;
   getPorts: () => number[] | null;
-  getDefault: () => Record<string, string | number> | null;
+  getDefault: () => RouteDefaultValuesType;
   getConstraints: () => RouteConstraintsType | null;
   getController: () => ControllerType;
   getMethods: () => HttpMethodType[] | null;
