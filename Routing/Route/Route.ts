@@ -8,7 +8,6 @@ import {
 } from "../deps.ts";
 import {
   IRoute,
-  MiddlewareType,
   RouteConstraintsType,
   RouteDefinitionType,
   RoutePathType,
@@ -50,10 +49,6 @@ export class Route implements IRoute {
     return this.definition.controller;
   }
 
-  public getMiddlewares(): MiddlewareType[] | null {
-    return this.definition.middlewares ?? null;
-  }
-
   public getConstraints(): RouteConstraintsType | null {
     return this.definition.constraints ?? null;
   }
@@ -70,7 +65,7 @@ export class Route implements IRoute {
     return this.definition.path;
   }
 
-  public getPorts(): string[] | null {
+  public getPorts(): number[] | null {
     return this.definition.ports ?? null;
   }
 

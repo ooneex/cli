@@ -1,5 +1,10 @@
 import { ReadonlyHeader } from "../Header/mod.ts";
-import { AppEnvType, LocaleType, VersionType } from "../deps.ts";
+import {
+  AppEnvType,
+  LocaleType,
+  MatchedRouteParamsType,
+  VersionType,
+} from "../deps.ts";
 import { HttpMethodType } from "../types.ts";
 
 export interface IRequest {
@@ -12,7 +17,7 @@ export interface IRequest {
   getRouteName: () => string;
   getIp: () => string;
   getLocale: () => LocaleType;
-  getEnv: () => AppEnvType;
+  getAppEnv: () => AppEnvType;
   getVersion: () => VersionType | null;
   isJson: () => boolean;
   isText: () => boolean;
@@ -20,6 +25,9 @@ export interface IRequest {
   getBody: <T = Record<string, unknown>>() => Promise<
     T | string | FormData | null
   >;
+  getParams: (
+    pattern?: UrlPatternType,
+  ) => MatchedRouteParamsType;
 }
 
 export type UrlPatternType = `/${string}`;

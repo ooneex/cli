@@ -28,6 +28,6 @@ export interface IMatchedRoute {
   getMethod(): HttpMethodType | null;
   getIp(): string;
   getLocale(): LocaleType;
-  getEnv(): AppEnvType;
+  getAppEnv(): AppEnvType;
   getVersion(): VersionType | null;
 }

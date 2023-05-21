@@ -5,27 +5,22 @@ import {
   HttpProtocolType,
   LocaleType,
   VersionType,
+  z,
 } from "../deps.ts";
+import { RouteConstraintsSchema, RouteDefinitionSchema } from "./schema.ts";
 
-export type MiddlewareType = () => void;
+export type RoutePathType = z.infer<typeof RouteDefinitionSchema.shape.path>;
 
-export type RoutePathType = `/${string}`;
-
-export type RouteConstraintsType = {
-  where?: Record<string, string | number>;
-  regex?: Record<string, string>;
-  number?: string[];
-  alphaNumeric?: string[];
-  in?: Record<string, (string | number)[]>;
-};
+export type RouteConstraintsType = z.infer<typeof RouteConstraintsSchema>;
 
 export type RouteDefinitionType = {
   /**
    * Name of route
    */
-  name: string;
+  name: z.infer<typeof RouteDefinitionSchema.shape.name>;
   /**
    * Path schema
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API
    * @example /products/:id /users/:id/edit
    */
   path: RoutePathType;
@@ -33,67 +28,65 @@ export type RouteDefinitionType = {
    * Handler to trigger if this route matched
    */
   controller: ControllerType;
-  /**
-   * Middlewares to trigger if this route matched
-   */
-  middlewares?: MiddlewareType[];
+
+  // TODO: add controller class name
 
   // TODO: add before and after event as decorator
   /**
    * Allowed methods for this route
    */
-  methods?: HttpMethodType[];
+  methods?: z.infer<typeof RouteDefinitionSchema.shape.methods>;
   /**
    * Protocol type
    * @example https http
    */
-  protocols?: HttpProtocolType[];
+  protocols?: z.infer<typeof RouteDefinitionSchema.shape.protocols>;
   /**
    * Allow hosts for this route
    * @example ["api.ooneex.io"]
    */
-  hosts?: string[];
+  hosts?: z.infer<typeof RouteDefinitionSchema.shape.hosts>;
   /**
    * Allow ips for this route
    * @example ["127.0.0.1"]
    */
-  ips?: string[];
+  ips?: z.infer<typeof RouteDefinitionSchema.shape.ips>;
   /**
    * Port of route
    * @default 80
    * @example 8000
    */
-  ports?: string[];
+  ports?: z.infer<typeof RouteDefinitionSchema.shape.ports>;
   /**
    * Constraints for route params
    * @example {id: /^[0-9]+$/}
    */
-  constraints?: RouteConstraintsType;
+  constraints?: z.infer<typeof RouteDefinitionSchema.shape.constraints>;
   /**
    * Default values for route params
    */
-  default?: Record<string, string | number>;
+  default?: z.infer<typeof RouteDefinitionSchema.shape.default>;
   /**
    * Additional data for this route
    */
-  data?: Record<string, unknown>;
+  data?: z.infer<typeof RouteDefinitionSchema.shape.data>;
   /**
    * Allowed locales for this route
    */
-  locales?: LocaleType[];
+  locales?: z.infer<typeof RouteDefinitionSchema.shape.locales>;
   /**
    * Allowed environment for this route
-   * @example ["dev"] ["prod", "dev"] ["test", "demo"]
+   * @example ["development"] ["production", "development"] ["testing", "local"]
    */
-  envs?: AppEnvType[];
+  envs?: z.infer<typeof RouteDefinitionSchema.shape.envs>;
   /**
    * Version of this route
    */
-  versions?: VersionType[];
+  versions?: z.infer<typeof RouteDefinitionSchema.shape.versions>;
   /**
    * Route description. Used for documentation
    */
-  description?: string;
+  description?: z.infer<typeof RouteDefinitionSchema.shape.description>;
 };
 
 export interface IRoute {
@@ -102,11 +95,10 @@ export interface IRoute {
   getProtocols: () => HttpProtocolType[] | null;
   getHosts: () => string[] | null;
   getIps: () => string[] | null;
-  getPorts: () => string[] | null;
+  getPorts: () => number[] | null;
   getDefault: () => Record<string, string | number> | null;
   getConstraints: () => RouteConstraintsType | null;
   getController: () => ControllerType;
-  getMiddlewares: () => MiddlewareType[] | null;
   getMethods: () => HttpMethodType[] | null;
   getData: <T>() => Record<string, T> | null;
   getLocales: () => LocaleType[] | null;

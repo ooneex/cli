@@ -38,7 +38,7 @@ export class MatchedRoute implements IMatchedRoute {
     return this.matched.locale;
   }
 
-  public getEnv(): AppEnvType {
+  public getAppEnv(): AppEnvType {
     return this.matched.env;
   }
 

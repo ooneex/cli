@@ -6,10 +6,10 @@ const routeDefinition: RouteDefinitionType = {
   protocols: ["https", "http"],
   hosts: ["api.ooneex.io", "ooneex.io"],
   ips: ["127.0.0.1"],
-  ports: ["80", "8000"],
+  ports: [80, 8000],
   constraints: {
     where: { price: 30, name: "keyboard" },
-    regex: { price: "^[0-9]+$", name: "^[a-z0-9]+$" },
+    regex: { price: /^[0-9]+$/, name: /^[a-z0-9]+$/ },
     number: ["part"],
     alphaNumeric: ["code"],
     in: { name: ["Doe", "Obama"] },
@@ -27,7 +27,6 @@ const routeDefinition: RouteDefinitionType = {
   envs: ["development", "testing", "production"],
   versions: ["1.2.3", "2.0.0"],
   controller: (): Response => new Response(),
-  middlewares: undefined,
   description: "Route description",
 };
 

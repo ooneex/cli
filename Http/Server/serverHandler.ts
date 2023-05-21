@@ -61,6 +61,7 @@ export const serverHandler = async (
   const matchedRoute: MatchedRouteType = {
     name: route.getName(),
     url: request.url as URL,
+    // TODO: combine default values and params
     params: params,
     method: request.getMethod() as HttpMethodType,
     // @ts-ignore: trust me

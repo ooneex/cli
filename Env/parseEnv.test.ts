@@ -3,7 +3,7 @@ import { it } from "testing/bdd.ts";
 import { DotEnvValueType, parseEnv } from "./mod.ts";
 
 const content = `# dev | prod | test | demo
-ENV=dev
+ENV=local
 LOCALE=en-us
 COUNTRY="United States"
 # api | react
@@ -35,7 +35,7 @@ it("Env - parse", () => {
   assertEquals(data["MIN_PRICE"], 42.42, "Get float value");
   assertEquals(data["IS_LEGAL"], true, "Get true value");
   assertEquals(data["IS_MINOR"], false, "Get false value");
-  assertEquals(data["ENV"], "dev", "Get simple text");
+  assertEquals(data["ENV"], "local", "Get simple text");
   assertEquals(
     data["MAILER_DSN"],
     "smtp://my-host=*",

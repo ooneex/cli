@@ -186,7 +186,7 @@ describe("Route Checker", () => {
     route = new Route({
       name: "user_show",
       path: "/users/:id",
-      ports: ["8080", "3000", "8000"],
+      ports: [8080, 3000, 8000],
       controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
@@ -195,7 +195,7 @@ describe("Route Checker", () => {
     route = new Route({
       name: "user_show",
       path: "/users/:id",
-      ports: ["3000", "8000"],
+      ports: [3000, 8000],
       controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
@@ -270,7 +270,7 @@ describe("Route Checker", () => {
         name: "user_show",
         path: "/users/:id/follower/:follower",
         constraints: {
-          regex: { count: "d+", ref: "[a-z]+" },
+          regex: { count: /d+/, ref: /[a-z]+/ },
         },
         controller: () => new Response(),
       });

@@ -113,7 +113,7 @@ export class RouteChecker implements IRouteChecker {
       return true;
     }
 
-    const env = this.matchedRoute.getEnv();
+    const env = this.matchedRoute.getAppEnv();
 
     if (env && envs.includes(env)) {
       return true;
@@ -208,7 +208,12 @@ export class RouteChecker implements IRouteChecker {
     }
 
     const url = this.matchedRoute.getUrl();
-    const port = url.port;
+    const p = url.port;
+    let port: number | null = null;
+
+    if (p) {
+      port = Number(p);
+    }
 
     if (port && ports.includes(port)) {
       return true;
@@ -271,10 +276,8 @@ export class RouteChecker implements IRouteChecker {
         return;
       }
 
-      const reg = new RegExp(regexConstraints[key]);
-
       // @ts-ignore: trust me
-      if (!reg.test(`${params[key]}`)) {
+      if (!regexConstraints[key].test(`${params[key]}`)) {
         errors.push({
           key: "regex constraints",
           message: `"${key}" param must match with "${regexConstraints[key]}"`,

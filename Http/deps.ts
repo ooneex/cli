@@ -13,7 +13,7 @@ export type { DotEnvValueType } from "../Env/types.ts";
 export { Exception } from "../Exception/Exception.ts";
 export { Figure } from "../Figure/Figure.ts";
 export { Helper } from "../Helper/mod.ts";
-export { get } from "../Ioc/get.ts";
+export { get, getOrNull } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
 export { Keys } from "../Ioc/types.ts";
 export { Output } from "../Output/Output.ts";

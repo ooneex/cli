@@ -1,13 +1,14 @@
-import { ReadonlyHeader } from "../Header/mod.ts";
 import {
   AppEnvType,
   get,
+  getOrNull,
   Helper,
   LocaleType,
   MatchedRouteParamsType,
   MatchedRouteType,
   VersionType,
 } from "../deps.ts";
+import { ReadonlyHeader } from "../Header/mod.ts";
 import { HttpMethodType } from "../types.ts";
 import { RequestBodyParserException } from "./RequestBodyParserException.ts";
 import { IRequest, UrlPatternType } from "./types.ts";
@@ -31,6 +32,8 @@ export class HttpRequest implements IRequest {
     }
   }
 
+  // TODO: getRouteDefinition
+
   public getRouteName(): string {
     const K = get<{ Route: { Matched: symbol } }>(this.id);
     const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
@@ -52,7 +55,7 @@ export class HttpRequest implements IRequest {
     return matchedRoute.locale;
   }
 
-  public getEnv(): AppEnvType {
+  public getAppEnv(): AppEnvType {
     const K = get<{ Route: { Matched: symbol } }>(this.id);
     const matchedRoute = get<MatchedRouteType>(K.Route.Matched);
 
@@ -128,8 +131,15 @@ export class HttpRequest implements IRequest {
    * Check if an url pattern (like /books/:id) matches with this request
    */
   public getParams(
-    pattern: UrlPatternType,
+    pattern?: UrlPatternType,
   ): MatchedRouteParamsType {
+    if (!pattern) {
+      const K = get<{ Route: { Params: symbol } }>(this.id);
+      const params = getOrNull<MatchedRouteParamsType>(K.Route.Params);
+
+      return params ?? {};
+    }
+
     if (!this.url) {
       return {};
     }
