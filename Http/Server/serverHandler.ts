@@ -3,14 +3,12 @@ import {
   EnvHelper,
   get,
   Keys,
-  LocaleType,
   MatchedRoute,
   MatchedRouteType,
   registerConstant,
   RouteChecker,
   Router,
   serveFile,
-  VersionType,
 } from "../deps.ts";
 import { HttpRequest } from "../Request/HttpRequest.ts";
 import { UrlPatternType } from "../Request/types.ts";
@@ -67,9 +65,9 @@ export const serverHandler = async (
     method: request.getMethod() as HttpMethodType,
     // @ts-ignore: trust me
     ip: connInfo.localAddr.hostname,
-    locale: envHelper.getLocale() as LocaleType,
-    env: envHelper.getAppEnv() as string,
-    version: envHelper.getVersion() as VersionType,
+    locale: envHelper.getLocale(),
+    env: envHelper.getAppEnv(),
+    version: envHelper.getVersion(),
   };
 
   registerConstant(K.Route.Matched, matchedRoute);

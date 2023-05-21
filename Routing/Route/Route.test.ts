@@ -42,7 +42,7 @@ describe("Route", () => {
       size: 42,
     });
     assertEquals(route.getLocales(), ["fr", "en"]);
-    assertEquals(route.getEnvs(), ["dev", "test", "prod"]);
+    assertEquals(route.getEnvs(), ["development", "testing", "production"]);
     assertEquals(route.getVersions(), ["1.2.3", "2.0.0"]);
     assertEquals(route.getMiddlewares(), null);
     assertEquals(route.getDescription(), "Route description");

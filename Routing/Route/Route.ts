@@ -1,10 +1,11 @@
 import {
   ControllerType,
+  EnvType,
   HttpMethodType,
   HttpProtocolType,
   LocaleType,
+  VersionType,
 } from "../deps.ts";
-import { EnvType, VersionType } from "../types.ts";
 import {
   IRoute,
   MiddlewareType,

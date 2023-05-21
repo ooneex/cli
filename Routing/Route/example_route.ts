@@ -24,7 +24,7 @@ const routeDefinition: RouteDefinitionType = {
     size: 42,
   },
   locales: ["fr", "en"],
-  envs: ["dev", "test", "prod"],
+  envs: ["development", "testing", "production"],
   versions: ["1.2.3", "2.0.0"],
   controller: (): Response => new Response(),
   middlewares: undefined,

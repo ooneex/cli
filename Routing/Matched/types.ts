@@ -1,5 +1,4 @@
-import { HttpMethodType, LocaleType } from "../deps.ts";
-import { EnvType, VersionType } from "../types.ts";
+import { EnvType, HttpMethodType, LocaleType, VersionType } from "../deps.ts";
 
 export type MatchedRouteParamsType = Record<
   string | number,

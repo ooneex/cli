@@ -32,25 +32,5 @@ export const parseEnv = (): ICollection<string, DotEnvValueType> => {
     });
   }
 
-  if (!data.has("APP_ENV")) {
-    data.set("APP_ENV", "local");
-  }
-
-  if (!data.has("LOCALE")) {
-    data.set("LOCALE", "en-us");
-  }
-
-  if (!data.has("DEBUG")) {
-    data.set("DEBUG", true);
-  }
-
-  if (!data.has("PORT")) {
-    data.set("PORT", "3000");
-  }
-
-  if (!data.has("HOST")) {
-    data.set("HOST", "localhost");
-  }
-
   return data;
 };

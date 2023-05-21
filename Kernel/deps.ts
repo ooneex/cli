@@ -1,3 +1,5 @@
+export { App } from "../App/App.ts";
+export { ApiConfigSchema, EnvSchema, ViewConfigSchema } from "../App/schema.ts";
 export { Collection } from "../Collection/mod.ts";
 export type { ICollection } from "../Collection/mod.ts";
 export { parseConfig } from "../Config/parseConfig.ts";
@@ -7,9 +9,11 @@ export type { LogType } from "../Debug/types.ts";
 export { EnvHelper } from "../Env/EnvHelper.ts";
 export { parseEnv } from "../Env/parseEnv.ts";
 export type { DotEnvValueType } from "../Env/types.ts";
+export { Exception } from "../Exception/Exception.ts";
 export { File } from "../File/File.ts";
 export { get } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
 export { Keys } from "../Ioc/types.ts";
 export { Route } from "../Routing/Route/Route.ts";
 export { Router } from "../Routing/Router/Router.ts";
+export { ZodError } from "../Validation/mod.ts";

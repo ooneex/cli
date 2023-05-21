@@ -1,4 +1,11 @@
-import { EnvType, get, ICollection, Keys, LocaleType } from "./deps.ts";
+import {
+  EnvType,
+  get,
+  ICollection,
+  Keys,
+  LocaleType,
+  VersionType,
+} from "./deps.ts";
 import { DotEnvValueType } from "./types.ts";
 
 export class EnvHelper {
@@ -7,8 +14,8 @@ export class EnvHelper {
     this.env = get<ICollection<string, DotEnvValueType>>(Keys.Env.Default);
   }
 
-  public getAppEnv(): EnvType | null {
-    return this.env.get<string>("APP_ENV") ?? null;
+  public getAppEnv(): EnvType {
+    return this.env.get<EnvType>("APP_ENV") as EnvType;
   }
 
   public isDevelopment(): boolean {
@@ -31,31 +38,31 @@ export class EnvHelper {
     return this.getAppEnv() === "staging";
   }
 
-  public getLocale(): LocaleType | null {
-    return this.env.get<LocaleType>("LOCALE") ?? null;
+  public getLocale(): LocaleType {
+    return this.env.get<LocaleType>("LOCALE") as LocaleType;
   }
 
   public getCountry(): string | null {
     return this.env.get<string>("COUNTRY") ?? null;
   }
 
-  public getVersion(): string | null {
-    return this.env.get<string>("VERSION") ?? null;
+  public getVersion(): VersionType {
+    return this.env.get<VersionType>("VERSION") as VersionType;
   }
 
-  public getSecret(): string | null {
-    return this.env.get<string>("SECRET") ?? null;
+  public getSecret(): string {
+    return this.env.get<string>("SECRET") as string;
   }
 
   public isDebug(): boolean {
-    return this.env.get<boolean>("DEBUG") ?? false;
+    return this.env.get<boolean>("DEBUG") as boolean;
   }
 
-  public getPort(): number | null {
-    return this.env.get<number>("PORT") ?? null;
+  public getPort(): number {
+    return this.env.get<number>("PORT") as number;
   }
 
-  public getHost(): string | null {
-    return this.env.get<string>("HOST") ?? null;
+  public getHost(): string {
+    return this.env.get<string>("HOST") as string;
   }
 }

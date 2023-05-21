@@ -3,7 +3,7 @@ import { ConfigException } from "./ConfigException.ts";
 export const parseConfig = async (): Promise<unknown> => {
   try {
     const config = await import(
-      `${Deno.env.get("ROOT_DIR")}/config/app/app.config.ts`
+      `${Deno.env.get("OONEEX_APP_ROOT_DIR")}/config/app/app.config.ts`
     );
 
     return config.default;

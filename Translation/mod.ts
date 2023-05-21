@@ -6,4 +6,5 @@ export * from "./CountryHelper.ts";
 export * from "./Currencies.ts";
 export * from "./Locales.ts";
 export * from "./PhoneCodes.ts";
+export * from "./schema.ts";
 export * from "./types.ts";
