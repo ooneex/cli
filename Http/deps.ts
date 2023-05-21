@@ -1,6 +1,6 @@
-export { serveFile } from "https://deno.land/std@0.177.0/http/file_server.ts";
-export { serve } from "https://deno.land/std@0.177.0/http/mod.ts";
-export type { ConnInfo } from "https://deno.land/std@0.177.0/http/mod.ts";
+export { serveFile } from "https://deno.land/std@0.188.0/http/file_server.ts";
+export { serve } from "https://deno.land/std@0.188.0/http/mod.ts";
+export type { ConnInfo } from "https://deno.land/std@0.188.0/http/mod.ts";
 export type { EnvType, VersionType } from "../App/types.ts";
 export { Collection } from "../Collection/mod.ts";
 export type { ICollection } from "../Collection/mod.ts";

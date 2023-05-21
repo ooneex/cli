@@ -33,7 +33,7 @@
     "@view": "./View/mod.ts",
 
     "deno-dom": "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts",
-    "testing/": "https://deno.land/std@0.182.0/testing/",
+    "testing/": "https://deno.land/std@0.188.0/testing/",
     "preact": "https://esm.sh/preact@10.13.2",
     "preact/": "https://esm.sh/preact@10.13.2/"
   },

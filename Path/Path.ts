@@ -6,14 +6,14 @@ import {
   normalize,
   relative,
   resolve,
-  sep,
+  SEP,
 } from "./deps.ts";
 
 export class Path {
   /**
    * Directory separator
    */
-  public static DS: string = sep;
+  public static DS: string = SEP;
 
   /**
    * Verifies whether provided path is absolute.

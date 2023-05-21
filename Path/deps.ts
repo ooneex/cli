@@ -6,5 +6,5 @@ export {
   normalize,
   relative,
   resolve,
-  sep,
-} from "https://deno.land/std@0.182.0/path/mod.ts";
+  SEP,
+} from "https://deno.land/std@0.188.0/path/mod.ts";
