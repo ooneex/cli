@@ -23,7 +23,7 @@ export class ServerErrorController {
     const status = HttpStatusType.InternalServerError;
     const envHelper = get<EnvHelper>(Keys.Env.Helper);
 
-    if (!envHelper.isLocal()) {
+    if (envHelper.isDebug()) {
       return response.json({
         name: exception.name,
         message: HttpCodeType[HttpStatusType.InternalServerError],
