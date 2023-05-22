@@ -107,11 +107,12 @@ export class HttpRequest implements IRequest {
   }
 
   // TODO: arrayBuffer() blob()
-  // TODO: check for bodyUsed
   public async getBody<T = Record<string, unknown>>(): Promise<
     T | string | FormData | null
   > {
-    // TODO: check if body is null
+    if (!this.native || !this.native.body || this.native.bodyUsed) {
+      return null;
+    }
 
     try {
       if (this.native && this.isJson()) {
