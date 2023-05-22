@@ -82,6 +82,14 @@ export class HttpRequest implements IRequest {
     return this.native.method as HttpMethodType;
   }
 
+  public isBlob(): boolean {
+    if (!this.header) {
+      return false;
+    }
+
+    return this.header.isBlob();
+  }
+
   public isFormData(): boolean {
     if (!this.header) {
       return false;
@@ -106,9 +114,9 @@ export class HttpRequest implements IRequest {
     return this.header.isText();
   }
 
-  // TODO: arrayBuffer() blob()
+  // TODO: arrayBuffer()
   public async getBody<T = Record<string, unknown>>(): Promise<
-    T | string | FormData | null
+    T | string | FormData | Blob | null
   > {
     if (!this.native || !this.native.body || this.native.bodyUsed) {
       return null;
@@ -125,6 +133,10 @@ export class HttpRequest implements IRequest {
 
       if (this.native && this.isFormData()) {
         return await this.native.formData();
+      }
+
+      if (this.native && this.isBlob()) {
+        return await this.native.blob();
       }
     } catch (e) {
       throw new RequestBodyParserException(e.message);

@@ -24,8 +24,9 @@ export interface IRequest {
   isJson: () => boolean;
   isText: () => boolean;
   isFormData: () => boolean;
+  isBlob: () => boolean;
   getBody: <T = Record<string, unknown>>() => Promise<
-    T | string | FormData | null
+    T | string | FormData | Blob | null
   >;
   getParams: (
     pattern?: UrlPatternType,
