@@ -23,4 +23,5 @@ export const HttpProtocolSchema = z.enum([
 export const CharsetSchema = z.enum([
   "utf-8",
   "iso-8859-1",
+  "us-ascii",
 ]).or(z.string());

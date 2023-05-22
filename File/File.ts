@@ -188,6 +188,16 @@ export class File implements IFile {
     }
   }
 
+  public async stream(): Promise<ReadableStream<Uint8Array>> {
+    try {
+      const file = await Deno.open(this.path, { read: true });
+
+      return file.readable;
+    } catch (e) {
+      throw new FileException(`[readableStream] ${e.message}`);
+    }
+  }
+
   /**
    * Ensures that a file is empty.
    */

@@ -3,7 +3,9 @@ import { Request } from "../Request/mod.ts";
 import {
   Collection,
   ControllerType,
+  File,
   get,
+  Helper,
   Keys,
   registerConstant,
   renderView,
@@ -93,13 +95,13 @@ export class HttpResponse implements IResponse {
 
   /**
    * Render file stream response
-   * TODO: to implement
-   * @see https://deno.land/manual@v1.30.0/examples/file_server
-   * @see https://medium.com/deno-the-complete-reference/deno-nuggets-convert-file-to-stream-d6dae2d73192
-   * @see https://opis.io/http/3.x/response-types.html
    */
-  public fileStream(_file: string): Response {
-    return this.string("TODO: to implement");
+  public async stream(
+    filePath: string,
+  ): Promise<Response> {
+    const file = new File(filePath);
+
+    return this.buildResponse(await file.stream());
   }
 
   /**
@@ -116,7 +118,6 @@ export class HttpResponse implements IResponse {
 
   /**
    * Redirect response
-   * TODO: to implement
    */
   public redirect(): Response {
     // TODO: redirect by route name
@@ -136,14 +137,19 @@ export class HttpResponse implements IResponse {
   }
 
   private buildResponse(
-    content: string,
-    contentType: HeaderContentTypeType,
+    content: string | ReadableStream,
+    contentType: HeaderContentTypeType | null = null,
     status?: HttpStatusType,
   ): Response {
-    this.header.delete("Content-Type");
-    this.header.delete("Content-Length");
-    this.header.contentType(contentType);
-    this.header.contentLength(content.length);
+    if (contentType) {
+      this.header.delete("Content-Type");
+      this.header.delete("Content-Length");
+      this.header.contentType(contentType);
+    }
+
+    if (Helper.isString(content)) {
+      this.header.contentLength((content as string).length);
+    }
     return new Response(content, this.getInitOptions(status));
   }
 }

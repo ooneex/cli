@@ -11,6 +11,7 @@ export interface IResponse {
   string: (content: string, status?: HttpStatusType) => Response;
   html: (content: string, status?: HttpStatusType) => Response;
   json: (data: Record<string, unknown>, status?: HttpStatusType) => Response;
+  stream: (filePath: string) => Promise<Response>;
   render: <T>(
     view: ViewType<T>,
     data?: T,

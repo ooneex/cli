@@ -57,6 +57,10 @@ export interface IFile {
    */
   read(): string;
   /**
+   *  Reads file content as stream
+   */
+  stream(): Promise<ReadableStream<Uint8Array>>;
+  /**
    *  Reads file content as json
    */
   json<T = string>(): Record<string, T>;

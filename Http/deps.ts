@@ -12,6 +12,7 @@ export { EnvHelper } from "../Env/EnvHelper.ts";
 export type { DotEnvValueType } from "../Env/types.ts";
 export { Exception } from "../Exception/Exception.ts";
 export { Figure } from "../Figure/Figure.ts";
+export { File } from "../File/File.ts";
 export { Helper } from "../Helper/mod.ts";
 export { get, getOrNull } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
