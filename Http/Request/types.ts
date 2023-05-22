@@ -8,10 +8,10 @@ import {
 import { HttpMethodType } from "../types.ts";
 
 export interface IRequest {
+  readonly id: string;
   readonly url: Readonly<URL> | null;
   readonly header: ReadonlyHeader | null;
   readonly search: Readonly<URLSearchParams> | null;
-  readonly id: string;
   readonly native: Request | null;
   getMethod: () => HttpMethodType | null;
   getRouteName: () => string;

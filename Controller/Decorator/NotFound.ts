@@ -2,7 +2,7 @@ import {
   Decorator,
   get,
   Helper,
-  HttpRequest as Request,
+  IRequest as IHttpRequest,
   Keys,
   registerConstant,
   RouteException,
@@ -26,7 +26,7 @@ export const NotFound = (): Decorator.MethodDecoratorReturnType => {
     const method = descriptor.value!;
 
     descriptor.value = function NotFoundController(
-      request: Request,
+      request: IHttpRequest,
     ): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,

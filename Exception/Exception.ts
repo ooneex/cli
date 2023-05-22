@@ -6,6 +6,7 @@ export class Exception extends Error implements IException {
   public readonly file: string | null;
   public readonly line: number | null;
   public readonly column: number | null;
+  public readonly date: Date = new Date();
 
   // deno-lint-ignore constructor-super
   constructor(

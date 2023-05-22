@@ -6,6 +6,7 @@ export interface IException {
   readonly line: number | null;
   readonly column: number | null;
   readonly status: number | null;
+  readonly date: Date;
   getData: <T>() => T | null;
 }
 

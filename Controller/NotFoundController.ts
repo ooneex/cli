@@ -1,19 +1,24 @@
 import { NotFound } from "./Decorator/NotFound.ts";
 import {
-  Exception,
   exception,
-  HttpRequest as Request,
   HttpResponse,
   HttpStatusType,
+  IException as IHttpException,
+  IRequest as IHttpRequest,
 } from "./deps.ts";
 import { NotFoundExceptionDataType } from "./types.ts";
+
+// deno-lint-ignore no-empty-interface
+interface IRequest extends IHttpRequest {}
+// deno-lint-ignore no-empty-interface
+interface IException extends IHttpException {}
 
 export class NotFoundController {
   @NotFound()
   public async index(
-    _request: Request,
+    _request: IRequest,
     response: HttpResponse,
-    @exception exception: Exception,
+    @exception exception: IException,
   ): Promise<Response> {
     const data: Record<string, unknown> = {};
     data["exception"] = {
