@@ -1,6 +1,7 @@
 import { ReadonlyHeader } from "../Header/mod.ts";
 import {
   AppEnvType,
+  IRoute,
   LocaleType,
   MatchedRouteParamsType,
   VersionType,
@@ -15,6 +16,7 @@ export interface IRequest {
   readonly native: Request | null;
   getMethod: () => HttpMethodType | null;
   getRouteName: () => string;
+  getRouteDefinition: () => IRoute;
   getIp: () => string;
   getLocale: () => LocaleType;
   getAppEnv: () => AppEnvType;

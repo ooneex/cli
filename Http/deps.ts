@@ -24,6 +24,7 @@ export type {
   MatchedRouteType,
 } from "../Routing/Matched/types.ts";
 export { RouteNotFoundException } from "../Routing/Route/RouteNotFoundException.ts";
+export type { IRoute } from "../Routing/Route/types.ts";
 export { Router } from "../Routing/Router/Router.ts";
 export type { LocaleType } from "../Translation/types.ts";
 export type { VersionType } from "../Version/types.ts";

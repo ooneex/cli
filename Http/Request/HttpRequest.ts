@@ -3,6 +3,7 @@ import {
   get,
   getOrNull,
   Helper,
+  IRoute,
   LocaleType,
   MatchedRouteParamsType,
   MatchedRouteType,
@@ -32,7 +33,11 @@ export class HttpRequest implements IRequest {
     }
   }
 
-  // TODO: getRouteDefinition
+  public getRouteDefinition(): IRoute {
+    const K = get<{ Route: { Default: symbol } }>(this.id);
+
+    return get<IRoute>(K.Route.Default);
+  }
 
   public getRouteName(): string {
     const K = get<{ Route: { Matched: symbol } }>(this.id);
