@@ -22,13 +22,14 @@ export const parseEnv = (): ICollection<string, DotEnvValueType> => {
   if (data.isEmpty()) {
     data.setData({
       APP_ENV: "local",
-      LOCALE: "en-us",
+      LOCALE: "en",
       COUNTRY: "United States",
       VERSION: "1.0.0",
       SECRET: crypto.randomUUID(),
       DEBUG: true,
       PORT: "3000",
       HOST: "localhost",
+      CHARSET: "utf-8",
     });
   }
 

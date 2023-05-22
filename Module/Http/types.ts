@@ -1,5 +1,9 @@
 import { z } from "./deps.ts";
-import { HttpMethodSchema, HttpProtocolSchema } from "./schema.ts";
+import {
+  CharsetSchema,
+  HttpMethodSchema,
+  HttpProtocolSchema,
+} from "./schema.ts";
 
 /**
  * Map from status code to status text.
@@ -17,14 +21,6 @@ import {
 } from "./deps.ts";
 
 export { HttpCodeType, HttpStatusType };
-
 export type HttpMethodType = z.infer<typeof HttpMethodSchema>;
-
 export type HttpProtocolType = z.infer<typeof HttpProtocolSchema>;
-
-// TODO: set charset in .env file
-// TODO: set charset in generated html
-export type CharsetType =
-  | "utf-8"
-  | "iso-8859-1"
-  | string;
+export type CharsetType = z.infer<typeof CharsetSchema>;

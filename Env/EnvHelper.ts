@@ -65,4 +65,8 @@ export class EnvHelper {
   public getHost(): string {
     return this.env.get<string>("HOST") as string;
   }
+
+  public getCharset(): string {
+    return this.env.get<string>("CHARSET") as string;
+  }
 }

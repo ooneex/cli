@@ -66,15 +66,14 @@ export class Helper {
     return typeof object == "boolean";
   }
 
-  // TODO: refactor
   public static isEmpty(object: unknown): boolean {
     if (!object) {
       return true;
     }
 
-    // @ts-ignore:
+    // @ts-ignore: trust me
     for (const k in object) {
-      // @ts-ignore:
+      // @ts-ignore: trust me
       if (Object.prototype.hasOwnProperty.call(object, k)) {
         return false;
       }

@@ -1,4 +1,4 @@
-import { LocaleSchema, VersionSchema, z } from "./deps.ts";
+import { CharsetSchema, LocaleSchema, VersionSchema, z } from "./deps.ts";
 
 export const AppEnvSchema = z.enum([
   "development",
@@ -25,6 +25,7 @@ export const EnvSchema = z.object({
   DEBUG: z.boolean(),
   PORT: z.number().positive(),
   HOST: z.string(),
+  CHARSET: CharsetSchema,
 });
 
 export const ViewConfigSchema = z.object({

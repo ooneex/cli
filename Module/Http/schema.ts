@@ -19,3 +19,8 @@ export const HttpProtocolSchema = z.enum([
   "tcp",
   "ftp",
 ]);
+
+export const CharsetSchema = z.enum([
+  "utf-8",
+  "iso-8859-1",
+]).or(z.string());
