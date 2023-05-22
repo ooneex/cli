@@ -390,5 +390,39 @@ describe("Route Checker", () => {
       checker = new RouteChecker(route, matched);
       assertEquals(checker.isValid(), false);
     });
+
+    it("Should check default values", () => {
+      const matched = new MatchedRoute({
+        name: "user_show",
+        url: new URL("http://localhost:8080/"),
+        params: {},
+        method: "GET",
+        ip: "127.0.0.1",
+        locale: "en",
+        env: "development",
+        version: "1.0.0",
+      });
+      route = new Route({
+        name: "user_show",
+        path: "/users/:id/follower/:follower",
+        constraints: {
+          regex: { id: /\d/ },
+        },
+        controller: () => new Response(),
+      });
+      checker = new RouteChecker(route, matched);
+      assertEquals(checker.isValid(), false);
+      route = new Route({
+        name: "user_show",
+        path: "/users/:id/follower/:follower",
+        constraints: {
+          regex: { id: /\d/ },
+        },
+        default: { id: 45 },
+        controller: () => new Response(),
+      });
+      checker = new RouteChecker(route, matched);
+      assertEquals(checker.isValid(), true);
+    });
   });
 });
