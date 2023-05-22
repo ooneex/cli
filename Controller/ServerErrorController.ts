@@ -7,12 +7,10 @@ import {
   HttpResponse,
   HttpStatusType,
   ICollection,
-  IException as IHttpException,
   Keys,
 } from "./deps.ts";
 
-// deno-lint-ignore no-empty-interface
-interface IException extends IHttpException {}
+import type { IException } from "./deps.ts";
 
 export class ServerErrorController {
   @ServerError()

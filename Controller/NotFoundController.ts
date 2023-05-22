@@ -1,4 +1,5 @@
 import { NotFound } from "./Decorator/NotFound.ts";
+import type { IException, IRequest } from "./deps.ts";
 import {
   DotEnvValueType,
   EnvHelper,
@@ -8,16 +9,9 @@ import {
   HttpResponse,
   HttpStatusType,
   ICollection,
-  IException as IHttpException,
-  IRequest as IHttpRequest,
   Keys,
 } from "./deps.ts";
 import { NotFoundExceptionDataType } from "./types.ts";
-
-// deno-lint-ignore no-empty-interface
-interface IRequest extends IHttpRequest {}
-// deno-lint-ignore no-empty-interface
-interface IException extends IHttpException {}
 
 export class NotFoundController {
   @NotFound()
