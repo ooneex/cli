@@ -28,6 +28,8 @@ type BootConfigType = {
 
 export class Kernel {
   public static async boot(config: BootConfigType): Promise<void> {
+    registerConstant(Keys.Config.App, config.app);
+
     // Load env vars
     const env = parseEnv();
 
@@ -67,8 +69,6 @@ export class Kernel {
         `${error.path.join(".")}: ${error.message}`,
       );
     }
-
-    registerConstant(Keys.Config.App, config.app);
 
     // Load controllers
     const controllers = await loadControllers();
