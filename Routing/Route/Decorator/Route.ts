@@ -56,8 +56,7 @@ export const Route = (
 
       parameters[0] = request;
       const K = get<{ Response: symbol }>(request.id);
-      const response = get(K.Response);
-      parameters[1] = response;
+      parameters[1] = get(K.Response);
 
       parameters = parameters.map((parameter: unknown) => {
         if (typeof parameter === "function") {

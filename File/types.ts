@@ -63,7 +63,7 @@ export interface IFile {
   /**
    *  Reads file content as json
    */
-  json<T = string>(): Record<string, T>;
+  json<T = string>(): Record<string | number, T>;
   /**
    * Copies a file. Overwrites it if option provided.
    */

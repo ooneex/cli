@@ -10,7 +10,23 @@ import {
   Path,
   readLines,
 } from "./deps.ts";
-import { FileException } from "./FileException.ts";
+import { AddFileContentException } from "./Exception/AddFileContentException.ts";
+import { ChmodFileException } from "./Exception/ChmodFileException.ts";
+import { CopyFileException } from "./Exception/CopyFileException.ts";
+import { EmptyFileException } from "./Exception/EmptyFileException.ts";
+import { EnsureFileException } from "./Exception/EnsureFileException.ts";
+import { ExistsFileException } from "./Exception/ExistsFileException.ts";
+import { GetFileInfoException } from "./Exception/GetFileInfoException.ts";
+import { MoveFileException } from "./Exception/MoveFileException.ts";
+import { ReadFileException } from "./Exception/ReadFileException.ts";
+import { ReadFileLinesException } from "./Exception/ReadFileLinesException.ts";
+import { ReadJsonFileException } from "./Exception/ReadJsonFileException.ts";
+import { RemoveFileException } from "./Exception/RemoveFileException.ts";
+import { RenameFileException } from "./Exception/RenameFileException.ts";
+import { ReplaceFileTextException } from "./Exception/ReplaceFileTextException.ts";
+import { StreamFileException } from "./Exception/StreamFileException.ts";
+import { WriteFileException } from "./Exception/WriteFileException.ts";
+import { WriteJsonFileException } from "./Exception/WriteJsonFileException.ts";
 import { FileCpConfigType, IFile } from "./types.ts";
 
 /**
@@ -73,7 +89,7 @@ export class File implements IFile {
     try {
       ensureFileSync(this.path);
     } catch (e) {
-      throw new FileException(`[ensure] ${e.message}`);
+      throw new EnsureFileException(e.message);
     }
 
     return this;
@@ -86,7 +102,7 @@ export class File implements IFile {
     try {
       Deno.truncateSync(this.path);
     } catch (e) {
-      throw new FileException(`[empty] ${e.message}`);
+      throw new EmptyFileException(e.message);
     }
 
     return this;
@@ -112,7 +128,7 @@ export class File implements IFile {
         return false;
       }
 
-      throw new FileException(`[exists] ${e.message}`);
+      throw new ExistsFileException(e.message);
     }
   }
 
@@ -126,7 +142,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[write] ${e.message}`);
+      throw new WriteFileException(e.message);
     }
   }
 
@@ -140,7 +156,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[writeJson] ${e.message}`);
+      throw new WriteJsonFileException(e.message);
     }
   }
 
@@ -155,7 +171,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[write] ${e.message}`);
+      throw new AddFileContentException(e.message);
     }
   }
 
@@ -170,7 +186,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[replaceText] ${e.message}`);
+      throw new ReplaceFileTextException(e.message);
     }
   }
 
@@ -184,7 +200,7 @@ export class File implements IFile {
 
       return decoder.decode(data);
     } catch (e) {
-      throw new FileException(`[read] ${e.message}`);
+      throw new ReadFileException(e.message);
     }
   }
 
@@ -194,20 +210,20 @@ export class File implements IFile {
 
       return file.readable;
     } catch (e) {
-      throw new FileException(`[readableStream] ${e.message}`);
+      throw new StreamFileException(e.message);
     }
   }
 
   /**
    * Ensures that a file is empty.
    */
-  public json<T = string>(): Record<string, T> {
+  public json<T = string>(): Record<string | number, T> {
     let data = {};
 
     try {
       data = JSON.parse(this.read());
     } catch (e) {
-      throw new FileException(`[json] ${e.message}`);
+      throw new ReadJsonFileException(e.message);
     }
 
     return data;
@@ -226,7 +242,7 @@ export class File implements IFile {
 
       return file;
     } catch (e) {
-      throw new FileException(`[cp] ${e.message}`);
+      throw new CopyFileException(e.message);
     }
   }
 
@@ -246,7 +262,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[mv] ${e.message}`);
+      throw new MoveFileException(e.message);
     }
   }
 
@@ -259,7 +275,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[rm] ${e.message}`);
+      throw new RemoveFileException(e.message);
     }
   }
 
@@ -276,7 +292,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[rename] ${e.message}`);
+      throw new RenameFileException(e.message);
     }
   }
 
@@ -306,7 +322,7 @@ export class File implements IFile {
 
       return this;
     } catch (e) {
-      throw new FileException(`[chmod] ${e.message}`);
+      throw new ChmodFileException(e.message);
     }
   }
 
@@ -329,7 +345,7 @@ export class File implements IFile {
 
       return lines;
     } catch (e) {
-      throw new FileException(`[lines] ${e.message}`);
+      throw new ReadFileLinesException(e.message);
     }
   }
 
@@ -400,7 +416,7 @@ export class File implements IFile {
 
       return fileInfo[info];
     } catch (e) {
-      throw new FileException(`[${info}] ${e.message}`);
+      throw new GetFileInfoException(e.message);
     }
   }
 }
