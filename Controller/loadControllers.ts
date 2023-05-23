@@ -14,7 +14,7 @@ const __dirname = new URL(".", import.meta.url).pathname;
 export const loadControllers = async (): Promise<Record<string, unknown>> => {
   const config = get<ConfigType>(Keys.Config.App);
   const controllerDir = config.directories.controllers;
-  const rootDir = config.directories.root;
+  // const rootDir = config.directories.root;
   const directory = new Directory(controllerDir);
   let controllers = directory.files(/Controller\.ts$/, true);
 
@@ -36,7 +36,7 @@ export const loadControllers = async (): Promise<Record<string, unknown>> => {
 
     try {
       const c = await import(
-        `${(controller.tag === "default") ? "" : rootDir + "/"}${path}`
+        `${(controller.tag === "default") ? "" : "./"}${path}`
       );
 
       if (!c[name]) {
