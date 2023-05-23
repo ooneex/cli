@@ -2,6 +2,7 @@ import { ConfigValidationException } from "./ConfigValidationException.ts";
 import {
   ApiConfigSchema,
   App,
+  AppType,
   Collection,
   EnvHelper,
   EnvSchema,
@@ -9,7 +10,6 @@ import {
   Keys,
   loadControllers,
   Log,
-  parseConfig,
   registerConstant,
   Route,
   Router,
@@ -21,8 +21,13 @@ import { parseEnv } from "./parseEnv.ts";
 
 window.Log = Log;
 
+type BootConfigType = {
+  app: Record<string, unknown>;
+  type: AppType;
+};
+
 export class Kernel {
-  public static async boot(): Promise<void> {
+  public static async boot(config: BootConfigType): Promise<void> {
     // Load env vars
     const env = parseEnv();
 
@@ -40,12 +45,9 @@ export class Kernel {
     registerConstant(Keys.Env.Default, env);
     registerConstant(Keys.Env.Helper, new EnvHelper());
 
-    // Load config
-    const config = await parseConfig();
-
     let configValidationError: null | ZodError = null;
     if (App.isApi()) {
-      const result = ApiConfigSchema.safeParse(config);
+      const result = ApiConfigSchema.safeParse(config.app);
       if (!result.success) {
         configValidationError = result.error;
       }
@@ -66,7 +68,7 @@ export class Kernel {
       );
     }
 
-    registerConstant(Keys.Config.App, config);
+    registerConstant(Keys.Config.App, config.app);
 
     // Load controllers
     const controllers = await loadControllers();

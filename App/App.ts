@@ -1,6 +1,11 @@
+import { get, Keys } from "./deps.ts";
+import { AppType } from "./types.ts";
+
 export class App {
-  public static getType(): string {
-    return Deno.env.get("OONEEX_APP_TYPE") as string;
+  public static getType(): AppType {
+    const config = get<{ type: AppType }>(Keys.Config.App);
+
+    return config.type;
   }
 
   public static getRootDir(): string {
