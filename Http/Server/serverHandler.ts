@@ -42,8 +42,9 @@ export const serverHandler = async (
 
   const response = new HttpResponse();
   registerConstant(K.Response, response);
-  // const pathname = decodeURIComponent(request.url.pathname);
+  registerConstant(response.id, K);
   const router = get<Router>(Keys.Router);
+  registerConstant(router.id, K);
   const route = router.findByPathname(request.url as Readonly<URL>);
   registerConstant(K.Route.Default, route);
 

@@ -17,6 +17,7 @@ import { HttpCodeType, HttpStatusType } from "../types.ts";
 import { IResponse } from "./types.ts";
 
 export class HttpResponse extends HeaderChecker implements IResponse {
+  public readonly id: string = crypto.randomUUID();
   public readonly data: Collection;
   public readonly body: Collection;
   public readonly status: HttpStatusType;
@@ -126,10 +127,10 @@ export class HttpResponse extends HeaderChecker implements IResponse {
   public redirect(): Response {
     // TODO: redirect by route name
     // TODO: redirect by url
-    // Response.redirect()
-    // static redirect(url: string | URL, status?: number): Response;
 
-    return this.string("TODO: to implement");
+    const url = new URL("/users/45", "http://localhost:5000");
+
+    return Response.redirect(url, HttpStatusType.TemporaryRedirect);
   }
 
   private getInitOptions(status?: HttpStatusType): ResponseInit {

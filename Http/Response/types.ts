@@ -4,6 +4,7 @@ import { Collection, IHeaderChecker, ViewType } from "../deps.ts";
 import { HttpStatusType } from "../types.ts";
 
 export interface IResponse extends IHeaderChecker {
+  readonly id: string;
   readonly data: Collection;
   readonly body: Collection;
   readonly status: HttpStatusType;

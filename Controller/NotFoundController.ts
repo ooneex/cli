@@ -23,7 +23,7 @@ export class NotFoundController {
     const status = exception.status ?? HttpStatusType.NotFound;
     const envHelper = get<EnvHelper>(Keys.Env.Helper);
 
-    if (envHelper.isDebug()) {
+    if (!envHelper.isDebug()) {
       return response.json({
         name: exception.name,
         // @ts-ignore: trust me

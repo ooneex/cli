@@ -48,6 +48,7 @@ export const Route = (
     const method = descriptor.value!;
 
     descriptor.value = function Controller(request: Request): Response {
+      // @ts-ignore: trust me
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,
