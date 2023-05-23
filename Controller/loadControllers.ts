@@ -3,6 +3,7 @@ import { Directory, File, get, Keys, print } from "./deps.ts";
 
 type ConfigType = {
   directories: {
+    root: string;
     controllers: string;
     var: string;
   };
@@ -13,8 +14,10 @@ const __dirname = new URL(".", import.meta.url).pathname;
 export const loadControllers = async (): Promise<Record<string, unknown>> => {
   const config = get<ConfigType>(Keys.Config.App);
   const controllerDir = config.directories.controllers;
+  const rootDir = config.directories.root;
   const directory = new Directory(controllerDir);
   let controllers = directory.files(/Controller\.ts$/, true);
+
   controllers = [
     new File(`${__dirname}NotFoundController.ts`, "default"),
     new File(`${__dirname}ServerErrorController.ts`, "default"),
@@ -33,7 +36,7 @@ export const loadControllers = async (): Promise<Record<string, unknown>> => {
 
     try {
       const c = await import(
-        `${(controller.tag === "default") ? "" : Deno.cwd() + "/"}${path}`
+        `${(controller.tag === "default") ? "" : rootDir + "/"}${path}`
       );
 
       if (!c[name]) {
