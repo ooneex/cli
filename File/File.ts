@@ -35,12 +35,17 @@ import { FileCpConfigType, IFile } from "./types.ts";
  */
 export class File implements IFile {
   public static EOL: string = EOL.CRLF;
+  private path: string;
 
   constructor(
-    private path: string,
+    path: string | URL,
     public readonly tag: string | null = null,
   ) {
-    this.path = Path.normalize(this.path);
+    if (path instanceof URL) {
+      path = path.pathname;
+    }
+
+    this.path = Path.normalize(path);
   }
 
   /**
@@ -204,9 +209,11 @@ export class File implements IFile {
     }
   }
 
-  public async stream(): Promise<ReadableStream<Uint8Array>> {
+  public async stream(
+    options: Deno.OpenOptions = { read: true },
+  ): Promise<ReadableStream<Uint8Array>> {
     try {
-      const file = await Deno.open(this.path, { read: true });
+      const file = await Deno.open(this.path, options);
 
       return file.readable;
     } catch (e) {

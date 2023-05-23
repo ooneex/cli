@@ -59,7 +59,7 @@ export interface IFile {
   /**
    *  Reads file content as stream
    */
-  stream(): Promise<ReadableStream<Uint8Array>>;
+  stream(options: Deno.OpenOptions): Promise<ReadableStream<Uint8Array>>;
   /**
    *  Reads file content as json
    */

@@ -5,6 +5,7 @@ import {
   ControllerType,
   File,
   get,
+  HeaderChecker,
   Helper,
   Keys,
   registerConstant,
@@ -15,7 +16,7 @@ import {
 import { HttpCodeType, HttpStatusType } from "../types.ts";
 import { IResponse } from "./types.ts";
 
-export class HttpResponse implements IResponse {
+export class HttpResponse extends HeaderChecker implements IResponse {
   public readonly data: Collection;
   public readonly body: Collection;
   public readonly status: HttpStatusType;
@@ -26,10 +27,12 @@ export class HttpResponse implements IResponse {
     status: HttpStatusType | null = null,
     header: Header | null = null,
   ) {
+    header = header ?? new Header();
+    super(header.native);
     this.data = new Collection();
     this.body = body ?? new Collection();
     this.status = status ?? HttpStatusType.OK;
-    this.header = header ?? new Header();
+    this.header = header;
   }
 
   /**
@@ -101,19 +104,20 @@ export class HttpResponse implements IResponse {
   ): Promise<Response> {
     const file = new File(filePath);
 
-    return this.buildResponse(await file.stream());
+    return this.buildResponse(await file.stream(), "application/octet-stream");
   }
 
   /**
    * Download file
-   * TODO: to implement
-   * @see https://deno.land/manual@v1.30.0/examples/file_server
-   * @see https://stackoverflow.com/questions/61945050/how-can-i-download-big-files-in-deno
-   * @see https://medium.com/deno-the-complete-reference/file-download-through-fetch-api-in-deno-771f30b19471
-   * @see https://opis.io/http/3.x/response-types.html
    */
-  public download(_file: string, _filename: string): Response {
-    return this.string("TODO: to implement");
+  public async download(
+    filePath: string,
+    filename: string,
+  ): Promise<Response> {
+    const file = new File(filePath);
+    this.header.contentDisposition(`attachment; filename="${filename}"`);
+
+    return this.buildResponse(await file.stream(), "application/octet-stream");
   }
 
   /**
@@ -129,10 +133,12 @@ export class HttpResponse implements IResponse {
   }
 
   private getInitOptions(status?: HttpStatusType): ResponseInit {
+    status = status ?? this.status;
+
     return {
       headers: this.header.native,
-      status: status ?? this.status,
-      statusText: HttpCodeType[this.status],
+      status,
+      statusText: HttpCodeType[status],
     };
   }
 
@@ -141,15 +147,17 @@ export class HttpResponse implements IResponse {
     contentType: HeaderContentTypeType | null = null,
     status?: HttpStatusType,
   ): Response {
+    this.header.delete("Content-Type");
+    this.header.delete("Content-Length");
+
     if (contentType) {
-      this.header.delete("Content-Type");
-      this.header.delete("Content-Length");
       this.header.contentType(contentType);
     }
 
     if (Helper.isString(content)) {
       this.header.contentLength((content as string).length);
     }
+
     return new Response(content, this.getInitOptions(status));
   }
 }

@@ -1,4 +1,5 @@
 import { CharsetType, HttpMethodType } from "../types.ts";
+import { HeaderChecker } from "./HeaderChecker.ts";
 import {
   AcceptEncodingType,
   HeaderAcceptType,
@@ -7,12 +8,11 @@ import {
   IReadonlyHeader,
 } from "./types.ts";
 
-export class ReadonlyHeader implements IReadonlyHeader {
-  private _native: Headers;
+export class ReadonlyHeader extends HeaderChecker implements IReadonlyHeader {
   protected charset: CharsetType = "utf-8";
 
   constructor(headers: Headers) {
-    this._native = headers;
+    super(headers);
 
     // TODO: handle cache control
   }
@@ -43,6 +43,10 @@ export class ReadonlyHeader implements IReadonlyHeader {
 
   public getContentType(): HeaderContentTypeType | null {
     return this.get("Content-Type");
+  }
+
+  public getContentDisposition(): string | null {
+    return this.get("Content-Disposition");
   }
 
   public getCookie(): string | null {
@@ -103,46 +107,6 @@ export class ReadonlyHeader implements IReadonlyHeader {
     }
 
     return match[1];
-  }
-
-  public isBlob(): boolean {
-    const contentType = this.get("Content-Type");
-
-    if (!contentType) {
-      return false;
-    }
-
-    return /application\/octet-stream/i.test(contentType);
-  }
-
-  public isJson(): boolean {
-    const contentType = this.get("Content-Type");
-
-    if (!contentType) {
-      return false;
-    }
-
-    return /application\/(ld\+)?json/i.test(contentType);
-  }
-
-  public isFormData(): boolean {
-    const contentType = this.get("Content-Type");
-
-    if (!contentType) {
-      return false;
-    }
-
-    return /multipart\/form-data/i.test(contentType);
-  }
-
-  public isText(): boolean {
-    const contentType = this.get("Content-Type");
-
-    if (!contentType) {
-      return false;
-    }
-
-    return /text\/css|\*|csv|html|plain|xml/i.test(contentType);
   }
 
   public forEach(

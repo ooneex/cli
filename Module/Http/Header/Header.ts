@@ -1,11 +1,11 @@
 import { CharsetType } from "../types.ts";
+import { ReadonlyHeader } from "./ReadonlyHeader.ts";
 import {
   AcceptEncodingType,
   HeaderContentTypeType,
   HeaderKeyType,
   IHeader,
 } from "./types.ts";
-import { ReadonlyHeader } from "./ReadonlyHeader.ts";
 
 export class Header extends ReadonlyHeader implements IHeader {
   public readonly native: Headers;
@@ -59,6 +59,12 @@ export class Header extends ReadonlyHeader implements IHeader {
     return this;
   }
 
+  public stream(): this {
+    this.contentType("application/octet-stream");
+
+    return this;
+  }
+
   public formData(): this {
     this.contentType("multipart/form-data");
 
@@ -73,6 +79,12 @@ export class Header extends ReadonlyHeader implements IHeader {
 
   public contentType(value: HeaderContentTypeType): this {
     this.add("Content-Type", `${value}; charset=${this.charset}`);
+
+    return this;
+  }
+
+  public contentDisposition(value: string): this {
+    this.add("Content-Disposition", `${value}`);
 
     return this;
   }

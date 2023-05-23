@@ -1,6 +1,7 @@
 import { ReadonlyHeader } from "../Header/mod.ts";
 import {
   AppEnvType,
+  IHeaderChecker,
   IRoute,
   LocaleType,
   MatchedRouteParamsType,
@@ -8,7 +9,7 @@ import {
 } from "../deps.ts";
 import { HttpMethodType } from "../types.ts";
 
-export interface IRequest {
+export interface IRequest extends IHeaderChecker {
   readonly id: string;
   readonly url: Readonly<URL> | null;
   readonly header: ReadonlyHeader | null;
@@ -21,10 +22,6 @@ export interface IRequest {
   getLocale: () => LocaleType;
   getAppEnv: () => AppEnvType;
   getVersion: () => VersionType | null;
-  isJson: () => boolean;
-  isText: () => boolean;
-  isFormData: () => boolean;
-  isBlob: () => boolean;
   getBody: <T = Record<string, unknown>>() => Promise<
     T | string | FormData | Blob | null
   >;

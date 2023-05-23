@@ -1,9 +1,9 @@
 import { Header } from "../Header/mod.ts";
 import { Request } from "../Request/mod.ts";
-import { Collection, ViewType } from "../deps.ts";
+import { Collection, IHeaderChecker, ViewType } from "../deps.ts";
 import { HttpStatusType } from "../types.ts";
 
-export interface IResponse {
+export interface IResponse extends IHeaderChecker {
   readonly data: Collection;
   readonly body: Collection;
   readonly status: HttpStatusType;

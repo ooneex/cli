@@ -4,13 +4,22 @@ export interface IHeader extends IReadonlyHeader {
   readonly native: Headers;
 }
 
-export interface IReadonlyHeader {
+export interface IHeaderChecker {
+  isBlob: () => boolean;
+  isJson: () => boolean;
+  isStream: () => boolean;
+  isText: () => boolean;
+  isFormData: () => boolean;
+}
+
+export interface IReadonlyHeader extends IHeaderChecker {
   get: (name: HeaderKeyType) => string | null;
   getAllow: () => HttpMethodType | null;
   getAccept: () => HeaderAcceptType | null;
   getAcceptEncoding: () => AcceptEncodingType | null;
   getContentLength: () => string | null;
   getContentType: () => HeaderContentTypeType | null;
+  getContentDisposition: () => string | null;
   getUserAgent: () => string | null;
   getAuthorization: () => string | null;
   getBasicAuth: () => string | null;
@@ -21,10 +30,6 @@ export interface IReadonlyHeader {
   getRefererPolicy: () => string | null;
   getServer: () => string | null;
   getCharset: () => CharsetType;
-  isBlob: () => boolean;
-  isJson: () => boolean;
-  isText: () => boolean;
-  isFormData: () => boolean;
   has: (name: HeaderKeyType) => boolean;
   keys: () => string[];
   count: () => number;

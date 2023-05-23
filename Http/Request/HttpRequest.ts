@@ -2,6 +2,7 @@ import {
   AppEnvType,
   get,
   getOrNull,
+  HeaderChecker,
   Helper,
   IRoute,
   LocaleType,
@@ -14,13 +15,15 @@ import { HttpMethodType } from "../types.ts";
 import { RequestBodyParserException } from "./RequestBodyParserException.ts";
 import { IRequest, UrlPatternType } from "./types.ts";
 
-export class HttpRequest implements IRequest {
+export class HttpRequest extends HeaderChecker implements IRequest {
   public readonly url: Readonly<URL> | null;
   public readonly header: ReadonlyHeader | null;
   public readonly search: Readonly<URLSearchParams> | null;
   public readonly id: string = crypto.randomUUID();
 
   constructor(public readonly native: Request | null = null) {
+    super(native ? native.headers : new Headers());
+
     this.url = null;
     this.header = null;
     this.search = null;
@@ -80,38 +83,6 @@ export class HttpRequest implements IRequest {
     }
 
     return this.native.method as HttpMethodType;
-  }
-
-  public isBlob(): boolean {
-    if (!this.header) {
-      return false;
-    }
-
-    return this.header.isBlob();
-  }
-
-  public isFormData(): boolean {
-    if (!this.header) {
-      return false;
-    }
-
-    return this.header.isFormData();
-  }
-
-  public isJson(): boolean {
-    if (!this.header) {
-      return false;
-    }
-
-    return this.header.isJson();
-  }
-
-  public isText(): boolean {
-    if (!this.header) {
-      return false;
-    }
-
-    return this.header.isText();
   }
 
   // TODO: arrayBuffer()
