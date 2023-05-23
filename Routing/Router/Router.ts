@@ -40,6 +40,7 @@ export class Router implements IRouter {
     params = { ...(route.getDefault()), ...params };
 
     const K = get<{ Route: { Matched: symbol } }>(this.id);
+    console.log("🚀 ~ file: Router.ts:43 ~ Router ~ K:", K);
     console.log(route);
   }
 }
