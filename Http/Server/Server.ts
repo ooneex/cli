@@ -1,11 +1,4 @@
-import {
-  ConnInfo,
-  DotEnvValueType,
-  get,
-  ICollection,
-  Keys,
-  serve,
-} from "../deps.ts";
+import { ConnInfo, EnvHelper, File, get, IFile, Keys, serve } from "../deps.ts";
 import { onServerError } from "./onServerError.ts";
 import { onServerListen } from "./onServerListen.ts";
 import { serverHandler } from "./serverHandler.ts";
@@ -22,10 +15,18 @@ export class Server {
   }
 
   public static create(): Server {
-    const env = get<ICollection<string, DotEnvValueType>>(Keys.Env.Default);
-    const port = env.get<number>("PORT") ?? 3000;
-    const host = env.get<string>("HOST") ?? "localhost";
+    const envHelper = get<EnvHelper>(Keys.Env.Helper);
+    const port = envHelper.getPort();
+    const host = envHelper.getHost();
     const abortController = get<AbortController>(Keys.AbortController);
+
+    let tlsKeyFile: IFile | undefined = undefined;
+    let tlsCertFile: IFile | undefined = undefined;
+
+    if (envHelper.isSecure()) {
+      tlsKeyFile = new File(envHelper.getTlsKey() as string);
+      tlsCertFile = new File(envHelper.getTlsCert() as string);
+    }
 
     const server = new Server({
       port: port,
@@ -37,9 +38,8 @@ export class Server {
         onServerListen(params.hostname, params.port),
       signal: abortController.signal,
 
-      // TODO: implement these features
-      key: undefined,
-      cert: undefined,
+      key: tlsKeyFile ? tlsKeyFile.read() : tlsKeyFile,
+      cert: tlsCertFile ? tlsCertFile.read() : tlsCertFile,
       keyFile: undefined,
       certFile: undefined,
     });

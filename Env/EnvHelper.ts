@@ -69,4 +69,16 @@ export class EnvHelper {
   public getCharset(): string {
     return this.env.get<string>("CHARSET") as string;
   }
+
+  public getTlsKey(): string | null {
+    return this.env.get("TLS_KEY") ?? null;
+  }
+
+  public getTlsCert(): string | null {
+    return this.env.get("TLS_CERT") ?? null;
+  }
+
+  public isSecure(): boolean {
+    return !!this.getTlsKey() && !!this.getTlsCert();
+  }
 }
