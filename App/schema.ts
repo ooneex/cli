@@ -36,7 +36,6 @@ export const ViewConfigSchema = z.object({
     islands: z.string(),
     middlewares: z.string(),
     public: z.string(),
-    root: z.string(),
     var: z.string(),
     views: z.string(),
   }),
@@ -47,7 +46,6 @@ export const ApiConfigSchema = z.object({
     config: z.string(),
     controllers: z.string(),
     middlewares: z.string(),
-    root: z.string(),
     var: z.string(),
   }),
 });

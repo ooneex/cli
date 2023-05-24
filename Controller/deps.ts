@@ -1,3 +1,4 @@
+export { App } from "../App/App.ts";
 export type { ICollection } from "../Collection/mod.ts";
 export * as Decorator from "../Decorator/mod.ts";
 export { Directory } from "../Directory/Directory.ts";

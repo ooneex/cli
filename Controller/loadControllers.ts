@@ -1,20 +1,18 @@
 import { ControllerException } from "./ControllerException.ts";
-import { Directory, File, get, Keys, print } from "./deps.ts";
+import { App, Directory, File, print } from "./deps.ts";
 
 type ConfigType = {
   directories: {
-    root: string;
     controllers: string;
-    var: string;
   };
 };
 
 const __dirname = new URL(".", import.meta.url).pathname;
 
 export const loadControllers = async (): Promise<Record<string, unknown>> => {
-  const config = get<ConfigType>(Keys.Config.App);
+  const config = App.getConfig<ConfigType>();
   const controllerDir = config.directories.controllers;
-  // const rootDir = config.directories.root;
+  const rootDir = App.getRootDir();
   const directory = new Directory(controllerDir);
   let controllers = directory.files(/Controller\.ts$/, true);
 
@@ -36,7 +34,7 @@ export const loadControllers = async (): Promise<Record<string, unknown>> => {
 
     try {
       const c = await import(
-        `${(controller.tag === "default") ? "" : "./"}${path}`
+        `${(controller.tag === "default") ? "" : rootDir + "/"}${path}`
       );
 
       if (!c[name]) {

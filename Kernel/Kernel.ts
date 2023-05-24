@@ -24,11 +24,14 @@ window.Log = Log;
 type BootConfigType = {
   app: Record<string, unknown>;
   type: AppType;
+  rootDir: string;
 };
 
 export class Kernel {
   public static async boot(config: BootConfigType): Promise<void> {
     registerConstant(Keys.Config.App, config.app);
+    registerConstant(Keys.App.Type, config.type);
+    registerConstant(Keys.App.RootDir, config.rootDir);
 
     // Load env vars
     const env = parseEnv();
@@ -56,7 +59,7 @@ export class Kernel {
     }
 
     if (App.isView()) {
-      const result = ViewConfigSchema.safeParse(config);
+      const result = ViewConfigSchema.safeParse(config.app);
       if (!result.success) {
         configValidationError = result.error;
       }

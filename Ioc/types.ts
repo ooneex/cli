@@ -1,4 +1,8 @@
 export const Keys = {
+  App: {
+    Type: Symbol.for(`app-type-${crypto.randomUUID()}`),
+    RootDir: Symbol.for(`app-root-${crypto.randomUUID()}`),
+  },
   Config: {
     App: Symbol.for(`config-app-${crypto.randomUUID()}`),
   },
