@@ -3,7 +3,6 @@ export { ApiConfigSchema, EnvSchema, ViewConfigSchema } from "../App/schema.ts";
 export type { AppType } from "../App/types.ts";
 export { Collection } from "../Collection/mod.ts";
 export type { ICollection } from "../Collection/mod.ts";
-export { loadControllers } from "../Controller/loadControllers.ts";
 export { Log } from "../Debug/Log.ts";
 export type { LogType } from "../Debug/types.ts";
 export { EnvHelper } from "../Env/EnvHelper.ts";

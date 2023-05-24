@@ -3,16 +3,11 @@ import {
   ApiConfigSchema,
   App,
   AppType,
-  Collection,
   EnvHelper,
   EnvSchema,
-  get,
   Keys,
-  loadControllers,
   Log,
   registerConstant,
-  Route,
-  Router,
   ViewConfigSchema,
   ZodError,
 } from "./deps.ts";
@@ -28,7 +23,7 @@ type BootConfigType = {
 };
 
 export class Kernel {
-  public static async boot(config: BootConfigType): Promise<void> {
+  public static boot(config: BootConfigType): void {
     registerConstant(Keys.Config.App, config.app);
     registerConstant(Keys.App.Type, config.type);
     registerConstant(Keys.App.RootDir, config.rootDir);
@@ -72,14 +67,6 @@ export class Kernel {
         `${error.path.join(".")}: ${error.message}`,
       );
     }
-
-    // Load controllers
-    const controllers = await loadControllers();
-    registerConstant(Keys.Controller.Default, controllers);
-
-    // Register router
-    const routes = get<Collection<string, Route>>(Keys.Routes);
-    registerConstant(Keys.Router, new Router(routes));
 
     // Abort Controller
     registerConstant(Keys.AbortController, new AbortController());
