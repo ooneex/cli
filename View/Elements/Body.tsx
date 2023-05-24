@@ -1,5 +1,7 @@
 import { ComponentChildren, Helper } from "../deps.ts";
 
+// TODO: Create Page component
+
 export interface IBodyProps {
   children?: ComponentChildren;
   //@ts-ignore:

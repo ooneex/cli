@@ -1,5 +1,5 @@
 import { Header, HeaderContentTypeType } from "../Header/mod.ts";
-import { Request } from "../Request/mod.ts";
+import { IRequest } from "../Request/types.ts";
 import {
   Collection,
   ControllerType,
@@ -11,6 +11,7 @@ import {
   registerConstant,
   renderView,
   RouteNotFoundException,
+  Router,
   ViewType,
 } from "../deps.ts";
 import { HttpCodeType, HttpStatusType } from "../types.ts";
@@ -82,7 +83,6 @@ export class HttpResponse extends HeaderChecker implements IResponse {
    */
   public async notFound(
     message: string,
-    request: Request,
     status?: HttpStatusType,
   ): Promise<Response> {
     const NotFoundController = get<ControllerType>(Keys.Controller.NotFound);
@@ -91,8 +91,9 @@ export class HttpResponse extends HeaderChecker implements IResponse {
       status ?? HttpStatusType.NotFound,
     );
 
-    const K = get<{ Exception: symbol }>(request.id);
+    const K = get<{ Request: symbol; Exception: symbol }>(this.id);
     registerConstant(K.Exception, error);
+    const request = get<IRequest>(K.Request);
 
     return await NotFoundController(request);
   }
@@ -122,15 +123,27 @@ export class HttpResponse extends HeaderChecker implements IResponse {
   }
 
   /**
-   * Redirect response
+   * Redirect by route definition name
    */
-  public redirect(): Response {
-    // TODO: redirect by route name
-    // TODO: redirect by url
+  public redirect(
+    routeName: string,
+    params: Record<string, string | number> = {},
+    status?: HttpStatusType,
+  ): Response {
+    const router = get<Router>(Keys.Router);
+    const url = router.generateUrl(routeName, params);
 
-    const url = new URL("/users/45", "http://localhost:5000");
+    return Response.redirect(
+      new URL(url),
+      status ?? HttpStatusType.TemporaryRedirect,
+    );
+  }
 
-    return Response.redirect(url, HttpStatusType.TemporaryRedirect);
+  public redirectToUrl(
+    url: string | URL,
+    status?: HttpStatusType,
+  ): Response {
+    return Response.redirect(url, status ?? HttpStatusType.TemporaryRedirect);
   }
 
   private getInitOptions(status?: HttpStatusType): ResponseInit {

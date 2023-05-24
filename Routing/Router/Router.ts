@@ -1,7 +1,10 @@
+import { RouteChecker } from "../Checker/RouteChecker.ts";
+import { get, Helper, ICollection } from "../deps.ts";
+import { MatchedRoute } from "../Matched/MatchedRoute.ts";
+import { MatchedRouteType } from "../Matched/types.ts";
 import { IRoute } from "../Route/types.ts";
-import { get, ICollection } from "../deps.ts";
-import { UrlGenerationException } from "./UrlGenerationException.ts";
 import { IRouter } from "./types.ts";
+import { UrlGenerationException } from "./UrlGenerationException.ts";
 
 export class Router implements IRouter {
   public readonly id: string = crypto.randomUUID();
@@ -28,10 +31,10 @@ export class Router implements IRouter {
   }
 
   public generateUrl(
-    name: string,
+    routeName: string,
     params: Record<string, string | number> = {},
-  ): void {
-    const route = this.findByName(name);
+  ): string {
+    const route = this.findByName(routeName);
 
     if (!route) {
       throw new UrlGenerationException(`Cannot found route "${name}"`);
@@ -40,7 +43,28 @@ export class Router implements IRouter {
     params = { ...(route.getDefault()), ...params };
 
     const K = get<{ Route: { Matched: symbol } }>(this.id);
-    console.log("🚀 ~ file: Router.ts:43 ~ Router ~ K:", K);
-    console.log(route);
+
+    let matched = get<MatchedRouteType>(K.Route.Matched);
+    matched = { ...matched, params };
+
+    const routeChecker = new RouteChecker(route, new MatchedRoute(matched));
+    if (!routeChecker.isValid()) {
+      const constraintErrors = routeChecker.getErrors();
+      const constraintError = constraintErrors[0];
+      throw new UrlGenerationException(constraintError.message);
+    }
+
+    const path = route.getPath().replace(
+      /:+([a-z0-9_-]+)/i,
+      (_match, param) => {
+        if (!Helper.hasProperty(params, param)) {
+          throw new UrlGenerationException(`Param "${param}" not defined`);
+        }
+
+        return `${params[param]}`;
+      },
+    );
+
+    return `${matched.url.protocol}//${matched.url.host}${path}`;
   }
 }

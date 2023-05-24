@@ -30,6 +30,7 @@ export const serverHandler = async (
   }
 
   const K = {
+    Request: Symbol.for(`request-${crypto.randomUUID()}`),
     Response: Symbol.for(`response-${crypto.randomUUID()}`),
     Route: {
       Default: Symbol.for(`route-default-${crypto.randomUUID()}`),
@@ -38,6 +39,7 @@ export const serverHandler = async (
     },
     Exception: Symbol.for(`exception-${crypto.randomUUID()}`),
   };
+  registerConstant(K.Request, request);
   registerConstant(request.id, K);
 
   const response = new HttpResponse();
@@ -45,13 +47,14 @@ export const serverHandler = async (
   registerConstant(response.id, K);
   const router = get<Router>(Keys.Router);
   registerConstant(router.id, K);
+
   const route = router.findByPathname(request.url as Readonly<URL>);
   registerConstant(K.Route.Default, route);
+  // registerConstant(route?.id, K);
 
   if (!route) {
     return await response.notFound(
       `Route ${(request.url as Readonly<URL>).pathname} not found`,
-      request,
     );
   }
 
@@ -81,7 +84,6 @@ export const serverHandler = async (
 
     return await response.notFound(
       constraintError.message,
-      request,
       constraintError.status,
     );
   }

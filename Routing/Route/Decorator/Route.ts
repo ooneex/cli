@@ -98,7 +98,7 @@ export const Route = (
       throw new RouteConfigException(
         `${error.path.join(".")}: ${error.message}`,
         null,
-        { name, path, controller: descriptor.value.name },
+        { name, path },
       );
     }
 

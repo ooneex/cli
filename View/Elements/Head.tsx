@@ -1,4 +1,4 @@
-import { ComponentChildren } from "../deps.ts";
+import { ComponentChildren, EnvHelper, get, Keys } from "../deps.ts";
 
 export interface IHeaderProps {
   charset?: string;
@@ -12,7 +12,7 @@ export interface IHeaderProps {
 
 export const Head = (
   {
-    charset = "utf-8",
+    charset,
     favicon,
     viewport = "width=device-width, initial-scale=1.0",
     title,
@@ -21,6 +21,9 @@ export const Head = (
     description,
   }: IHeaderProps,
 ) => {
+  const envHelper = get<EnvHelper>(Keys.Env.Helper);
+  charset = charset ?? envHelper.getCharset();
+
   return (
     <head>
       {charset && <meta charSet={charset} />}

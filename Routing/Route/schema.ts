@@ -16,7 +16,7 @@ export const RouteConstraintsSchema = z.object({
 
 export const RouteDefinitionSchema = z.object({
   name: z.string(),
-  path: z.custom<`/${string}`>(
+  path: z.custom<string>(
     (value) => {
       if ((value as string) === "/") {
         return true;

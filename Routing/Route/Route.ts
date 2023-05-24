@@ -15,6 +15,8 @@ import {
 } from "./types.ts";
 
 export class Route implements IRoute {
+  public readonly id: string = crypto.randomUUID();
+
   constructor(private readonly definition: RouteDefinitionType) {
   }
 

@@ -1,13 +1,13 @@
 import { File, get, Helper, Keys } from "./deps.ts";
-export const publicDir = "public";
 
 type LocalConfigType = { directories: { var: string } };
 
+// TODO: implement asset("@...")
 export const asset = (name: string): string => {
   const config = get<{ directories: { public: string } }>(Keys.Config.App);
   name = Helper.trim(name, "/ ");
 
-  return `${config.directories.public}/${name}`;
+  return `/${config.directories.public}/${name}`;
 };
 
 export const getAssetFromCache = (name: string, directory?: string): string => {
@@ -26,7 +26,7 @@ export const getAssetFromCache = (name: string, directory?: string): string => {
 
   let hash = "a";
   for (let i = 0; i < 10; i++) {
-    hash += String(Helper.randomInt(9));
+    hash += `${Helper.randomInt(9)}`;
   }
 
   const ext = file.getExt();
@@ -39,7 +39,7 @@ export const getAssetFromCache = (name: string, directory?: string): string => {
       assetsCacheManifest[name] = `${hash}.${file.getExt()}`;
     }
 
-    assetsCacheFile.write(JSON.stringify(assetsCacheManifest));
+    assetsCacheFile.writeJson(assetsCacheManifest);
   }
 
   return assetsCacheManifest[name];

@@ -93,6 +93,7 @@ export type RouteDefinitionType = {
 };
 
 export interface IRoute {
+  readonly id: string;
   getName: () => string;
   getPath: () => RoutePathType;
   getProtocols: () => HttpProtocolType[] | null;
