@@ -16,7 +16,20 @@ export const RouteConstraintsSchema = z.object({
 
 export const RouteDefinitionSchema = z.object({
   name: z.string(),
-  path: z.string().startsWith("/", { message: `Must start with "/"` }),
+  path: z.custom<`/${string}`>(
+    (value) => {
+      if ((value as string) === "/") {
+        return true;
+      }
+
+      if (!/^[a-z0-9\/:_-]+$/.test(value as string)) {
+        return false;
+      }
+
+      return true;
+    },
+    `Format not valid. Try "/path-name/:param-1/:param-2"`,
+  ),
   controller: z.function(),
   methods: HttpMethodSchema.array().optional(),
   protocols: HttpProtocolSchema.array().optional(),
