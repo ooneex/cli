@@ -56,7 +56,7 @@ export const Head = (
       />
 
       {styles &&
-        styles.forEach((style) => <link rel={"stylesheet"} href={style} />)}
+        styles.map((style) => <link rel={"stylesheet"} href={style} />)}
 
       <title>{title}</title>
       {children}

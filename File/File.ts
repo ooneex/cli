@@ -245,6 +245,7 @@ export class File implements IFile {
   ): IFile {
     try {
       const file = new File(destination);
+      file.getDirectory().ensure();
       copySync(this.path, file.getPath(), config);
 
       return file;

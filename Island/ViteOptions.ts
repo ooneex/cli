@@ -42,17 +42,17 @@ export const getOptions = (
             getAssetFromCache(
               `${directories.islands}/${chunkInfo.name}.js`,
               directories.islands,
-            ),
+            ).name,
           chunkFileNames: (chunkInfo: Record<"name", string>) =>
             getAssetFromCache(
               `${directories.islands}/${chunkInfo.name}.js`,
               directories.islands,
-            ),
+            ).name,
           assetFileNames: (assetInfo: Record<"name", string>) =>
             getAssetFromCache(
               `${directories.islands}/${assetInfo.name}`,
               directories.islands,
-            ),
+            ).name,
         },
       },
       watch: null,

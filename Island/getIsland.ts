@@ -7,7 +7,7 @@ import { IslandConfigType, LocalConfigType, ManifestType } from "./types.ts";
 export const getIsland = async (
   island: string,
 ): Promise<IslandConfigType> => {
-  const name = Helper.trim(island, "/").replace(/\.tsx/i, "");
+  const name = Helper.trim(island, "/").replace(/\.tsx$/i, "");
   const config = get<LocalConfigType>(Keys.Config.App);
 
   const file = new File(`${config.directories.islands}/${name}.tsx`);
@@ -51,9 +51,10 @@ elements.forEach((element) => {
 });
   `;
 
-  const proxyFileName = `${config.directories.islands}/${name}.proxy.tsx`;
+  const proxyFileName = `${config.directories.islands}/${name}.__proxy__.tsx`;
   const proxyFile = new File(proxyFileName);
   proxyFile.write(content);
+  // TODO: compile according to env
   await compileIslands(proxyFile.getPath(), "development");
   proxyFile.rm();
 
@@ -65,6 +66,11 @@ elements.forEach((element) => {
   }
 
   const manifest = manifestFile.json<ManifestType>();
+
+  const details = manifest[proxyFileName];
+  const src = details.src?.replace(/\.__proxy__/, "");
+  details["src"] = src;
+  manifest[proxyFileName] = details;
 
   const data = {
     id,
