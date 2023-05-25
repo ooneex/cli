@@ -18,7 +18,10 @@ import { RouteDefinitionType, RoutePathType } from "../types.ts";
 export const Route = (
   name: z.infer<typeof RouteDefinitionSchema.shape.name>,
   path: RoutePathType,
-  config?: Omit<RouteDefinitionType, "name" | "path" | "controller">,
+  config?: Omit<
+    RouteDefinitionType,
+    "name" | "path" | "controller" | "metadata"
+  >,
 ): MethodDecoratorReturnType => {
   if (!name) {
     throw new RouteException(`Cannot register route. Name is required`, null, {
@@ -48,7 +51,6 @@ export const Route = (
     const method = descriptor.value!;
 
     descriptor.value = function Controller(request: Request): Response {
-      // @ts-ignore: trust me
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,
@@ -87,6 +89,11 @@ export const Route = (
       name,
       path,
       controller: descriptor.value,
+      metadata: {
+        controller: {
+          name: propertyName,
+        },
+      },
       ...config,
     };
 

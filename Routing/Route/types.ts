@@ -7,7 +7,11 @@ import {
   VersionType,
   z,
 } from "../deps.ts";
-import { RouteConstraintsSchema, RouteDefinitionSchema } from "./schema.ts";
+import {
+  RouteConstraintsSchema,
+  RouteDefinitionSchema,
+  RouteMetadataSchema,
+} from "./schema.ts";
 
 export type RoutePathType = z.infer<typeof RouteDefinitionSchema.shape.path>;
 export type RouteDefaultValuesType = z.infer<
@@ -32,7 +36,7 @@ export type RouteDefinitionType = {
    */
   controller: ControllerType;
 
-  // TODO: add controller class name
+  metadata?: z.infer<typeof RouteMetadataSchema>;
 
   // TODO: add before and after event as decorator
   /**

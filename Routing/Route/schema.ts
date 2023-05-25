@@ -4,6 +4,12 @@ import {
 } from "../../Module/Http/schema.ts";
 import { AppEnvSchema, LocaleSchema, VersionSchema, z } from "../deps.ts";
 
+export const RouteMetadataSchema = z.object({
+  controller: z.object({
+    name: z.string(),
+  }).optional(),
+});
+
 export const RouteConstraintsSchema = z.object({
   where: z.record(z.string(), z.string().or(z.number())).optional(),
   regex: z.record(z.string(), z.instanceof(RegExp)).optional(),
@@ -31,6 +37,7 @@ export const RouteDefinitionSchema = z.object({
     `Format not valid. Try "/path-name/:param-1/:param-2"`,
   ),
   controller: z.function(),
+  metadata: RouteMetadataSchema.optional(),
   methods: HttpMethodSchema.array().optional(),
   protocols: HttpProtocolSchema.array().optional(),
   hosts: z.string().array().optional(),
