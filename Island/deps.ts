@@ -1,6 +1,7 @@
 export type { JSX } from "npm:solid-js@^1.6.3";
 export { build } from "npm:vite@^4.0.4";
 export { Directory } from "../Directory/Directory.ts";
+export { EnvHelper } from "../Env/EnvHelper.ts";
 export { Exception } from "../Exception/Exception.ts";
 export { File } from "../File/File.ts";
 export { Helper } from "../Helper/mod.ts";

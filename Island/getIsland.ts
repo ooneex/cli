@@ -1,5 +1,5 @@
 import { compileIslands } from "./compile.ts";
-import { File, get, Helper, Keys } from "./deps.ts";
+import { EnvHelper, File, get, Helper, Keys } from "./deps.ts";
 import { IslandException } from "./IslandException.ts";
 import { IslandNotFoundException } from "./IslandNotFoundException.ts";
 import { IslandConfigType, LocalConfigType, ManifestType } from "./types.ts";
@@ -54,8 +54,13 @@ elements.forEach((element) => {
   const proxyFileName = `${config.directories.islands}/${name}.__proxy__.tsx`;
   const proxyFile = new File(proxyFileName);
   proxyFile.write(content);
-  // TODO: compile according to env
-  await compileIslands(proxyFile.getPath(), "development");
+
+  const envHelper = get<EnvHelper>(Keys.Env.Helper);
+
+  await compileIslands(
+    proxyFile.getPath(),
+    envHelper.isLocal() ? "development" : "production",
+  );
   proxyFile.rm();
 
   const publicDir = config.directories.public;
