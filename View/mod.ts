@@ -1,5 +1,6 @@
 export * from "./Elements/Body.tsx";
 export * from "./Elements/Head.tsx";
+export * from "./Elements/Page.tsx";
 export * from "./ViewException.ts";
 export * from "./ViewNotFoundException.ts";
 export * from "./asset.ts";

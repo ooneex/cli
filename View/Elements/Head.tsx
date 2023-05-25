@@ -1,6 +1,7 @@
 import { ComponentChildren, EnvHelper, get, Keys } from "../deps.ts";
 
-export interface IHeaderProps {
+// @ts-ignore: trust me
+export interface IHeaderProps extends HTMLAttributes<HTMLHeadElement> {
   charset?: string;
   favicon?: string;
   viewport?: string;
@@ -11,21 +12,29 @@ export interface IHeaderProps {
 }
 
 export const Head = (
-  {
-    charset,
+  props: IHeaderProps,
+) => {
+  const envHelper = get<EnvHelper>(Keys.Env.Helper);
+
+  const {
+    charset = envHelper.getCharset(),
     favicon,
     viewport = "width=device-width, initial-scale=1.0",
     title,
     children,
     styles,
     description,
-  }: IHeaderProps,
-) => {
-  const envHelper = get<EnvHelper>(Keys.Env.Helper);
-  charset = charset ?? envHelper.getCharset();
+  } = props;
+
+  delete props.charset;
+  delete props.favicon;
+  delete props.viewport;
+  delete props.children;
+  delete props.styles;
+  delete props.description;
 
   return (
-    <head>
+    <head {...props}>
       {charset && <meta charSet={charset} />}
 
       {favicon &&

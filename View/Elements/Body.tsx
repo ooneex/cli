@@ -1,18 +1,22 @@
 import { ComponentChildren, Helper } from "../deps.ts";
 
-// TODO: Create Page component
-
-export interface IBodyProps {
+//@ts-ignore: trust me
+export interface IBodyProps extends HTMLAttributes<HTMLBodyElement> {
   children?: ComponentChildren;
-  //@ts-ignore:
+  //@ts-ignore: trust me
   scripts?: HTMLAttributes<HTMLScriptElement>[] | string[];
 }
 
 export const Body = (
-  { children, scripts }: IBodyProps,
+  props: IBodyProps,
 ) => {
+  const { children, scripts } = props;
+
+  delete props.children;
+  delete props.scripts;
+
   return (
-    <body>
+    <body {...props}>
       {children}
       <span
         style={{ display: "none" }}

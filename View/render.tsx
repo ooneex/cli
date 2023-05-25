@@ -19,7 +19,7 @@ export const renderView: renderViewType = <T = unknown>(
 
   // @ts-ignore: trust me
   let html = renderToString(<View {...(data ?? {})} />);
-  html = `<!DOCTYPE html><html lang=${envHelper.getLocale()}>${html}</html>`;
+  html = `<!DOCTYPE html>${html}`;
 
   // Render island scripts and styles
   let styles = "";
