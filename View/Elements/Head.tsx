@@ -31,6 +31,8 @@ export const Head = (
   delete props.viewport;
   delete props.children;
   delete props.styles;
+  // @ts-ignore: trust me
+  delete props.title;
   delete props.description;
 
   return (
