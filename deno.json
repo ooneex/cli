@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
     "emitDecoratorMetadata": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
     "lib": [
       "dom",
       "dom.iterable",
@@ -12,33 +10,10 @@
     ]
   },
   "imports": {
-    "@collection": "./Collection/mod.ts",
-    "@config": "./Config/mod.ts",
-    "@controller": "./Controller/mod.ts",
-    "@decorator": "./Decorator/mod.ts",
-    "@directory": "./Directory/mod.ts",
-    "@env": "./Env/mod.ts",
-    "@exception": "./Exception/mod.ts",
-    "@figure": "./Figure/mod.ts",
-    "@file": "./File/mod.ts",
-    "@helper": "./Helper/mod.ts",
-    "@http": "./Http/mod.ts",
-    "@ioc": "./Ioc/mod.ts",
-    "@island": "./Island/mod.ts",
-    "@kernel": "./Kernel/mod.ts",
-    "@output": "./Output/mod.ts",
-    "@path": "./Path/mod.ts",
-    "@routing": "./Routing/mod.ts",
-    "@translation": "./Translation/mod.ts",
-    "@view": "./View/mod.ts",
-
-    "deno-dom": "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts",
-    "testing/": "https://deno.land/std@0.188.0/testing/",
-    "preact": "https://esm.sh/preact@10.13.2",
-    "preact/": "https://esm.sh/preact@10.13.2/"
+    "testing/": "https://deno.land/std@0.188.0/testing/"
   },
   "tasks": {
-    "start": "deno run -A --watch=.env,.env.local,config/,controllers/,middlewares/ index.ts",
+    "start": "deno run -A ooneex.ts",
     "test": "deno test -A",
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
