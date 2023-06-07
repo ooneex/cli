@@ -4,6 +4,7 @@ import { response } from "../../Decorator/response.ts";
 import { Request } from "../../Request.ts";
 import { Response } from "../../Response.ts";
 import { createComponent } from "./createComponent.ts";
+import { createController } from "./createController.ts";
 import { createIsland } from "./createIsland.ts";
 import { createView } from "./createView.ts";
 
@@ -36,6 +37,9 @@ export class MakeCommand {
         break;
       case "view":
         createView();
+        break;
+      case "controller":
+        createController();
         break;
       default:
         console.log("default");
