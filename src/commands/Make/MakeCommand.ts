@@ -4,6 +4,7 @@ import { response } from "../../Decorator/response.ts";
 import { Request } from "../../Request.ts";
 import { Response } from "../../Response.ts";
 import { createComponent } from "./createComponent.ts";
+import { createIsland } from "./createIsland.ts";
 
 export class MakeCommand {
   @Command("make", [
@@ -28,6 +29,9 @@ export class MakeCommand {
     switch (request.action) {
       case "component":
         createComponent();
+        break;
+      case "island":
+        createIsland();
         break;
       default:
         console.log("default");

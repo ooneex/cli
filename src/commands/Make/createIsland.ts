@@ -8,13 +8,13 @@ import {
   SelectPrompt,
   Style,
 } from "../../deps.ts";
-import { ComponentHelper } from "./ComponentHelper.ts";
+import { IslandHelper } from "./IslandHelper.ts";
 
-export const createComponent = async (): Promise<void> => {
-  const components = ComponentHelper.getDirectories();
+export const createIsland = async (): Promise<void> => {
+  const components = IslandHelper.getDirectories();
 
   // Select directory
-  const prompt = new SelectPrompt("Choose the directory for the component");
+  const prompt = new SelectPrompt("Choose the directory for the island");
   components.forEach((dir) => {
     prompt.addOption({ name: dir, value: dir });
   });
@@ -23,7 +23,7 @@ export const createComponent = async (): Promise<void> => {
 
   // Ask component name
 
-  const inputPrompt = new InputPrompt("Component name (e.g. ButtonPrimary)");
+  const inputPrompt = new InputPrompt("Island name (e.g. ShowMessage)");
 
   inputPrompt.transform((input): string => {
     return Helper.pascalize(input);
@@ -51,7 +51,7 @@ export const createComponent = async (): Promise<void> => {
     return;
   }
 
-  const result = ComponentHelper.create(dir as string, name);
+  const result = IslandHelper.create(dir as string, name);
 
   if (result) {
     const output = new Output();
