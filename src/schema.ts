@@ -1,4 +1,4 @@
-import { parseVersion, z } from "../deps.ts";
+import { parseVersion, z } from "./deps.ts";
 
 export const ArgSchema = z.object({
   name: z.string(),

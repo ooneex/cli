@@ -1,4 +1,4 @@
-import { print } from "./deps.ts";
+import { print } from "./src/deps.ts";
 import { Kernel } from "./src/Kernel.ts";
 
 if (import.meta.main) {

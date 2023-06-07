@@ -8,7 +8,7 @@ import {
   loadEnv,
   parseFlags,
   registerConstant,
-} from "../deps.ts";
+} from "./deps.ts";
 import { CommandChecker } from "./CommandChecker.ts";
 import { CommandNotFoundException } from "./CommandNotFoundException.ts";
 import { Keys } from "./Keys.ts";

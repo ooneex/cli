@@ -1,12 +1,6 @@
-import {
-  Collection,
-  getOrNull,
-  Helper,
-  registerConstant,
-  z,
-} from "../../deps.ts";
 import { CommandDefinitionException } from "../CommandDefinitionException.ts";
 import { CommandException } from "../CommandException.ts";
+import { Collection, getOrNull, Helper, registerConstant, z } from "../deps.ts";
 import { Keys } from "../Keys.ts";
 import { Response } from "../Response.ts";
 import { CommandDefinitionSchema } from "../schema.ts";
@@ -39,7 +33,7 @@ export const Command = (
 
     const method = descriptor.value!;
 
-    descriptor.value = function Controller(): Response {
+    descriptor.value = function Command(): Response {
       let parameters = Reflect.getOwnMetadata(
         Keys.Internal.Parameters,
         target,

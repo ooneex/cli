@@ -6,11 +6,11 @@ import { Response } from "../Response.ts";
 export class VersionCommand {
   @Command("version", [], {
     description: "Display Ooneex CLI version",
-    usage: ["ooneex version", "ooneex -v"],
+    usage: ["ooneex version", "ooneex -v", "ooneex --version"],
     version: "1.0.0",
   })
   public index(@response response: Response): Response {
-    console.log(`Ooneex CLI: ${config.version}`);
+    console.log(`%cooneex: ${config.version}`, "color: grey");
 
     console.log(`%cdeno: ${config.deno.version}`, "color: grey");
     console.log(`%cv8: ${config.v8.version}`, "color: grey");

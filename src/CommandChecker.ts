@@ -1,7 +1,7 @@
-import { Helper } from "../deps.ts";
 import { CommandActionException } from "./CommandActionException.ts";
 import { CommandArgumentException } from "./CommandArgumentException.ts";
 import { CommandFlagException } from "./CommandFlagException.ts";
+import { Helper } from "./deps.ts";
 import { CommandDefinitionType, IRequest, ShortFlagKeyType } from "./types.ts";
 
 export class CommandChecker {

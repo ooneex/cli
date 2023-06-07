@@ -1,3 +1,3 @@
-import { Exception } from "../deps.ts";
+import { Exception } from "./deps.ts";
 
 export class CommandActionException extends Exception {}

@@ -1,4 +1,4 @@
-import { Collection, IException } from "../deps.ts";
+import { Collection, IException } from "./deps.ts";
 import { IResponse } from "./types.ts";
 
 export class Response implements IResponse {

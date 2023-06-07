@@ -1,4 +1,4 @@
-import { Collection, IException, z } from "../deps.ts";
+import { Collection, IException, z } from "./deps.ts";
 import { Response } from "./Response.ts";
 import {
   ActionSchema,

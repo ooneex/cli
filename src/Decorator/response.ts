@@ -1,4 +1,4 @@
-import { get } from "../../deps.ts";
+import { get } from "../deps.ts";
 import { Keys } from "../Keys.ts";
 import { Response } from "../Response.ts";
 
