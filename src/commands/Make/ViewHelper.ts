@@ -1,8 +1,8 @@
 import { Directory } from "../../deps.ts";
 
-export class IslandHelper {
+export class ViewHelper {
   public static getDirectories(): string[] {
-    const dir = IslandHelper.getDirectory();
+    const dir = ViewHelper.getDirectory();
     const directories: string[] = [dir];
 
     const directory = new Directory(`${dir}`);
@@ -13,16 +13,16 @@ export class IslandHelper {
     return directories;
   }
 
-  public static getIslands(): string[] {
-    const islandsDir = IslandHelper.getDirectory();
-    const islands: string[] = [];
+  public static getViews(): string[] {
+    const viewsDir = ViewHelper.getDirectory();
+    const views: string[] = [];
 
-    const directory = new Directory(`${islandsDir}`);
-    directory.files(/\.tsx$/i, true).forEach((file) => {
-      islands.push(file.getPath().replace(/\.tsx$/i, ""));
+    const directory = new Directory(`${viewsDir}`);
+    directory.files(/View\.tsx$/i, true).forEach((file) => {
+      views.push(file.getPath().replace(/\.tsx$/i, ""));
     });
 
-    return islands;
+    return views;
   }
 
   public static create(dir: string, name: string): boolean {
@@ -36,27 +36,28 @@ export class IslandHelper {
 
     // create component
     directory.touch(
-      `${name}.tsx`,
-      `import { render } from "../render.tsx";
-import { ${name}PropsType } from "./types.ts";
+      `${name}View.tsx`,
+      `import { Body, Head, Page } from "@hypervit/view";
+import { ${name}ViewPropsType } from "./types.ts";
 
-export const ${name} = ({ message }: ${name}PropsType) => {
+export const ${name}View = ({ message }: ${name}ViewPropsType) => {
   return (
-    <>
-      <p>{message}</p>
-    </>
+    <Page>
+      <Head title="${name}" />
+      <Body>
+        <h1>${name}View</h1>
+        <p>{message}</p>
+      </Body>
+    </Page>
   );
 };
-
-// Don't change it
-render(${name}, "__${crypto.randomUUID()}__");
 `,
     );
 
     // create types.ts
     directory.touch(
       `types.ts`,
-      `export type ${name}PropsType = {
+      `export type ${name}ViewPropsType = {
   message: string;
 };
 `,
@@ -65,7 +66,7 @@ render(${name}, "__${crypto.randomUUID()}__");
     // create mod.ts
     directory.touch(
       `mod.ts`,
-      `export * from "./${name}.tsx";
+      `export * from "./${name}View.tsx";
 export * from "./types.ts";
 `,
     );
@@ -76,6 +77,6 @@ export * from "./types.ts";
   public static getDirectory(): string {
     // TODO: get directory dynamically
 
-    return "islands";
+    return "views";
   }
 }

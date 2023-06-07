@@ -8,14 +8,14 @@ import {
   SelectPrompt,
   Style,
 } from "../../deps.ts";
-import { IslandHelper } from "./IslandHelper.ts";
+import { ViewHelper } from "./ViewHelper.ts";
 
-export const createIsland = async (): Promise<void> => {
-  const islands = IslandHelper.getDirectories();
+export const createView = async (): Promise<void> => {
+  const views = ViewHelper.getDirectories();
 
   // Select directory
-  const prompt = new SelectPrompt("Choose the directory for the island");
-  islands.forEach((dir) => {
+  const prompt = new SelectPrompt("Choose the directory for the view");
+  views.forEach((dir) => {
     prompt.addOption({ name: dir, value: dir });
   });
   prompt.searchLabel("Search");
@@ -23,7 +23,7 @@ export const createIsland = async (): Promise<void> => {
 
   // Ask component name
 
-  const inputPrompt = new InputPrompt("Island name (e.g. ShowMessage)");
+  const inputPrompt = new InputPrompt("View name (e.g. Homepage)");
 
   inputPrompt.transform((input): string => {
     return Helper.pascalize(input);
@@ -32,7 +32,7 @@ export const createIsland = async (): Promise<void> => {
   inputPrompt.validate((input): boolean | string => {
     input = Helper.pascalize(input);
 
-    const filePath = `${dir}/${input}/${input}.tsx`;
+    const filePath = `${dir}/${input}/${input}View.tsx`;
     if ((new File(`${filePath}`)).exists()) {
       return `File "${filePath}" already exists`;
     }
@@ -42,7 +42,7 @@ export const createIsland = async (): Promise<void> => {
   const name = await inputPrompt.prompt();
 
   const confirmPrompt = new ConfirmPrompt(
-    `Create "${dir}/${name}/${name}.tsx" file`,
+    `Create "${dir}/${name}/${name}View.tsx" file`,
   );
   confirmPrompt.defaultValue(false);
   const confirm = await confirmPrompt.prompt();
@@ -51,7 +51,7 @@ export const createIsland = async (): Promise<void> => {
     return;
   }
 
-  const result = IslandHelper.create(dir as string, name);
+  const result = ViewHelper.create(dir as string, name);
 
   if (result) {
     const output = new Output();
@@ -59,7 +59,7 @@ export const createIsland = async (): Promise<void> => {
     output.newLine();
     style.color("green");
     let message = style.render(Figure.tick());
-    message += ` ${dir}/${name}/${name}.tsx`;
+    message += ` ${dir}/${name}/${name}View.tsx`;
     output.write(message);
 
     message = style.render(Figure.tick());

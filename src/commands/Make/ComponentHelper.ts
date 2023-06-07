@@ -18,7 +18,7 @@ export class ComponentHelper {
     const components: string[] = [];
 
     const directory = new Directory(`${componentsDir}`);
-    directory.files(/\.tsx$/i, true).map((file) => {
+    directory.files(/\.tsx$/i, true).forEach((file) => {
       components.push(file.getPath().replace(/\.tsx$/i, ""));
     });
 

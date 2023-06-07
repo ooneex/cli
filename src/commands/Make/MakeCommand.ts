@@ -5,6 +5,7 @@ import { Request } from "../../Request.ts";
 import { Response } from "../../Response.ts";
 import { createComponent } from "./createComponent.ts";
 import { createIsland } from "./createIsland.ts";
+import { createView } from "./createView.ts";
 
 export class MakeCommand {
   @Command("make", [
@@ -32,6 +33,9 @@ export class MakeCommand {
         break;
       case "island":
         createIsland();
+        break;
+      case "view":
+        createView();
         break;
       default:
         console.log("default");
