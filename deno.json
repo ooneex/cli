@@ -16,7 +16,7 @@
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
     "lint": "deno fmt --check && deno lint",
-    "cache": "deno cache ./src/deps.ts"
+    "cache:reload": "deno cache --reload ./src/deps.ts"
   },
   "lint": {
     "exclude": [
