@@ -1,3 +1,4 @@
+import { App } from "../../App.ts";
 import {
   ConfirmPrompt,
   Figure,
@@ -9,6 +10,7 @@ import {
   Style,
 } from "../../deps.ts";
 import { ControllerHelper } from "./ControllerHelper.ts";
+import { ViewHelper } from "./ViewHelper.ts";
 
 export const createController = async (): Promise<void> => {
   const controllers = ControllerHelper.getDirectories();
@@ -19,7 +21,7 @@ export const createController = async (): Promise<void> => {
     prompt.addOption({ name: dir, value: dir });
   });
   prompt.searchLabel("Search");
-  const dir = await prompt.prompt();
+  const dir = await prompt.prompt() as string;
 
   // Ask component name
 
@@ -40,16 +42,6 @@ export const createController = async (): Promise<void> => {
     return true;
   });
   const name = await inputPrompt.prompt();
-
-  const confirmPrompt = new ConfirmPrompt(
-    `Create "${dir}/${name}/${name}Controller.ts" file`,
-  );
-  confirmPrompt.defaultValue(false);
-  const confirm = await confirmPrompt.prompt();
-
-  if (!confirm) {
-    return;
-  }
 
   // Ask route name
   const routeNamePrompt = new InputPrompt("Route name (e.g. homepage)");
@@ -75,12 +67,49 @@ export const createController = async (): Promise<void> => {
     .addOption({ name: "CONNECT", value: "CONNECT" });
   const routeMethods = await routeMethodsPrompt.prompt();
 
+  let view: string | null = null;
+
+  if (App.isView()) {
+    const confirmPrompt = new ConfirmPrompt(
+      `Do you want to create view for ${name}Controller?`,
+    );
+    confirmPrompt.defaultValue(true);
+    const confirm = await confirmPrompt.prompt();
+
+    if (confirm) {
+      const viewNamePrompt = new InputPrompt("View name");
+      viewNamePrompt.defaultValue(name);
+      view = await viewNamePrompt.prompt();
+
+      ViewHelper.create(
+        dir.replace(
+          new RegExp(`^${ControllerHelper.getDirectory()}`),
+          ViewHelper.getDirectory(),
+        ),
+        view,
+      );
+    }
+  }
+
+  // Confirm creation
+
+  const confirmPrompt = new ConfirmPrompt(
+    `Create "${dir}/${name}/${name}Controller.ts" file`,
+  );
+  confirmPrompt.defaultValue(false);
+  const confirm = await confirmPrompt.prompt();
+
+  if (!confirm) {
+    return;
+  }
+
   const result = ControllerHelper.create(
     dir as string,
     name,
     routeName,
     routePath,
     routeMethods as string[],
+    view,
   );
 
   if (result) {

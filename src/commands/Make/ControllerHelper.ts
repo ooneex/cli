@@ -1,4 +1,5 @@
 import { Directory } from "../../deps.ts";
+import { ViewHelper } from "./ViewHelper.ts";
 
 export class ControllerHelper {
   public static getDirectories(): string[] {
@@ -31,6 +32,7 @@ export class ControllerHelper {
     routeName: string,
     routePath: string,
     methods: string[],
+    view: string | null,
   ): boolean {
     const directory = new Directory(`${dir}/${name}`);
 
@@ -40,13 +42,34 @@ export class ControllerHelper {
 
     directory.ensure();
 
+    let viewImport = "";
+
+    if (view) {
+      const viewDir = dir.replace(
+        new RegExp(`^${ControllerHelper.getDirectory()}`),
+        ViewHelper.getDirectory(),
+      );
+      viewImport = `
+import { ${view}View, ${view}ViewPropsType } from "@${viewDir}/${view}/mod.ts";`;
+    }
+
+    let returnText = `return response.json({
+      message: "Welcome",
+    });`;
+
+    if (view) {
+      returnText =
+        `return await response.render<${view}ViewPropsType>(${view}View, {
+        message: "Welcome",
+      });`;
+    }
+
     // create component
     directory.touch(
       `${name}Controller.ts`,
       `import { Route } from "@hypervit/decorator";
 import type { IRequest } from "@hypervit/http";
-import { Response as HttpResponse } from "@hypervit/http";
-import { HomepageView, HomepageViewPropsType } from "@views/Homepage/mod.ts";
+import { Response as HttpResponse } from "@hypervit/http";${viewImport}
 
 export class ${name}Controller {
   @Route("${routeName}", "${routePath}", { methods: ${
@@ -56,9 +79,7 @@ export class ${name}Controller {
     _request: IRequest,
     response: HttpResponse,
   ): Promise<Response> {
-    return await response.render<HomepageViewPropsType>(HomepageView, {
-      message: "Welcome",
-    });
+    ${returnText}
   }
 }
 `,

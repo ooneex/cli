@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
     "emitDecoratorMetadata": true,
+    "strict": true,
     "lib": [
-      "dom",
-      "dom.iterable",
-      "dom.asynciterable",
       "deno.ns",
       "deno.unstable"
     ]
@@ -18,5 +16,19 @@
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
     "lint": "deno fmt --check && deno lint"
-  }
+  },
+  "lint": {
+    "exclude": [
+      "node_modules",
+      "var"
+    ]
+  },
+  "fmt": {
+    "exclude": [
+      "node_modules",
+      "var"
+    ]
+  },
+  "lock": false,
+  "nodeModulesDir": true
 }

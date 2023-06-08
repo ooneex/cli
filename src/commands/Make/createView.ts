@@ -19,7 +19,7 @@ export const createView = async (): Promise<void> => {
     prompt.addOption({ name: dir, value: dir });
   });
   prompt.searchLabel("Search");
-  const dir = await prompt.prompt();
+  const dir = await prompt.prompt() as string;
 
   // Ask component name
 
@@ -51,7 +51,7 @@ export const createView = async (): Promise<void> => {
     return;
   }
 
-  const result = ViewHelper.create(dir as string, name);
+  const result = ViewHelper.create(dir, name);
 
   if (result) {
     const output = new Output();

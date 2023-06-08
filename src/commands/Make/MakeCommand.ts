@@ -15,7 +15,7 @@ export class MakeCommand {
     { name: "island", description: "Create island" },
     { name: "view", description: "Create view" },
   ], {
-    description: "Create Ooneex resources",
+    description: "Create resources",
     usage: [
       "ooneex make:component",
       "ooneex make:controller",
