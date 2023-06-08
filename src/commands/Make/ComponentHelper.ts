@@ -49,6 +49,30 @@ export const ${name} = ({ message }: ${name}PropsType) => {
 `,
     );
 
+    // create component.test.ts
+    directory.touch(
+      `${name}.test.ts`,
+      `import { assertEquals, describe, it } from "@hypervit/testing";
+import { renderView } from "@hypervit/view";
+import "@tests/setup.ts";
+import { DOMParser } from "dom";
+import { ${name}, ${name}PropsType } from "./mod.ts";
+
+describe("${name} component", () => {
+  const content = renderView<${name}PropsType>(${name}, {
+    message: "hello",
+  });
+
+  const dom = new DOMParser().parseFromString(content, "text/html")!;
+
+  it("props", () => {
+    const p = dom.querySelector("p")!;
+    assertEquals(p.innerHTML, "hello");
+  });
+});
+`,
+    );
+
     // create types.ts
     directory.touch(
       `types.ts`,

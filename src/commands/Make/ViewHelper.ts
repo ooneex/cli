@@ -34,7 +34,7 @@ export class ViewHelper {
 
     directory.ensure();
 
-    // create component
+    // create view
     directory.touch(
       `${name}View.tsx`,
       `import { Body, Head, Page } from "@hypervit/view";
@@ -51,6 +51,39 @@ export const ${name}View = ({ message }: ${name}ViewPropsType) => {
     </Page>
   );
 };
+`,
+    );
+
+    // create view.test.ts
+    directory.touch(
+      `${name}View.test.ts`,
+      `import { assertEquals, describe, it } from "@hypervit/testing";
+import { renderView } from "@hypervit/view";
+import "@tests/setup.ts";
+import { DOMParser } from "dom";
+import { ${name}View, ${name}ViewPropsType } from "./mod.ts";
+
+describe("${name}View", () => {
+  const content = renderView<${name}ViewPropsType>(${name}View, {
+    message: "hi",
+  });
+  const dom = new DOMParser().parseFromString(content, "text/html")!;
+
+  it("title", () => {
+    const title = dom.querySelector("title")!;
+    assertEquals(title.innerHTML, "${name}");
+  });
+
+  it("h1", () => {
+    const h1 = dom.querySelector("body h1")!;
+    assertEquals(h1.innerHTML, "${name}View");
+  });
+
+  it("props", () => {
+    const p = dom.querySelector("body p")!;
+    assertEquals(p.innerHTML, "hi");
+  });
+});
 `,
     );
 

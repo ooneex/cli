@@ -64,7 +64,7 @@ import { ${view}View, ${view}ViewPropsType } from "@${viewDir}/${view}/mod.ts";`
       });`;
     }
 
-    // create component
+    // create controller
     directory.touch(
       `${name}Controller.ts`,
       `import { Route } from "@hypervit/decorator";
@@ -82,6 +82,46 @@ export class ${name}Controller {
     ${returnText}
   }
 }
+`,
+    );
+
+    // create controller.test.ts
+    directory.touch(
+      `${name}Controller.test.ts`,
+      `import { ICollection } from "@hypervit/collection";
+import { get, Keys } from "@hypervit/ioc";
+import { IRoute, Route } from "@hypervit/routing";
+import {
+  assertEquals,
+  assertInstanceOf,
+  describe,
+  it,
+} from "@hypervit/testing";
+import "@tests/setup.ts";
+import { ${name}Controller } from "./${name}Controller.ts";
+
+describe("${name}Controller", () => {
+  new ${name}Controller();
+
+  const routes = get<ICollection<string, IRoute>>(Keys.Routes);
+  const route = routes.get("${routeName}");
+
+  it("should be registered", () => {
+    assertInstanceOf(route, Route);
+  });
+
+  it("name", () => {
+    assertEquals(route?.getName(), "${routeName}");
+  });
+
+  it("path", () => {
+    assertEquals(route?.getPath(), "${routePath}");
+  });
+
+  it("methods", () => {
+    assertEquals(route?.getMethods(), ${JSON.stringify(methods)});
+  });
+});
 `,
     );
 

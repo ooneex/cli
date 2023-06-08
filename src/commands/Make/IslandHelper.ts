@@ -34,7 +34,7 @@ export class IslandHelper {
 
     directory.ensure();
 
-    // create component
+    // create island
     directory.touch(
       `${name}.tsx`,
       `import { render } from "../render.tsx";

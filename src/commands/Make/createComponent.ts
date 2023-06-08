@@ -69,5 +69,9 @@ export const createComponent = async (): Promise<void> => {
     message = style.render(Figure.tick());
     message += ` ${dir}/${name}/mod.ts`;
     output.write(message);
+
+    message = style.render(Figure.tick());
+    message += ` ${dir}/${name}/${name}.test.ts`;
+    output.write(message);
   }
 };
