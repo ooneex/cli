@@ -60,8 +60,8 @@ import { ${view}View, ${view}ViewPropsType } from "@${viewDir}/${view}/mod.ts";`
     if (view) {
       returnText =
         `return await response.render<${view}ViewPropsType>(${view}View, {
-        message: "Welcome",
-      });`;
+      message: "Welcome",
+    });`;
     }
 
     // create controller
@@ -75,10 +75,10 @@ export class ${name}Controller {
   @Route("${routeName}", "${routePath}", { methods: ${
         JSON.stringify(methods)
       } })
-  public async index(
+  public${view ? " async" : ""} index(
     _request: IRequest,
     response: HttpResponse,
-  ): Promise<Response> {
+  ): ${view ? "Promise<Response>" : "Response"} {
     ${returnText}
   }
 }
